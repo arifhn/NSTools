@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NSTools</string>
+    <string name="ns_tweak">Nexus-S Tweak</string>
+    
+    <string name="bld_tweak">Backlight Dimmer</string>
+    <string name="key_bld_status">key_bld_status</string>
+    <string name="key_bld_delay">key_bld_delay</string>
+
+	<string name="screen_dimmer_tweak">Screen Dimmer</string>
+    <string name="key_screen_dimmer_status">key_screen_dimmer_status</string>
+    <string name="key_screen_dimmer_delay">key_screen_dimmer_delay</string>
+
+	<string name="label_status">Status: %1$s</string>
+	<string name="label_delay">Delay: %1$s</string>
+	<string name="status_on"><b>ON</b></string>
+	<string name="status_off"><b>OFF</b></string>
+	<string name="status_not_supported"><i>not supported</i></string>    
+        
+</resources>

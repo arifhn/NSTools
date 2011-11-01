@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
+    <string name="SCRIPT_VERSION">1</string>
+    <string-array name="scripts">
+		<item>read_ns_tweak.sh</item>
+	</string-array>
+	
+    <string name="NS_TWEAK_FILE">/data/data/mobi.cyann.nstools/nstweak.prop</string>
+    <string name="NS_TWEAK_SCRIPT">/data/data/mobi.cyann.nstools/scripts/read_ns_tweak.sh</string>
+    <string name="NS_TEMP_SCRIPT">/data/data/mobi.cyann.nstools/temp.sh</string>
+</resources>
