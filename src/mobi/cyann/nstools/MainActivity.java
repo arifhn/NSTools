@@ -45,10 +45,14 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tab1);
 		
 		TabSpec tab2 = tabHost.newTabSpec("tid2");
-		tab2.setIndicator(getString(R.string.about));
-		tab2.setContent(new Intent(this, AboutActivity.class));
+		tab2.setIndicator(getString(R.string.voltage_control));
+		tab2.setContent(new Intent(this, VoltageControlActivity.class));
 		tabHost.addTab(tab2);
-		//tabHost.addTab(tab3);
+		
+		TabSpec tab3 = tabHost.newTabSpec("tid3");
+		tab3.setIndicator(getString(R.string.about));
+		tab3.setContent(new Intent(this, AboutActivity.class));
+		tabHost.addTab(tab3);
 	}
 
     @Override

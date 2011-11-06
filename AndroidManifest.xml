@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="mobi.cyann.nstools.NSTweakActivity" />
+        <activity android:name="mobi.cyann.nstools.VoltageControlActivity" />
         <activity android:name="mobi.cyann.nstools.AboutActivity" />
         <service android:name="mobi.cyann.nstools.OnBootCompleteService" >
             <intent-filter >

@@ -75,5 +75,14 @@ public class OnBootCompleteService extends IntentService {
 			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/touchwake/enabled");
 			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/touchwake/delay");
 		}
+		
+		// customvoltage
+		// -----------------
+		status = preferences.getString(getString(R.string.key_max_arm_volt), "-1");
+		if(!status.equals("-1")) {
+			String armvolts = preferences.getString(getString(R.string.key_arm_volt_pref), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_arm_volt");
+			SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/arm_volt");
+		}
 	}
 }

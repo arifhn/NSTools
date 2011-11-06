@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NSTools</string>
-    <string name="ns_tweak">Nexus-S Tweak</string>
-    
+	<!-- NSTweakActivity -->
+	<string name="ns_tweak">Nexus-S Tweak</string>
+	    
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="key_bld_status">key_bld_status</string>
     <string name="key_bld_delay">key_bld_delay</string>
@@ -33,6 +33,17 @@
     <string name="touchwake_tweak">Touchwake</string>
     <string name="key_touchwake_status">key_touchwake_status</string>
     <string name="key_touchwake_delay">key_touchwake_delay</string>
+    
+	<!-- VoltageControlActivity -->
+	<string name="voltage_control">Voltage Control</string>
+	
+	<string name="key_arm_volt_pref">key_arm_volt_pref</string>
+	<string name="arm_voltage">Arm Voltage</string>
+	<string name="key_max_arm_volt">key_max_arm_volt</string>
+	<string name="label_max_arm_volt">Max Arm Volt</string>
+	
+	<!-- common  -->
+	<string name="app_name">NSTools</string>
     
 	<string name="label_status">Status</string>
 	<string name="label_delay">Delay</string>
