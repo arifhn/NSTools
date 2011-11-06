@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- NSTweakActivity -->
-	<string name="ns_tweak">Nexus-S Tweak</string>
+	<string name="ns_tweak">Tweak</string>
 	    
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="key_bld_status">key_bld_status</string>
@@ -35,7 +35,7 @@
     <string name="key_touchwake_delay">key_touchwake_delay</string>
     
 	<!-- VoltageControlActivity -->
-	<string name="voltage_control">Voltage Control</string>
+	<string name="voltage_control">Custom Voltage</string>
 	
 	<string name="key_arm_volt_pref">key_arm_volt_pref</string>
 	<string name="arm_voltage">Arm Voltage</string>
