@@ -128,6 +128,16 @@ public class SysCommand {
 		else 
 			return null;
 	}
+	
+	public void logLastError(String tag) {
+		if(err != null)
+			err.logLastLines(tag);
+	}
+	
+	public void logLastOutput(String tag) {
+		if(out != null)
+			out.logLastLines(tag);
+	}
 
 	public String getLastResult(int line) {
 		if(out != null)
@@ -182,6 +192,14 @@ public class SysCommand {
 			}
 		}
 
+		public void logLastLines(String tag) {
+			if(result != null) {
+				for(int i = 0; i < result.size(); ++i) {
+					Log.d(tag, result.get(i));
+				}
+			}
+		}
+		
 		public int getLineCount() {
 			return result.size();
 		}

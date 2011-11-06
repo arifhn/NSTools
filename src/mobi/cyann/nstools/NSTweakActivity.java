@@ -13,10 +13,11 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.widget.EditText;
 
 public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
-	//private final static String LOG_TAG = "NSTools.NSTweakActivity";
+	private final static String LOG_TAG = "NSTools.NSTweakActivity";
 	
 	private SharedPreferences preferences;
 	
@@ -55,6 +56,8 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p.setOnPreferenceClickListener(this);
 		p = findPreference(getString(R.string.key_deepidle_stats));
 		p.setOnPreferenceClickListener(this);
+		p = findPreference(getString(R.string.key_deepidle_reset_stats));
+		p.setOnPreferenceClickListener(this);
 				
 		// Screendimmer status
 		p = findPreference(getString(R.string.key_screendimmer_status));
@@ -80,7 +83,13 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		editText = ((EditTextPreference)p).getEditText();
 		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
-				
+
+		// Liveoc oc value
+		p = findPreference(getString(R.string.key_liveoc));
+		editText = ((EditTextPreference)p).getEditText();
+		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
+		p.setOnPreferenceChangeListener(this);
+		
 		// Screendimmer delay
 		p = findPreference(getString(R.string.key_screendimmer_delay));
 		editText = ((EditTextPreference)p).getEditText();
@@ -137,12 +146,22 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
 			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(false);
-			
 		}
 		
 		// update display for BLX
 		pref = findPreference(getString(R.string.key_blx_charging_limit));
 		value = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
+		if(value.equals("-1")) {
+			pref.setEnabled(false);
+			pref.setSummary(getString(R.string.status_not_available));
+		}else {
+			pref.setEnabled(true);
+			pref.setSummary(value);
+		}
+		
+		// update display for Liveoc
+		pref = findPreference(getString(R.string.key_liveoc));
+		value = preferences.getString(getString(R.string.key_liveoc), "-1");
 		if(value.equals("-1")) {
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
@@ -211,12 +230,20 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		String status = preferences.getString(keyStatus, "-1");
 		if(status.equals("1")) {
 			// disable tweak
-			if(SysCommand.getInstance().suRun("echo", "0", ">", deviceString) >= 0)
+			if(SysCommand.getInstance().suRun("echo", "0", ">", deviceString) >= 0) {
 				setPreference(keyStatus, "0");
+			}else {
+				Log.e(LOG_TAG, "failed to set 0 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
 		}else if(status.equals("0")) {
 			// enable tweak
-			if(SysCommand.getInstance().suRun("echo", "1", ">", deviceString) >= 0)
+			if(SysCommand.getInstance().suRun("echo", "1", ">", deviceString) >= 0) {
 				setPreference(keyStatus, "1");
+			}else {
+				Log.e(LOG_TAG, "failed to set 1 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
 		}
 		reloadPreferences();
 	}
@@ -253,7 +280,7 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle(getString(R.string.label_deepidle_stats));
 				builder.setMessage(str.toString());
-				builder.setPositiveButton("Ok", new OnClickListener() {
+				builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
@@ -261,6 +288,30 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				});
 				builder.show();
 				
+				ret = true;
+			}else if(preference.getKey().equals(getString(R.string.key_deepidle_reset_stats))) {
+				// create new message dialog with two button yes and no
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(getString(R.string.label_deepidle_reset_stats));
+				builder.setMessage(getString(R.string.msg_confirm_reset_deepidle_stats));
+				builder.setPositiveButton(getString(R.string.label_yes), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// echo 1 to deepidle reset_stats
+						if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
+							Log.d(LOG_TAG, "failed to reset deepidle stats");
+							SysCommand.getInstance().logLastError(LOG_TAG);
+						}
+						dialog.dismiss();
+					}
+				});
+				builder.setNegativeButton(getString(R.string.label_no), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();						
+					}
+				});
+				builder.show();
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_screendimmer_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/screendimmer/enabled");
@@ -283,6 +334,11 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_blx_charging_limit))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/batterylifeextender/charging_limit");
 			setPreference(getString(R.string.key_blx_charging_limit), newValue.toString());
+			reloadPreferences();
+			return true;
+		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
+			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
+			setPreference(getString(R.string.key_liveoc), newValue.toString());
 			reloadPreferences();
 			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_screendimmer_delay))) {

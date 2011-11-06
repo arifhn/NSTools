@@ -48,6 +48,14 @@ else
 	echo "<string name=\"key_deepidle_status\">-1</string>" >> $OUT_FILE
 fi
 
+# liveoc
+STAT=`cat /sys/class/misc/liveoc/oc_value`
+if [ "$?" == "0" ] ; then
+	echo "<string name=\"key_liveoc\">$STAT</string>" >> $OUT_FILE
+else
+	echo "<string name=\"key_liveoc\">-1</string>" >> $OUT_FILE
+fi
+
 # screen dimmer
 STAT=`cat /sys/class/misc/screendimmer/enabled`
 if [ "$STAT" == "1" ] ; then

@@ -54,6 +54,12 @@ public class OnBootCompleteService extends IntentService {
 			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/deepidle/enabled");
 		}
 		
+		// Liveoc
+		status = preferences.getString(getString(R.string.key_liveoc), "-1");
+		if(!status.equals("-1")) {
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
+		}
+				
 		// Screendimmer
 		status = preferences.getString(getString(R.string.key_screendimmer_status), "-1");
 		if(!status.equals("-1")) {
