@@ -4,12 +4,10 @@
  */
 package mobi.cyann.nstools;
 
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.util.Properties;
-
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -24,46 +22,52 @@ public class OnBootCompleteService extends IntentService {
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		try {
-			Properties p = new Properties();
-			p.load(new FileInputStream(getString(R.string.NS_TWEAK_FILE)));
+		Log.d(LOG_TAG, "service start");
+		// load preferences
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		// Restore each tweak preference on boot
+		
+		// BLD
+		String status = preferences.getString(getString(R.string.key_bld_status), "-1");
+		if(!status.equals("-1")) {
+			String delay = preferences.getString(getString(R.string.key_bld_delay), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/backlightdimmer/enabled");
+			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/backlightdimmer/delay");
+		}
+		
+		// BLN
+		status = preferences.getString(getString(R.string.key_bln_status), "-1");
+		if(!status.equals("-1")) {
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/backlightnotification/enabled");
+		}
 
-			FileWriter tempScript = new FileWriter(getString(R.string.NS_TEMP_SCRIPT));
-			tempScript.write("#!/system/bin/sh\n");
-			
-			// BLD
-			String status = p.getProperty("bld.status", "-1");
-			if(!status.equals("-1")) {
-				tempScript.write("echo ");
-				tempScript.write(status);
-				tempScript.write(" > /sys/class/misc/backlightdimmer/enabled\n");
-				
-				tempScript.write("echo ");
-				tempScript.write(p.getProperty("bld.delay", "5000"));
-				tempScript.write(" > /sys/class/misc/backlightdimmer/delay\n");
-			}
-			
-			// Screen dimmer
-			status = p.getProperty("screendimmer.status", "-1");
-			if(!status.equals("-1")) {
-				tempScript.write("echo ");
-				tempScript.write(status);
-				tempScript.write(" > /sys/class/misc/screendimmer/enabled\n");
-				
-				tempScript.write("echo ");
-				tempScript.write(p.getProperty("screendimmer.delay", "5000"));
-				tempScript.write(" > /sys/class/misc/screendimmer/delay\n");
-			}
-			
-			tempScript.flush();
-			tempScript.close();
-
-			// set execute permission
-			SysCommand.getInstance().run("chmod", "+x", getString(R.string.NS_TEMP_SCRIPT));
-			// kick the script run!
-			SysCommand.getInstance().suRun(getString(R.string.NS_TEMP_SCRIPT));
-		}catch(Exception e) {
-			Log.e(LOG_TAG, "", e);
+		// BLX
+		status = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
+		if(!status.equals("-1")) {
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/batterylifeextender/charging_limit");
+		}
+		
+		// Deepidle
+		status = preferences.getString(getString(R.string.key_deepidle_status), "-1");
+		if(!status.equals("-1")) {
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/deepidle/enabled");
+		}
+		
+		// Screendimmer
+		status = preferences.getString(getString(R.string.key_screendimmer_status), "-1");
+		if(!status.equals("-1")) {
+			String delay = preferences.getString(getString(R.string.key_screendimmer_delay), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/screendimmer/enabled");
+			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/screendimmer/delay");
+		}
+		
+		// Touchwake
+		status = preferences.getString(getString(R.string.key_touchwake_status), "-1");
+		if(!status.equals("-1")) {
+			String delay = preferences.getString(getString(R.string.key_touchwake_delay), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/touchwake/enabled");
+			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/touchwake/delay");
 		}
 	}
 }

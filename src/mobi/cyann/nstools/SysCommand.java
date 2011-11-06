@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +34,54 @@ public class SysCommand {
 	 * @return
 	 */
 	public int suRun(String... cmd) {
-		StringBuilder cmds = new StringBuilder();
+		StringBuilder cmds = new StringBuilder("");
 		for(int i = 0; i < cmd.length; ++i) {
 			cmds.append(cmd[i]);
 			cmds.append(" ");
 		}
+		
+		int result = 0;
+		try {
+			// build process
+			ProcessBuilder pb = new ProcessBuilder("su", "-c", "/system/bin/sh");
+			// start the process
+			Process p = pb.start();
+			
+			OutputStream os = p.getOutputStream();
+			OutputStreamWriter osw = new OutputStreamWriter(os);
+			osw.write(cmds.toString());
+			osw.write("\nexit\n");
+			osw.flush();
+			osw.close();
+			
+			// create stream eater
+			err = new StreamGobbler(p.getErrorStream());
+			out = new StreamGobbler(p.getInputStream());
+			// start them all
+			err.start();
+			out.start();
+			// wait until they finished
+			p.waitFor();
+			err.waitFor();
+			out.waitFor();
+			
+			if (err.getLineCount() > 0) {
+				result = -err.getLineCount();
+			} else {
+				result = out.getLineCount();
+			}
+		} catch (Exception e) {
+			Log.e(LOG_TAG, "", e);
+			out = null;
+			err = null;
+			result = -1;
+		}
+		return result;
+		
+		/*
 		return run("su", "-c", cmds.toString());
+		*/
+		
 	}
 	
 	/**
@@ -106,12 +150,14 @@ public class SysCommand {
 
 		public void run() {
 			run = true;
+			result.clear();
 			try {
 				InputStreamReader isr = new InputStreamReader(is);
 				BufferedReader br = new BufferedReader(isr, 100);
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					result.add(line);
+					if(line.length() > 0)
+						result.add(line);
 				}
 				br.close();
 				isr.close();

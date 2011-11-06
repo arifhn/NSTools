@@ -8,8 +8,10 @@ import java.io.InputStream;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -31,20 +33,24 @@ public class MainActivity extends TabActivity {
 		tab1.setIndicator(getString(R.string.ns_tweak));
 		tab1.setContent(new Intent(this, NSTweakActivity.class));
 		tabHost.addTab(tab1);
-		//tabHost.addTab(tab2);
+		
+		TabSpec tab2 = tabHost.newTabSpec("tid2");
+		tab2.setIndicator(getString(R.string.about));
+		tab2.setContent(new Intent(this, AboutActivity.class));
+		tabHost.addTab(tab2);
 		//tabHost.addTab(tab3);
 	}
 
     private void copyAsset(String srcPath, String dstPath) throws IOException {
 		AssetManager assetManager = getApplicationContext().getAssets();
     	InputStream is = assetManager.open(srcPath);
-    	FileOutputStream fos = new FileOutputStream(dstPath);
+    	FileOutputStream fos = new FileOutputStream(dstPath, false);
     	byte[] buffer = new byte[100];
     	int n = -1;
     	do {
     		n = is.read(buffer);
     		if(n != -1) {
-    			fos.write(buffer);
+    			fos.write(buffer, 0, n);
     		}
     	}while(n != -1);
     	fos.flush();
@@ -60,20 +66,30 @@ public class MainActivity extends TabActivity {
 		// first check script version (in the future we can change SCRIPT_VERSION constant to overwrite existing scripts)
 		if(!new File(scriptVersionTagFile).exists()) {
 			try {
+				SysCommand sc = SysCommand.getInstance();
 				// clean old script dir
-				SysCommand.getInstance().run("rm", "-r", scriptDir);
+				int r = sc.run("rm", "-r", scriptDir);
+				if(r < 0) {
+					Log.e(LOG_TAG, sc.getLastError(0));
+				}
 				// create script dir
 				new File(scriptDir).mkdir();
 				// copy all scripts
 				String[] scripts = getResources().getStringArray(R.array.scripts);
 				for(String f: scripts) {
 					copyAsset(f, scriptDir + f);
+					r = SysCommand.getInstance().run("chmod", "0755", scriptDir + f);
+					if(r < 0) {
+						Log.e(LOG_TAG, sc.getLastError(0));
+					}
 				}
-				SysCommand.getInstance().run("chmod", "+x", scriptDir + "*");
 				// mark script version
 				FileWriter fw = new FileWriter(scriptVersionTagFile);
 				fw.write(scriptVersion);
 				fw.close();
+
+				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+				pref.edit().clear().commit();
 			}catch(IOException e) {
 				Log.e(LOG_TAG, "failed to extract scripts", e);
 			}

@@ -1,33 +1,78 @@
 #!/system/bin/sh
 
 # outputfile to save result
-OUT_FILE="/data/data/mobi.cyann.nstools/nstweak.prop"
+OUT_FILE="/data/data/mobi.cyann.nstools/shared_prefs/mobi.cyann.nstools_preferences.xml"
 
-# empty the file
-echo "" > $OUT_FILE
+# prepare the file
+echo "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" > $OUT_FILE
+echo "<map>" >> $OUT_FILE
 
 # bld
 STAT=`cat /sys/class/misc/backlightdimmer/enabled`
 if [ "$STAT" == "1" ] ; then
-	echo "bld.status=1" >> $OUT_FILE
-	echo "bld.delay=`cat /sys/class/misc/backlightdimmer/delay`" >> $OUT_FILE
+	echo "<string name=\"key_bld_status\">1</string>" >> $OUT_FILE
+	echo "<string name=\"key_bld_delay\">`cat /sys/class/misc/backlightdimmer/delay`</string>" >> $OUT_FILE
 elif [ "$STAT" == "0" ] ; then
-	echo "bld.status=0" >> $OUT_FILE
-	echo "bld.delay=`cat /sys/class/misc/backlightdimmer/delay`" >> $OUT_FILE
+	echo "<string name=\"key_bld_status\">0</string>" >> $OUT_FILE
+	echo "<string name=\"key_bld_delay\">`cat /sys/class/misc/backlightdimmer/delay`</string>" >> $OUT_FILE
 else
-	echo "bld.status=-1" >> $OUT_FILE
-	echo "bld.delay=0" >> $OUT_FILE
+	echo "<string name=\"key_bld_status\">-1</string>" >> $OUT_FILE
+	echo "<string name=\"key_bld_delay\">0</string>" >> $OUT_FILE
+fi
+
+# bln
+STAT=`cat /sys/class/misc/backlightnotification/enabled`
+if [ "$STAT" == "1" ] ; then
+	echo "<string name=\"key_bln_status\">1</string>" >> $OUT_FILE
+elif [ "$STAT" == "0" ] ; then
+	echo "<string name=\"key_bln_status\">0</string>" >> $OUT_FILE
+else
+	echo "<string name=\"key_bln_status\">-1</string>" >> $OUT_FILE
+fi
+
+# blx
+STAT=`cat /sys/class/misc/batterylifeextender/charging_limit`
+if [ "$?" == "0" ] ; then
+	echo "<string name=\"key_blx_charging_limit\">$STAT</string>" >> $OUT_FILE
+else
+	echo "<string name=\"key_blx_charging_limit\">-1</string>" >> $OUT_FILE
+fi
+
+# bln
+STAT=`cat /sys/class/misc/deepidle/enabled`
+if [ "$STAT" == "1" ] ; then
+	echo "<string name=\"key_deepidle_status\">1</string>" >> $OUT_FILE
+elif [ "$STAT" == "0" ] ; then
+	echo "<string name=\"key_deepidle_status\">0</string>" >> $OUT_FILE
+else
+	echo "<string name=\"key_deepidle_status\">-1</string>" >> $OUT_FILE
 fi
 
 # screen dimmer
 STAT=`cat /sys/class/misc/screendimmer/enabled`
 if [ "$STAT" == "1" ] ; then
-	echo "screendimmer.status=1" >> $OUT_FILE
-	echo "screendimmer.delay=`cat /sys/class/misc/screendimmer/delay`" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_status\">1</string>" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_delay\">`cat /sys/class/misc/screendimmer/delay`</string>" >> $OUT_FILE
 elif [ "$STAT" == "0" ] ; then
-	echo "screendimmer.status=0" >> $OUT_FILE
-	echo "screendimmer.delay=`cat /sys/class/misc/screendimmer/delay`" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_status\">0</string>" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_delay\">`cat /sys/class/misc/screendimmer/delay`</string>" >> $OUT_FILE
 else
-	echo "screendimmer.status=-1" >> $OUT_FILE
-	echo "screendimmer.delay=0" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_status\">-1</string>" >> $OUT_FILE
+	echo "<string name=\"key_screendimmer_delay\">0</string>" >> $OUT_FILE
 fi
+
+# touchwake
+STAT=`cat /sys/class/misc/touchwake/enabled`
+if [ "$STAT" == "1" ] ; then
+	echo "<string name=\"key_touchwake_status\">1</string>" >> $OUT_FILE
+	echo "<string name=\"key_touchwake_delay\">`cat /sys/class/misc/touchwake/delay`</string>" >> $OUT_FILE
+elif [ "$STAT" == "0" ] ; then
+	echo "<string name=\"key_touchwake_status\">0</string>" >> $OUT_FILE
+	echo "<string name=\"key_touchwake_delay\">`cat /sys/class/misc/touchwake/delay`</string>" >> $OUT_FILE
+else
+	echo "<string name=\"key_touchwake_status\">-1</string>" >> $OUT_FILE
+	echo "<string name=\"key_touchwake_delay\">0</string>" >> $OUT_FILE
+fi
+
+echo "</map>" >> $OUT_FILE
+

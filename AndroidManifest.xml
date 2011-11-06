@@ -5,14 +5,15 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="8" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name="mobi.cyann.nstools.MainActivity" >
+            android:name="mobi.cyann.nstools.MainActivity">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,9 +21,16 @@
             </intent-filter>
         </activity>
         <activity android:name="mobi.cyann.nstools.NSTweakActivity" />
-        
-        <receiver android:name="mobi.cyann.nstools.BootCompleteReceiver">
-            <intent-filter>
+        <activity android:name="mobi.cyann.nstools.AboutActivity" />
+        <service android:name="mobi.cyann.nstools.OnBootCompleteService" >
+            <intent-filter >
+                <action android:name="mobi.cyann.nstools.OnBootCompleteService" >
+                </action>
+            </intent-filter>
+        </service>
+
+        <receiver android:name="mobi.cyann.nstools.BootCompleteReceiver" >
+            <intent-filter >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

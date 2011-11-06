@@ -12,14 +12,50 @@
             android:title="@string/label_delay" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/screen_dimmer_tweak" >
+    <PreferenceCategory android:title="@string/bln_tweak" >
 
         <PreferenceScreen
-            android:key="@string/key_screen_dimmer_status"
+            android:key="@string/key_bln_status"
+            android:title="@string/label_status" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/blx_tweak" >
+
+        <EditTextPreference
+            android:key="@string/key_blx_charging_limit"
+            android:title="@string/label_charging_limit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/deepidle_tweak" >
+
+        <PreferenceScreen
+            android:key="@string/key_deepidle_status"
+            android:title="@string/label_status" />
+
+        <PreferenceScreen
+            android:key="@string/key_deepidle_stats"
+            android:title="@string/label_deepidle_stats" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/screendimmer_tweak" >
+
+        <PreferenceScreen
+            android:key="@string/key_screendimmer_status"
             android:title="@string/label_status" />
 
         <EditTextPreference
-            android:key="@string/key_screen_dimmer_delay"
+            android:key="@string/key_screendimmer_delay"
+            android:title="@string/label_delay" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/touchwake_tweak" >
+
+        <PreferenceScreen
+            android:key="@string/key_touchwake_status"
+            android:title="@string/label_status" />
+
+        <EditTextPreference
+            android:key="@string/key_touchwake_delay"
             android:title="@string/label_delay" />
     </PreferenceCategory>
 

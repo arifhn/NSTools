@@ -7,14 +7,33 @@
     <string name="key_bld_status">key_bld_status</string>
     <string name="key_bld_delay">key_bld_delay</string>
 
-	<string name="screen_dimmer_tweak">Screen Dimmer</string>
-    <string name="key_screen_dimmer_status">key_screen_dimmer_status</string>
-    <string name="key_screen_dimmer_delay">key_screen_dimmer_delay</string>
+    <string name="bln_tweak">Backlight Notification</string>
+    <string name="key_bln_status">key_bln_status</string>
+    
+    <string name="blx_tweak">Battery Life Extender</string>
+    <string name="key_blx_charging_limit">key_blx_charging_limit</string>
+    <string name="label_charging_limit">Charging Limit</string>
+    
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="key_deepidle_status">key_deepidle_status</string>
+    <string name="key_deepidle_stats">key_deepidle_stats</string>
+    <string name="label_deepidle_stats">Idle Stats</string>
+    
+	<string name="screendimmer_tweak">Screen Dimmer</string>
+    <string name="key_screendimmer_status">key_screendimmer_status</string>
+    <string name="key_screendimmer_delay">key_screendimmer_delay</string>
 
-	<string name="label_status">Status: %1$s</string>
-	<string name="label_delay">Delay: %1$s</string>
+    <string name="touchwake_tweak">Touchwake</string>
+    <string name="key_touchwake_status">key_touchwake_status</string>
+    <string name="key_touchwake_delay">key_touchwake_delay</string>
+    
+	<string name="label_status">Status</string>
+	<string name="label_delay">Delay</string>
+	
 	<string name="status_on"><b>ON</b></string>
 	<string name="status_off"><b>OFF</b></string>
-	<string name="status_not_supported"><i>not supported</i></string>    
-        
+	<string name="status_not_available"><i>not available</i></string>    
+    
+	<string name="about">About</string>
+	<string name="about_text"><b>Contact me:</b>\nhttp://forum.xda-developers.com/member.php?u=3143931\narifhn@cyann.mobi</string>
 </resources>
