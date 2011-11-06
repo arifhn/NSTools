@@ -19,11 +19,21 @@ import android.widget.TabHost.TabSpec;
 public class MainActivity extends TabActivity {
 	private final static String LOG_TAG = "NSTools.MainActivity";
 	
+	private boolean onCreate = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// call extract 
 		extractScripts();
+		
+		// we need to call this before executing ns tweak script, to make sure
+		// shared_prefs directory created
+		PreferenceManager.getDefaultSharedPreferences(this);
+		// execute our reader script to get values for each tweak
+		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
+		// mark onCreate
+		onCreate = true;
 		
 		setContentView(R.layout.main);
 		
@@ -41,7 +51,16 @@ public class MainActivity extends TabActivity {
 		//tabHost.addTab(tab3);
 	}
 
-    private void copyAsset(String srcPath, String dstPath) throws IOException {
+    @Override
+	protected void onResume() {
+		super.onResume();
+		if(!onCreate) { // re-exceute our reader script
+			SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
+		}
+		onCreate = false;
+	}
+
+	private void copyAsset(String srcPath, String dstPath) throws IOException {
 		AssetManager assetManager = getApplicationContext().getAssets();
     	InputStream is = assetManager.open(srcPath);
     	FileOutputStream fos = new FileOutputStream(dstPath, false);

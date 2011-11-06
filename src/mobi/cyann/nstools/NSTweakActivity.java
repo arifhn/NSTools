@@ -21,24 +21,14 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 	
 	private SharedPreferences preferences;
 	
-	private boolean dirtyPreferences = true;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// execute our reader script to get values for each tweak
-		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
-
-		// reload preferences
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		// set 'dirty' flag
-		dirtyPreferences = false;
 		
 		// set preference layout
 		addPreferencesFromResource(R.xml.ns_tweak);
-		
 		
 		// Set onPreferenceClickListener to this class
 		// --------------------------------------------
@@ -109,22 +99,8 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		// reload preferences
 		reloadPreferences();
 	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// set 'dirty' flag to true (just in case the values changed from other process)
-		// so we can reload it later onResume
-		dirtyPreferences = true;
-	}
 
 	private void reloadPreferences() {
-		if(dirtyPreferences) {
-			// execute our reader script once again if 'dirty' flag is true
-			SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
-			// reload preferences
-			preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		}
 		// setup display for each preference
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
 		updateDisplay(getString(R.string.key_bln_status));
@@ -330,27 +306,22 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/backlightdimmer/delay");
 			setPreference(getString(R.string.key_bld_delay), newValue.toString());
 			reloadPreferences();
-			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_blx_charging_limit))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/batterylifeextender/charging_limit");
 			setPreference(getString(R.string.key_blx_charging_limit), newValue.toString());
 			reloadPreferences();
-			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
 			setPreference(getString(R.string.key_liveoc), newValue.toString());
 			reloadPreferences();
-			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_screendimmer_delay))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/screendimmer/delay");
 			setPreference(getString(R.string.key_screendimmer_delay), newValue.toString());
 			reloadPreferences();
-			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_touchwake_delay))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/touchwake/delay");
 			setPreference(getString(R.string.key_touchwake_delay), newValue.toString());
 			reloadPreferences();
-			return true;
 		}
 		return false;
 	}
