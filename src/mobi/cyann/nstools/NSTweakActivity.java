@@ -13,10 +13,11 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.widget.EditText;
 
 public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
-	//private final static String LOG_TAG = "NSTools.NSTweakActivity";
+	private final static String LOG_TAG = "NSTools.NSTweakActivity";
 	
 	private SharedPreferences preferences;
 	
@@ -213,12 +214,20 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		String status = preferences.getString(keyStatus, "-1");
 		if(status.equals("1")) {
 			// disable tweak
-			if(SysCommand.getInstance().suRun("echo", "0", ">", deviceString) >= 0)
+			if(SysCommand.getInstance().suRun("echo", "0", ">", deviceString) >= 0) {
 				setPreference(keyStatus, "0");
+			}else {
+				Log.e(LOG_TAG, "failed to set 0 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
 		}else if(status.equals("0")) {
 			// enable tweak
-			if(SysCommand.getInstance().suRun("echo", "1", ">", deviceString) >= 0)
+			if(SysCommand.getInstance().suRun("echo", "1", ">", deviceString) >= 0) {
 				setPreference(keyStatus, "1");
+			}else {
+				Log.e(LOG_TAG, "failed to set 1 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
 		}
 		reloadPreferences();
 	}
@@ -273,7 +282,10 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// echo 1 to deepidle reset_stats
-						SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats");
+						if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
+							Log.d(LOG_TAG, "failed to reset deepidle stats");
+							SysCommand.getInstance().logLastError(LOG_TAG);
+						}
 						dialog.dismiss();
 					}
 				});
