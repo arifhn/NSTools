@@ -22,6 +22,10 @@
     <string name="label_deepidle_reset_stats">Reset Stats</string>
     <string name="msg_confirm_reset_deepidle_stats">Do you want to reset idle statistics?</string>
     
+	<string name="liveoc_tweak">Live OC</string>
+	<string name="key_liveoc">key_liveoc</string>
+	<string name="label_liveoc_ocvalue">OC Value</string>
+	
 	<string name="screendimmer_tweak">Screen Dimmer</string>
     <string name="key_screendimmer_status">key_screendimmer_status</string>
     <string name="key_screendimmer_delay">key_screendimmer_delay</string>

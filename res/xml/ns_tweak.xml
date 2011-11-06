@@ -41,6 +41,12 @@
             android:title="@string/label_deepidle_reset_stats" />
     </PreferenceCategory>
 
+	<PreferenceCategory android:title="@string/liveoc_tweak">
+	    <EditTextPreference
+            android:key="@string/key_liveoc"
+            android:title="@string/label_liveoc_ocvalue" />
+	</PreferenceCategory>
+	
     <PreferenceCategory android:title="@string/screendimmer_tweak" >
 
         <PreferenceScreen

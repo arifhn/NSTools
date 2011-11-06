@@ -83,7 +83,13 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		editText = ((EditTextPreference)p).getEditText();
 		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
-				
+
+		// Liveoc oc value
+		p = findPreference(getString(R.string.key_liveoc));
+		editText = ((EditTextPreference)p).getEditText();
+		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
+		p.setOnPreferenceChangeListener(this);
+		
 		// Screendimmer delay
 		p = findPreference(getString(R.string.key_screendimmer_delay));
 		editText = ((EditTextPreference)p).getEditText();
@@ -140,12 +146,22 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
 			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(false);
-			
 		}
 		
 		// update display for BLX
 		pref = findPreference(getString(R.string.key_blx_charging_limit));
 		value = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
+		if(value.equals("-1")) {
+			pref.setEnabled(false);
+			pref.setSummary(getString(R.string.status_not_available));
+		}else {
+			pref.setEnabled(true);
+			pref.setSummary(value);
+		}
+		
+		// update display for Liveoc
+		pref = findPreference(getString(R.string.key_liveoc));
+		value = preferences.getString(getString(R.string.key_liveoc), "-1");
 		if(value.equals("-1")) {
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
@@ -318,6 +334,11 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_blx_charging_limit))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/batterylifeextender/charging_limit");
 			setPreference(getString(R.string.key_blx_charging_limit), newValue.toString());
+			reloadPreferences();
+			return true;
+		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
+			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
+			setPreference(getString(R.string.key_liveoc), newValue.toString());
 			reloadPreferences();
 			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_screendimmer_delay))) {
