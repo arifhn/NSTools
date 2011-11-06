@@ -55,6 +55,8 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p.setOnPreferenceClickListener(this);
 		p = findPreference(getString(R.string.key_deepidle_stats));
 		p.setOnPreferenceClickListener(this);
+		p = findPreference(getString(R.string.key_deepidle_reset_stats));
+		p.setOnPreferenceClickListener(this);
 				
 		// Screendimmer status
 		p = findPreference(getString(R.string.key_screendimmer_status));
@@ -253,7 +255,7 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle(getString(R.string.label_deepidle_stats));
 				builder.setMessage(str.toString());
-				builder.setPositiveButton("Ok", new OnClickListener() {
+				builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
@@ -261,6 +263,27 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				});
 				builder.show();
 				
+				ret = true;
+			}else if(preference.getKey().equals(getString(R.string.key_deepidle_reset_stats))) {
+				// create new message dialog with two button yes and no
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(getString(R.string.label_deepidle_reset_stats));
+				builder.setMessage(getString(R.string.msg_confirm_reset_deepidle_stats));
+				builder.setPositiveButton(getString(R.string.label_yes), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// echo 1 to deepidle reset_stats
+						SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats");
+						dialog.dismiss();
+					}
+				});
+				builder.setNegativeButton(getString(R.string.label_no), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();						
+					}
+				});
+				builder.show();
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_screendimmer_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/screendimmer/enabled");

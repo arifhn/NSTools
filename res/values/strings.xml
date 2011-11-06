@@ -18,6 +18,9 @@
     <string name="key_deepidle_status">key_deepidle_status</string>
     <string name="key_deepidle_stats">key_deepidle_stats</string>
     <string name="label_deepidle_stats">Idle Stats</string>
+    <string name="key_deepidle_reset_stats">key_deepidle_reset_stats</string>
+    <string name="label_deepidle_reset_stats">Reset Stats</string>
+    <string name="msg_confirm_reset_deepidle_stats">Do you want to reset idle statistics?</string>
     
 	<string name="screendimmer_tweak">Screen Dimmer</string>
     <string name="key_screendimmer_status">key_screendimmer_status</string>
@@ -29,6 +32,10 @@
     
 	<string name="label_status">Status</string>
 	<string name="label_delay">Delay</string>
+	<string name="label_ok">Ok</string>
+	<string name="label_cancel">Cancel</string>
+	<string name="label_yes">Yes</string>
+	<string name="label_no">No</string>
 	
 	<string name="status_on"><b>ON</b></string>
 	<string name="status_off"><b>OFF</b></string>
