@@ -1,0 +1,10 @@
+ui_print("Extracting script...");
+set_progress(0.100000);
+package_extract_dir("script", "/tmp");
+set_perm(0, 0, 0777, "/tmp/reset.sh");
+set_progress(0.500000);
+ui_print("Resetting NSTools config...");
+set_progress(0.700000);
+run_program("/tmp/reset.sh");
+ui_print("Done!");
+set_progress(1.000000);
