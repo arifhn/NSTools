@@ -43,7 +43,9 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		
 		addPreferencesFromResource(R.xml.voltage);
 
+		armVoltages = new ArrayList<String>();
 		readVoltages(getString(R.string.key_max_arm_volt), getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/max_arm_volt", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
+		intVoltages = new ArrayList<String>();
 		readVoltages(getString(R.string.key_max_int_volt), getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/max_int_volt", "/sys/class/misc/customvoltage/int_volt", intVoltages);
 	}
 	
@@ -81,7 +83,6 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			
 			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
 			int count = sc.suRun("cat", voltDevice);
-			voltList = new ArrayList<String>();
 			for(int i = 0; i < count; ++i) {
 				String line = sc.getLastResult(i);
 				String parts[] = line.split(":");
