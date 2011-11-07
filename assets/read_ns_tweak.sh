@@ -56,19 +56,6 @@ else
 	echo "<string name=\"key_liveoc\">-1</string>" >> $OUT_FILE
 fi
 
-# screen dimmer
-STAT=`cat /sys/class/misc/screendimmer/enabled`
-if [ "$STAT" == "1" ] ; then
-	echo "<string name=\"key_screendimmer_status\">1</string>" >> $OUT_FILE
-	echo "<string name=\"key_screendimmer_delay\">`cat /sys/class/misc/screendimmer/delay`</string>" >> $OUT_FILE
-elif [ "$STAT" == "0" ] ; then
-	echo "<string name=\"key_screendimmer_status\">0</string>" >> $OUT_FILE
-	echo "<string name=\"key_screendimmer_delay\">`cat /sys/class/misc/screendimmer/delay`</string>" >> $OUT_FILE
-else
-	echo "<string name=\"key_screendimmer_status\">-1</string>" >> $OUT_FILE
-	echo "<string name=\"key_screendimmer_delay\">0</string>" >> $OUT_FILE
-fi
-
 # touchwake
 STAT=`cat /sys/class/misc/touchwake/enabled`
 if [ "$STAT" == "1" ] ; then

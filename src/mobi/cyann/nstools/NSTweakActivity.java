@@ -48,10 +48,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p.setOnPreferenceClickListener(this);
 		p = findPreference(getString(R.string.key_deepidle_reset_stats));
 		p.setOnPreferenceClickListener(this);
-				
-		// Screendimmer status
-		p = findPreference(getString(R.string.key_screendimmer_status));
-		p.setOnPreferenceClickListener(this);
 
 		// Touchwake status
 		p = findPreference(getString(R.string.key_touchwake_status));
@@ -80,12 +76,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
 		
-		// Screendimmer delay
-		p = findPreference(getString(R.string.key_screendimmer_delay));
-		editText = ((EditTextPreference)p).getEditText();
-		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
-		p.setOnPreferenceChangeListener(this);
-
 		// Touchwake delay
 		p = findPreference(getString(R.string.key_touchwake_delay));
 		editText = ((EditTextPreference)p).getEditText();
@@ -104,7 +94,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		// setup display for each preference
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
 		updateDisplay(getString(R.string.key_bln_status));
-		updateDisplay(getString(R.string.key_screendimmer_status), getString(R.string.key_screendimmer_delay));
 		updateDisplay(getString(R.string.key_touchwake_status), getString(R.string.key_touchwake_delay));
 		
 		// update display for Deepidle
@@ -289,9 +278,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				});
 				builder.show();
 				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_screendimmer_status))) {
-				toggleTweakStatus(preference.getKey(), "/sys/class/misc/screendimmer/enabled");
-				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");
 				ret = true;
@@ -313,10 +299,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
 			setPreference(getString(R.string.key_liveoc), newValue.toString());
-			reloadPreferences();
-		}else if(preference.getKey().equals(getString(R.string.key_screendimmer_delay))) {
-			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/screendimmer/delay");
-			setPreference(getString(R.string.key_screendimmer_delay), newValue.toString());
 			reloadPreferences();
 		}else if(preference.getKey().equals(getString(R.string.key_touchwake_delay))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/touchwake/delay");

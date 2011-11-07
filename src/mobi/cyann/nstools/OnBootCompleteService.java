@@ -75,14 +75,6 @@ public class OnBootCompleteService extends IntentService {
 		if(!status.equals("-1")) {
 			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
 		}
-				
-		// Screendimmer
-		status = preferences.getString(getString(R.string.key_screendimmer_status), "-1");
-		if(!status.equals("-1")) {
-			String delay = preferences.getString(getString(R.string.key_screendimmer_delay), "0");
-			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/screendimmer/enabled");
-			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/screendimmer/delay");
-		}
 		
 		// Touchwake
 		status = preferences.getString(getString(R.string.key_touchwake_status), "-1");
