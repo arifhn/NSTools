@@ -42,6 +42,12 @@
 	<string name="key_max_arm_volt">key_max_arm_volt</string>
 	<string name="label_max_arm_volt">Max Arm Volt</string>
 	
+	<string name="key_int_volt_pref">key_int_volt_pref</string>
+	<string name="int_voltage">Int Voltage</string>
+	<string name="key_max_int_volt">key_max_int_volt</string>
+	<string name="label_max_int_volt">Max Int Volt</string>
+	<string name="warning_message">These settings are dangerous. Use at your own risk.</string>
+	
 	<!-- common  -->
 	<string name="app_name">NSTools</string>
     
@@ -51,6 +57,7 @@
 	<string name="label_cancel">Cancel</string>
 	<string name="label_yes">Yes</string>
 	<string name="label_no">No</string>
+	<string name="label_warning">WARNING</string>
 	
 	<string name="status_on"><b>ON</b></string>
 	<string name="status_off"><b>OFF</b></string>

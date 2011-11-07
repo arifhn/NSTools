@@ -27,9 +27,25 @@ public class OnBootCompleteService extends IntentService {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		// Restore each tweak preference on boot
+		// customvoltage
+		// -----------------
+		// arm voltages
+		String status = preferences.getString(getString(R.string.key_max_arm_volt), "-1");
+		if(!status.equals("-1")) {
+			String armvolts = preferences.getString(getString(R.string.key_arm_volt_pref), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_arm_volt");
+			SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/arm_volt");
+		}
+		// int voltages
+		status = preferences.getString(getString(R.string.key_max_int_volt), "-1");
+		if(!status.equals("-1")) {
+			String armvolts = preferences.getString(getString(R.string.key_int_volt_pref), "0");
+			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_int_volt");
+			SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/int_volt");
+		}
 		
 		// BLD
-		String status = preferences.getString(getString(R.string.key_bld_status), "-1");
+		status = preferences.getString(getString(R.string.key_bld_status), "-1");
 		if(!status.equals("-1")) {
 			String delay = preferences.getString(getString(R.string.key_bld_delay), "0");
 			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/backlightdimmer/enabled");
@@ -74,15 +90,6 @@ public class OnBootCompleteService extends IntentService {
 			String delay = preferences.getString(getString(R.string.key_touchwake_delay), "0");
 			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/touchwake/enabled");
 			SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/touchwake/delay");
-		}
-		
-		// customvoltage
-		// -----------------
-		status = preferences.getString(getString(R.string.key_max_arm_volt), "-1");
-		if(!status.equals("-1")) {
-			String armvolts = preferences.getString(getString(R.string.key_arm_volt_pref), "0");
-			SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_arm_volt");
-			SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/arm_volt");
 		}
 	}
 }

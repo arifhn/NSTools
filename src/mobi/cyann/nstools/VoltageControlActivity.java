@@ -7,7 +7,10 @@ package mobi.cyann.nstools;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -30,6 +33,7 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 	private SharedPreferences preferences;
 	
 	private List<String> armVoltages;
+	private List<String> intVoltages;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +43,32 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		
 		addPreferencesFromResource(R.xml.voltage);
 
-		readVoltages();
+		readVoltages(getString(R.string.key_max_arm_volt), getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/max_arm_volt", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
+		readVoltages(getString(R.string.key_max_int_volt), getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/max_int_volt", "/sys/class/misc/customvoltage/int_volt", intVoltages);
+	}
+	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.label_warning));
+		builder.setMessage(getString(R.string.warning_message));
+		builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
 	}
 
-	private void readVoltages() {
+	private void readVoltages(String maxKey, String catKey, String voltPrefix, String maxDevice, String voltDevice, List<String>voltList) {
 		SysCommand sc = SysCommand.getInstance();
 		// read max arm volt
-		EditTextPreference p = (EditTextPreference)findPreference(getString(R.string.key_max_arm_volt));
-		if(sc.suRun("cat", "/sys/class/misc/customvoltage/max_arm_volt") >= 0) {
+		EditTextPreference p = (EditTextPreference)findPreference(maxKey);
+		if(sc.suRun("cat", maxDevice) >= 0) {
 			String volt = sc.getLastResult(0).split(" ")[0];
 			
 			// Max arm volt
@@ -55,11 +77,11 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			p.setOnPreferenceChangeListener(this);
 			EditText editText = ((EditTextPreference)p).getEditText();
 			editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
-			saveVoltage(getString(R.string.key_max_arm_volt), volt, null);
+			saveVoltage(maxKey, volt, null);
 			
-			PreferenceCategory c = (PreferenceCategory)findPreference(getString(R.string.key_arm_volt_pref));
-			int count = sc.suRun("cat", "/sys/class/misc/customvoltage/arm_volt");
-			armVoltages = new ArrayList<String>();
+			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
+			int count = sc.suRun("cat", voltDevice);
+			voltList = new ArrayList<String>();
 			for(int i = 0; i < count; ++i) {
 				String line = sc.getLastResult(i);
 				String parts[] = line.split(":");
@@ -68,7 +90,7 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 				Log.d(LOG_TAG, line);
 				
 				EditTextPreference ed = new EditTextPreference(this);
-				ed.setKey("armvolt_" + i);
+				ed.setKey(voltPrefix + i);
 				ed.setTitle(parts[0]);
 				ed.setDialogTitle(parts[0]);
 				ed.setSummary(parts[1]);
@@ -77,14 +99,14 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 				ed.getEditText().setKeyListener(DigitsKeyListener.getInstance(false,true));
 				c.addPreference(ed);
 				
-				armVoltages.add(volt);
+				voltList.add(volt);
 			}
-			saveVoltages(getString(R.string.key_arm_volt_pref), armVoltages, null);
+			saveVoltages(catKey, voltList, null);
 		}else {
 			// disable it
 			p.setEnabled(false);
 			p.setSummary(getString(R.string.status_not_available));
-			saveVoltage(getString(R.string.key_max_arm_volt), "-1", null);
+			saveVoltage(maxKey, "-1", null);
 		}
 	}
 	
@@ -127,6 +149,17 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			preference.setSummary(newValue + " mV");
 			((EditTextPreference)preference).setText(newValue.toString());
 			saveVoltage(getString(R.string.key_max_arm_volt), newValue.toString(), "/sys/class/misc/customvoltage/max_arm_volt");
+		}else if(preference.getKey().startsWith("intvolt_")) {
+			String parts[] = preference.getKey().split("_");
+			int i = Integer.parseInt(parts[1]);
+			intVoltages.set(i, newValue.toString());
+			preference.setSummary(newValue + " mV");
+			((EditTextPreference)preference).setText(newValue.toString());
+			saveVoltages(getString(R.string.key_int_volt_pref), intVoltages, "/sys/class/misc/customvoltage/int_volt");
+		}else if(preference.getKey().equals(getString(R.string.key_max_int_volt))) {
+			preference.setSummary(newValue + " mV");
+			((EditTextPreference)preference).setText(newValue.toString());
+			saveVoltage(getString(R.string.key_max_int_volt), newValue.toString(), "/sys/class/misc/customvoltage/max_int_volt");
 		}
 		return false;
 	}

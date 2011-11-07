@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:key="@string/key_arm_volt_pref"
+    <PreferenceCategory
+        android:key="@string/key_arm_volt_pref"
         android:title="@string/arm_voltage" >
 
         <EditTextPreference
@@ -9,5 +10,13 @@
             android:title="@string/label_max_arm_volt" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="@string/key_int_volt_pref"
+        android:title="@string/int_voltage" >
+
+        <EditTextPreference
+            android:key="@string/key_max_int_volt"
+            android:title="@string/label_max_int_volt" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
