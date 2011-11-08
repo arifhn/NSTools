@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
-    <string name="SCRIPT_VERSION">3</string>
+    <string name="SCRIPT_VERSION">4</string>
     <string-array name="scripts">
 		<item>read_ns_tweak.sh</item>
 	</string-array>
