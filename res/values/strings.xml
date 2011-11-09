@@ -62,7 +62,12 @@
 	<string name="status_on"><b>ON</b></string>
 	<string name="status_off"><b>OFF</b></string>
 	<string name="status_not_available"><i>not available</i></string>    
-    
-	<string name="about">About</string>
-	<string name="about_text"><b>Contact me:</b>\nhttp://forum.xda-developers.com/member.php?u=3143931\narifhn@cyann.mobi</string>
+
+	<string name="label_setting">Setting</string>
+
+	<string name="key_about">key_about</string>
+	<string name="label_about">About</string>
+	<string name="about_text">NSTools on XDA</string>
+	<string name="about_desc">Visit NSTools thread on XDA</string>
+	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
 </resources>

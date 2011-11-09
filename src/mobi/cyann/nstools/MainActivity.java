@@ -54,8 +54,8 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tab2);
 		
 		TabSpec tab3 = tabHost.newTabSpec("tid3");
-		tab3.setIndicator(getString(R.string.about));
-		tab3.setContent(new Intent(this, AboutActivity.class));
+		tab3.setIndicator(getString(R.string.label_setting));
+		tab3.setContent(new Intent(this, SettingActivity.class));
 		tabHost.addTab(tab3);
 	}
 
