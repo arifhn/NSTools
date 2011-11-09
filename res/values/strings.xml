@@ -63,8 +63,14 @@
 	<string name="status_off"><b>OFF</b></string>
 	<string name="status_not_available"><i>not available</i></string>    
 
+	<!-- Setting Activity -->
 	<string name="label_setting">Setting</string>
-
+	
+	<string name="key_restore_on_boot">key_restore_on_boot</string>
+	<string name="label_restore_on_boot">Restore on boot</string>
+	<string name="summaryOn_restore_on_boot">Restore kernel setting on boot</string>
+	<string name="summaryOff_restore_on_boot">Don\'t restore kernel setting on boot</string>
+	
 	<string name="key_about">key_about</string>
 	<string name="label_about">About</string>
 	<string name="about_text">NSTools on XDA</string>

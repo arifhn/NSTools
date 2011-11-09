@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="@string/key_restore_on_boot"
+        android:summaryOff="@string/summaryOff_restore_on_boot"
+        android:summaryOn="@string/summaryOn_restore_on_boot"
+        android:title="@string/label_restore_on_boot" />
 
     <PreferenceCategory android:title="@string/label_about" >
 
-        <PreferenceScreen android:key="@string/key_about" android:title="@string/about_text" android:summary="@string/about_desc"/>
+        <PreferenceScreen
+            android:key="@string/key_about"
+            android:summary="@string/about_desc"
+            android:title="@string/about_text" />
     </PreferenceCategory>
 
 </PreferenceScreen>
