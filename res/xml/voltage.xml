@@ -6,6 +6,7 @@
         android:title="@string/arm_voltage" >
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_max_arm_volt"
             android:title="@string/label_max_arm_volt" />
     </PreferenceCategory>
@@ -15,6 +16,7 @@
         android:title="@string/int_voltage" >
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_max_int_volt"
             android:title="@string/label_max_int_volt" />
     </PreferenceCategory>

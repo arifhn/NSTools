@@ -19,11 +19,10 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.text.method.DigitsKeyListener;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 
 /**
  * @author arif
@@ -85,8 +84,6 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			p.setText(volt);
 			p.setSummary(volt + " mV");
 			p.setOnPreferenceChangeListener(this);
-			EditText editText = ((EditTextPreference)p).getEditText();
-			editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 			
 			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
 			SysCommand sc = SysCommand.getInstance();
@@ -105,7 +102,7 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 				ed.setSummary(parts[1]);
 				ed.setText(volt);
 				ed.setOnPreferenceChangeListener(this);
-				ed.getEditText().setKeyListener(DigitsKeyListener.getInstance(false,true));
+				ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 				c.addPreference(ed);
 				
 				voltList.add(volt);

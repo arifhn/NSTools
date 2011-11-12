@@ -8,6 +8,7 @@
             android:title="@string/label_status" />
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_bld_delay"
             android:title="@string/label_delay" />
     </PreferenceCategory>
@@ -22,6 +23,7 @@
     <PreferenceCategory android:title="@string/blx_tweak" >
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_blx_charging_limit"
             android:title="@string/label_charging_limit" />
     </PreferenceCategory>
@@ -44,6 +46,7 @@
     <PreferenceCategory android:title="@string/liveoc_tweak" >
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_liveoc"
             android:title="@string/label_liveoc_ocvalue" />
     </PreferenceCategory>
@@ -55,6 +58,7 @@
             android:title="@string/label_status" />
 
         <EditTextPreference
+            android:inputType="number"
             android:key="@string/key_touchwake_delay"
             android:title="@string/label_delay" />
     </PreferenceCategory>

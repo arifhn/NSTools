@@ -6,15 +6,12 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.text.method.DigitsKeyListener;
 import android.util.Log;
-import android.widget.EditText;
 
 public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.NSTweakActivity";
@@ -51,33 +48,20 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p = findPreference(getString(R.string.key_touchwake_status));
 		p.setOnPreferenceClickListener(this);
 		
-
-		// Set EditTextPreference so only numbers are allowed for input
-		// and then set onPreferenceChangeListener to this activity
-		// -------------------------------------------------------------
-		
 		// BLD delay
 		p = findPreference(getString(R.string.key_bld_delay));
-		EditText editText = ((EditTextPreference)p).getEditText();
-		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
 
 		// BLX charging limit
 		p = findPreference(getString(R.string.key_blx_charging_limit));
-		editText = ((EditTextPreference)p).getEditText();
-		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
 
 		// Liveoc oc value
 		p = findPreference(getString(R.string.key_liveoc));
-		editText = ((EditTextPreference)p).getEditText();
-		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
 		
 		// Touchwake delay
 		p = findPreference(getString(R.string.key_touchwake_delay));
-		editText = ((EditTextPreference)p).getEditText();
-		editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		p.setOnPreferenceChangeListener(this);
 	}
 	
