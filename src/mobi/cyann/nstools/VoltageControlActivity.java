@@ -9,8 +9,8 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -21,6 +21,8 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 /**
@@ -54,16 +56,23 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 	protected void onResume() {
 		super.onResume();
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getString(R.string.label_warning));
-		builder.setMessage(getString(R.string.warning_message));
-		builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.show();
+		if(!preferences.getBoolean(getString(R.string.key_dont_show_volt_warning), false)) {
+			final View content = getLayoutInflater().inflate(R.layout.warning_dialog, null);
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setView(content);
+			builder.setTitle(getString(R.string.label_warning));
+			builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					boolean val = ((CheckBox)content.findViewById(R.id.checkboxWarning)).isChecked();
+					Editor ed = preferences.edit();
+					ed.putBoolean(getString(R.string.key_dont_show_volt_warning), val);
+					ed.commit();
+					dialog.dismiss();
+				}
+			});
+			builder.show();
+		}
 	}
 
 	private void readVoltages(String maxKey, String catKey, String voltPrefix, String maxDevice, String voltDevice, List<String>voltList) {
@@ -164,6 +173,24 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		}
 		return false;
 	}
-	
-	
+	/*
+	class WarningDialog extends Dialog {
+		public WarningDialog(Context context) {
+			super(context);
+		}
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			
+			setContentView(R.layout.warning_dialog);
+			((Button) findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dismiss();
+				}
+			});
+		}
+	}
+	*/
 }

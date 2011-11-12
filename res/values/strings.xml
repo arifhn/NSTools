@@ -47,6 +47,8 @@
 	<string name="key_max_int_volt">key_max_int_volt</string>
 	<string name="label_max_int_volt">Max Int Volt</string>
 	<string name="warning_message">These settings are dangerous. Use at your own risk.</string>
+	<string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
+	<string name="dontshow_message">Don\'t show this message again</string>
 	
 	<!-- common  -->
 	<string name="app_name">NSTools</string>

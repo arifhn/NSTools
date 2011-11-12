@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/warning_message"
+        android:textSize="8pt" />
+
+    <CheckBox
+        android:id="@+id/checkboxWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textWarning"
+        android:layout_centerInParent="true"
+        android:text="@string/dontshow_message"
+        android:textSize="6pt" />
+
+</RelativeLayout>
