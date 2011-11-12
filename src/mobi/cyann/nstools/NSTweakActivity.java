@@ -1,5 +1,8 @@
 package mobi.cyann.nstools;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -12,6 +15,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.NSTweakActivity";
@@ -40,8 +45,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p = findPreference(getString(R.string.key_deepidle_status));
 		p.setOnPreferenceClickListener(this);
 		p = findPreference(getString(R.string.key_deepidle_stats));
-		p.setOnPreferenceClickListener(this);
-		p = findPreference(getString(R.string.key_deepidle_reset_stats));
 		p.setOnPreferenceClickListener(this);
 
 		// Touchwake status
@@ -204,6 +207,49 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		ed.commit();
 	}
 	
+	private void showIdleStatsDialog() {
+		// display dialog
+		final int timeText[] = {R.id.time1, R.id.time2, R.id.time3};
+		final int avgText[] = {R.id.avg1, R.id.avg2, R.id.avg3};
+		
+		final View content = getLayoutInflater().inflate(R.layout.idle_stats_dialog, null);
+		
+		Pattern time = Pattern.compile("([0-9]+)ms");
+		Pattern average = Pattern.compile("\\(([0-9]+)ms\\)");
+		
+		SysCommand.getInstance().suRun("cat", "/sys/class/misc/deepidle/idle_stats");
+		for(int i = 0; i < 3; ++i) {
+			String line = SysCommand.getInstance().getLastResult(i + 2);
+			Log.d(LOG_TAG, line);
+			Matcher m = time.matcher(line);
+			if(m.find())
+				((TextView)content.findViewById(timeText[i])).setText(m.group(1));
+			m = average.matcher(line);
+			if(m.find())
+				((TextView)content.findViewById(avgText[i])).setText(m.group(1));
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.label_deepidle_stats));
+		builder.setView(content);
+		builder.setPositiveButton(getString(R.string.label_reset), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
+					Log.d(LOG_TAG, "failed to reset deepidle stats");
+					SysCommand.getInstance().logLastError(LOG_TAG);
+				}
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(getString(R.string.label_close), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+	}
+	
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		boolean ret = false;
@@ -219,48 +265,7 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/deepidle/enabled");
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_deepidle_stats))) {
-				// display dialog
-				int n = SysCommand.getInstance().suRun("cat", "/sys/class/misc/deepidle/idle_stats");
-				StringBuilder str = new StringBuilder();
-				for(int i = 0; i < n; ++i) {
-					str.append(SysCommand.getInstance().getLastResult(i));
-					str.append("\n");
-				}
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.label_deepidle_stats));
-				builder.setMessage(str.toString());
-				builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-				builder.show();
-				
-				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_deepidle_reset_stats))) {
-				// create new message dialog with two button yes and no
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.label_deepidle_reset_stats));
-				builder.setMessage(getString(R.string.msg_confirm_reset_deepidle_stats));
-				builder.setPositiveButton(getString(R.string.label_yes), new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// echo 1 to deepidle reset_stats
-						if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
-							Log.d(LOG_TAG, "failed to reset deepidle stats");
-							SysCommand.getInstance().logLastError(LOG_TAG);
-						}
-						dialog.dismiss();
-					}
-				});
-				builder.setNegativeButton(getString(R.string.label_no), new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();						
-					}
-				});
-				builder.show();
+				showIdleStatsDialog();
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");

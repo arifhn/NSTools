@@ -38,9 +38,6 @@
             android:key="@string/key_deepidle_stats"
             android:title="@string/label_deepidle_stats" />
 
-        <PreferenceScreen
-            android:key="@string/key_deepidle_reset_stats"
-            android:title="@string/label_deepidle_reset_stats" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/liveoc_tweak" >
