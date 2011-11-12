@@ -40,15 +40,15 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		addPreferencesFromResource(R.xml.voltage);
 
 		armVoltages = new ArrayList<String>();
-		readVoltages(getString(R.string.key_max_arm_volt), getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/max_arm_volt", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
 		intVoltages = new ArrayList<String>();
-		readVoltages(getString(R.string.key_max_int_volt), getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/max_int_volt", "/sys/class/misc/customvoltage/int_volt", intVoltages);
+		
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		readVoltages(getString(R.string.key_max_arm_volt), getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
+		readVoltages(getString(R.string.key_max_int_volt), getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/int_volt", intVoltages);
 	}
 	
 
@@ -73,24 +73,23 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			});
 			builder.show();
 		}
+		
 	}
 
-	private void readVoltages(String maxKey, String catKey, String voltPrefix, String maxDevice, String voltDevice, List<String>voltList) {
-		SysCommand sc = SysCommand.getInstance();
+	private void readVoltages(String maxKey, String catKey, String voltPrefix, String voltDevice, List<String>voltList) {
 		// read max arm volt
 		EditTextPreference p = (EditTextPreference)findPreference(maxKey);
-		if(sc.suRun("cat", maxDevice) >= 0) {
-			String volt = sc.getLastResult(0).split(" ")[0];
-			
-			// Max arm volt
+		String volt = preferences.getString(maxKey, "-1");
+		if(!volt.equals("-1")) {
+			// Max volt
 			p.setText(volt);
 			p.setSummary(volt + " mV");
 			p.setOnPreferenceChangeListener(this);
 			EditText editText = ((EditTextPreference)p).getEditText();
 			editText.setKeyListener(DigitsKeyListener.getInstance(false,true));
-			saveVoltage(maxKey, volt, null);
 			
 			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
+			SysCommand sc = SysCommand.getInstance();
 			int count = sc.suRun("cat", voltDevice);
 			for(int i = 0; i < count; ++i) {
 				String line = sc.getLastResult(i);
@@ -173,24 +172,4 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		}
 		return false;
 	}
-	/*
-	class WarningDialog extends Dialog {
-		public WarningDialog(Context context) {
-			super(context);
-		}
-		
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			
-			setContentView(R.layout.warning_dialog);
-			((Button) findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dismiss();
-				}
-			});
-		}
-	}
-	*/
 }

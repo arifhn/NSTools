@@ -1,26 +1,47 @@
 #!/system/bin/sh
 
 # outputfile to save result
-OUT_FILE="/data/data/mobi.cyann.nstools/shared_prefs/mobi.cyann.nstools_preferences.xml"
+OUT_FILE="/data/data/mobi.cyann.nstools/nstweak.prop"
 
 # prepare the file
-echo "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" > $OUT_FILE
-echo "<map>" >> $OUT_FILE
+echo "" > $OUT_FILE
+
+# arm volt
+STAT=`cat /sys/class/misc/customvoltage/max_arm_volt`
+case "$?" in
+	0)
+	echo "key_max_arm_volt=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_max_arm_volt=-1" >> $OUT_FILE
+	;;
+esac
+
+# int volt
+STAT=`cat /sys/class/misc/customvoltage/max_int_volt`
+case "$?" in
+	0)
+	echo "key_max_int_volt=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_max_int_volt=-1" >> $OUT_FILE
+	;;
+esac
 
 # bld
 STAT=`cat /sys/class/misc/backlightdimmer/enabled`
 case "$STAT" in
 	1)
-	echo "<string name=\"key_bld_status\">1</string>" >> $OUT_FILE
-	echo "<string name=\"key_bld_delay\">`cat /sys/class/misc/backlightdimmer/delay`</string>" >> $OUT_FILE
+	echo "key_bld_status=1" >> $OUT_FILE
+	echo "key_bld_delay=`cat /sys/class/misc/backlightdimmer/delay`" >> $OUT_FILE
 	;;
 	0)
-	echo "<string name=\"key_bld_status\">0</string>" >> $OUT_FILE
-	echo "<string name=\"key_bld_delay\">`cat /sys/class/misc/backlightdimmer/delay`</string>" >> $OUT_FILE
+	echo "key_bld_status=0" >> $OUT_FILE
+	echo "key_bld_delay=`cat /sys/class/misc/backlightdimmer/delay`" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_bld_status\">-1</string>" >> $OUT_FILE
-	echo "<string name=\"key_bld_delay\">0</string>" >> $OUT_FILE
+	echo "key_bld_status=-1" >> $OUT_FILE
+	echo "key_bld_delay=0" >> $OUT_FILE
 	;;
 esac
 
@@ -28,13 +49,13 @@ esac
 STAT=`cat /sys/class/misc/backlightnotification/enabled`
 case "$STAT" in
 	1)
-	echo "<string name=\"key_bln_status\">1</string>" >> $OUT_FILE
+	echo "key_bln_status=1" >> $OUT_FILE
 	;;
 	2)
-	echo "<string name=\"key_bln_status\">0</string>" >> $OUT_FILE
+	echo "key_bln_status=0" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_bln_status\">-1</string>" >> $OUT_FILE
+	echo "key_bln_status=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -42,10 +63,10 @@ esac
 STAT=`cat /sys/class/misc/batterylifeextender/charging_limit`
 case "$?" in
 	0)
-	echo "<string name=\"key_blx_charging_limit\">$STAT</string>" >> $OUT_FILE
+	echo "key_blx_charging_limit=$STAT" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_blx_charging_limit\">-1</string>" >> $OUT_FILE
+	echo "key_blx_charging_limit=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -53,13 +74,13 @@ esac
 STAT=`cat /sys/class/misc/deepidle/enabled`
 case "$STAT" in
 	1)
-	echo "<string name=\"key_deepidle_status\">1</string>" >> $OUT_FILE
+	echo "key_deepidle_status=1" >> $OUT_FILE
 	;;
 	0)
-	echo "<string name=\"key_deepidle_status\">0</string>" >> $OUT_FILE
+	echo "key_deepidle_status=0" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_deepidle_status\">-1</string>" >> $OUT_FILE
+	echo "key_deepidle_status=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -67,10 +88,10 @@ esac
 STAT=`cat /sys/class/misc/liveoc/oc_value`
 case "$?" in
 	0)
-	echo "<string name=\"key_liveoc\">$STAT</string>" >> $OUT_FILE
+	echo "key_liveoc=$STAT" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_liveoc\">-1</string>" >> $OUT_FILE
+	echo "key_liveoc=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -78,17 +99,16 @@ esac
 STAT=`cat /sys/class/misc/touchwake/enabled`
 case "$STAT" in
 	1)
-	echo "<string name=\"key_touchwake_status\">1</string>" >> $OUT_FILE
-	echo "<string name=\"key_touchwake_delay\">`cat /sys/class/misc/touchwake/delay`</string>" >> $OUT_FILE
+	echo "key_touchwake_status=1" >> $OUT_FILE
+	echo "key_touchwake_delay=`cat /sys/class/misc/touchwake/delay`" >> $OUT_FILE
 	;;
 	0)
-	echo "<string name=\"key_touchwake_status\">0</string>" >> $OUT_FILE
-	echo "<string name=\"key_touchwake_delay\">`cat /sys/class/misc/touchwake/delay`</string>" >> $OUT_FILE
+	echo "key_touchwake_status=0" >> $OUT_FILE
+	echo "key_touchwake_delay=`cat /sys/class/misc/touchwake/delay`" >> $OUT_FILE
 	;;
 	*)
-	echo "<string name=\"key_touchwake_status\">-1</string>" >> $OUT_FILE
-	echo "<string name=\"key_touchwake_delay\">0</string>" >> $OUT_FILE
+	echo "key_touchwake_status=-1" >> $OUT_FILE
+	echo "key_touchwake_delay=0" >> $OUT_FILE
 	;;
 esac
 
-echo "</map>" >> $OUT_FILE

@@ -25,8 +25,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
 		// set preference layout
 		addPreferencesFromResource(R.xml.ns_tweak);
 		
@@ -91,6 +89,8 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 	}
 
 	private void reloadPreferences() {
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		// setup display for each preference
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
 		updateDisplay(getString(R.string.key_bln_status));

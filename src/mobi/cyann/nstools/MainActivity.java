@@ -1,14 +1,17 @@
 package mobi.cyann.nstools;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,18 +29,15 @@ public class MainActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		// call extract 
+		// extract our scripts 
 		extractScripts();
 		
-		// we need to call this before executing ns tweak script, to make sure
-		// shared_prefs directory created
-		PreferenceManager.getDefaultSharedPreferences(this);
-		// execute our reader script to get values for each tweak
-		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
-		// mark onCreate
+		// reload tweak
+		reloadTweak();
+		// flag oncreate
 		onCreate = true;
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.main);
 		
@@ -62,12 +62,38 @@ public class MainActivity extends TabActivity {
     @Override
 	protected void onResume() {
 		super.onResume();
-		if(!onCreate) { // re-exceute our reader script
-			SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
+		if(!onCreate) {
+			reloadTweak();
 		}
 		onCreate = false;
 	}
 
+    private void reloadTweak() {
+    	// execute our reader script to get values for each tweak
+		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
+		// reload preference from prop file
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		Properties prop = new Properties();
+		try {
+			FileInputStream fis = new FileInputStream(getString(R.string.NS_TWEAK_FILE));
+			prop.load(fis);
+			fis.close();
+		}catch(Exception ex) {
+			Log.e(LOG_TAG, "fail to load ns_tweak_file", ex);
+		}
+		Editor editor = preferences.edit();
+		for(Object key: prop.keySet()) {
+			if(!key.toString().equals(getString(R.string.key_max_arm_volt)) &&
+					!key.toString().equals(getString(R.string.key_max_int_volt))) {
+				editor.putString(key.toString(), prop.getProperty(key.toString()));
+			}else {
+				String parts[] = prop.getProperty(key.toString()).split(" ");
+				editor.putString(key.toString(), parts[0].trim());
+			}
+		}
+		editor.commit();
+    }
+    
 	private void copyAsset(String srcPath, String dstPath) throws IOException {
 		AssetManager assetManager = getApplicationContext().getAssets();
     	InputStream is = assetManager.open(srcPath);
