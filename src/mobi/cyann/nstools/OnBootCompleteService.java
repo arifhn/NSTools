@@ -84,6 +84,30 @@ public class OnBootCompleteService extends IntentService {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/touchwake/enabled");
 				SysCommand.getInstance().suRun("echo", delay, ">", "/sys/class/misc/touchwake/delay");
 			}
+			
+			// governor
+			status = preferences.getString(getString(R.string.key_governor), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
+			}
+			
+			// cpu min freq
+			status = preferences.getString(getString(R.string.key_min_cpufreq), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+			}
+			
+			// cpu max freq
+			status = preferences.getString(getString(R.string.key_max_cpufreq), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+			}
+			
+			// lazy screenoff max freq
+			status = preferences.getString(getString(R.string.key_screenoff_maxfreq), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq");
+			}
 		}
 	}
 }

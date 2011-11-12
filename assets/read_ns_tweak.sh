@@ -112,3 +112,46 @@ case "$STAT" in
 	;;
 esac
 
+# cpu governor
+STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`
+case "$?" in
+	0)
+	echo "key_governor=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_governor=-1" >> $OUT_FILE
+	;;
+esac
+
+# cpu min freq
+STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq`
+case "$?" in
+	0)
+	echo "key_min_cpufreq=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_min_cpufreq=-1" >> $OUT_FILE
+	;;
+esac
+
+# cpu max freq
+STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq`
+case "$?" in
+	0)
+	echo "key_max_cpufreq=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_max_cpufreq=-1" >> $OUT_FILE
+	;;
+esac
+
+# lazy screenoff
+STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq`
+case "$?" in
+	0)
+	echo "key_screenoff_maxfreq=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_screenoff_maxfreq=-1" >> $OUT_FILE
+	;;
+esac

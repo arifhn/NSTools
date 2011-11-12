@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:key="@string/key_governor"
+        android:title="@string/label_governor" />
+
+    <ListPreference
+        android:key="@string/key_min_cpufreq"
+        android:title="@string/label_min_cpufreq" />
+
+    <ListPreference
+        android:key="@string/key_max_cpufreq"
+        android:title="@string/label_max_cpufreq" />
+
+    <PreferenceCategory android:title="@string/label_lazy" >
+        <PreferenceScreen
+            android:key="@string/key_screenoff_maxfreq"
+            android:title="@string/label_screenoff_maxfreq" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

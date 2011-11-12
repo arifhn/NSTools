@@ -84,4 +84,16 @@
 	<string name="about_text">NSTools on XDA</string>
 	<string name="about_desc">Visit NSTools thread on XDA</string>
 	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
+	
+	<!-- CPU Activity -->
+	<string name="label_cpu_tweak">CPU</string>
+	<string name="key_governor">key_governor</string>
+	<string name="label_governor">Governor</string>
+	<string name="key_min_cpufreq">key_min_cpufreq</string>
+	<string name="label_min_cpufreq">Min CPU freq</string>
+	<string name="key_max_cpufreq">key_max_cpufreq</string>
+	<string name="label_max_cpufreq">Max CPU freq</string>
+	<string name="label_lazy">Lazy</string>
+	<string name="key_screenoff_maxfreq">key_screenoff_maxfreq</string>
+	<string name="label_screenoff_maxfreq">Screen off max freq</string>
 </resources>

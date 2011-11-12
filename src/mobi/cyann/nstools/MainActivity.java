@@ -49,14 +49,19 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(tab1);
 		
 		TabSpec tab2 = tabHost.newTabSpec("tid2");
-		tab2.setIndicator(getString(R.string.voltage_control));
-		tab2.setContent(new Intent(this, VoltageControlActivity.class));
+		tab2.setIndicator(getString(R.string.label_cpu_tweak));
+		tab2.setContent(new Intent(this, CPUActivity.class));
 		tabHost.addTab(tab2);
 		
 		TabSpec tab3 = tabHost.newTabSpec("tid3");
-		tab3.setIndicator(getString(R.string.label_setting));
-		tab3.setContent(new Intent(this, SettingActivity.class));
+		tab3.setIndicator(getString(R.string.voltage_control));
+		tab3.setContent(new Intent(this, VoltageControlActivity.class));
 		tabHost.addTab(tab3);
+		
+		TabSpec tab4 = tabHost.newTabSpec("tid4");
+		tab4.setIndicator(getString(R.string.label_setting));
+		tab4.setContent(new Intent(this, SettingActivity.class));
+		tabHost.addTab(tab4);
 	}
 
     @Override
