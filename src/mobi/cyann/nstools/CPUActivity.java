@@ -7,12 +7,14 @@ package mobi.cyann.nstools;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 
 /**
@@ -59,6 +61,19 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 			availableFreqInMhz = new String[availableFreqeuncies.length];
 			for(int i = 0; i < availableFreqeuncies.length; ++i) {
 				availableFreqInMhz[i] = toMHzString(availableFreqeuncies[i]);
+			}
+		}else {
+			// try read available frequencies from uv_mv_table
+			n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
+			if(n >= 0) {
+				availableFreqeuncies = new String[n];
+				availableFreqInMhz = new String[n];
+				for(int i = 0; i < n; ++i) {
+					String line = sc.getLastResult(i);
+					String parts[] = line.split("mhz");
+					availableFreqeuncies[i] = String.valueOf(Integer.parseInt(parts[0]) * 1000);
+					availableFreqInMhz[i] = parts[0] + " MHz";
+				}
 			}
 		}
 	}
