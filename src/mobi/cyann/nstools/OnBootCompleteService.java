@@ -28,23 +28,35 @@ public class OnBootCompleteService extends IntentService {
 		boolean restore = preferences.getBoolean(getString(R.string.key_restore_on_boot), true);
 		if(restore) {
 			// Restore each tweak preference on boot
-			// customvoltage
-			// -----------------
-			// arm voltages
-			String status = preferences.getString(getString(R.string.key_max_arm_volt), "-1");
-			if(!status.equals("-1")) {
-				String armvolts = preferences.getString(getString(R.string.key_arm_volt_pref), "0");
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_arm_volt");
-				SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/arm_volt");
-			}
-			// int voltages
-			status = preferences.getString(getString(R.string.key_max_int_volt), "-1");
-			if(!status.equals("-1")) {
-				String armvolts = preferences.getString(getString(R.string.key_int_volt_pref), "0");
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_int_volt");
-				SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/int_volt");
-			}
+			String status = null;
 			
+			if(!preferences.getBoolean(getString(R.string.key_default_voltage), true)) {
+				// restore voltage setting if and only if key_default_voltage is false
+				
+				// customvoltage
+				// -----------------
+				// arm voltages
+				status = preferences.getString(getString(R.string.key_max_arm_volt), "-1");
+				if(!status.equals("-1")) {
+					String armvolts = preferences.getString(getString(R.string.key_arm_volt_pref), "0");
+					SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_arm_volt");
+					SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/arm_volt");
+				}
+				
+				// uv_mv_table
+				status = preferences.getString(getString(R.string.key_uvmvtable_pref), "-1");
+				if(!status.equals("-1")) {
+					SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
+				}
+				
+				// int voltages
+				status = preferences.getString(getString(R.string.key_max_int_volt), "-1");
+				if(!status.equals("-1")) {
+					String armvolts = preferences.getString(getString(R.string.key_int_volt_pref), "0");
+					SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/customvoltage/max_int_volt");
+					SysCommand.getInstance().suRun("echo", armvolts, ">", "/sys/class/misc/customvoltage/int_volt");
+				}
+			}
 			// BLD
 			status = preferences.getString(getString(R.string.key_bld_status), "-1");
 			if(!status.equals("-1")) {

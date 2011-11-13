@@ -48,13 +48,16 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		readVoltages(getString(R.string.key_max_arm_volt), getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
 		readVoltages(getString(R.string.key_max_int_volt), getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/int_volt", intVoltages);
+		
+		if(preferences.getString(getString(R.string.key_max_arm_volt), "-1").equals("-1")) {
+			// if we can't get customvoltage mod, then try to read UV_mV_table
+			readUvmvTable();
+		}
+		findPreference(getString(R.string.key_default_voltage)).setOnPreferenceChangeListener(this);
 	}
 	
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
+	private void showWarningDialog() {
 		if(!preferences.getBoolean(getString(R.string.key_dont_show_volt_warning), false)) {
 			final View content = getLayoutInflater().inflate(R.layout.warning_dialog, null);
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -72,18 +75,47 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			});
 			builder.show();
 		}
-		
+	}
+	
+	private void readUvmvTable() {
+		boolean enabled = !preferences.getBoolean(getString(R.string.key_default_voltage), true);
+		PreferenceCategory c = (PreferenceCategory)findPreference(getString(R.string.key_arm_volt_pref));
+		SysCommand sc = SysCommand.getInstance();
+		int count = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
+		for(int i = 0; i < count; ++i) {
+			String line = sc.getLastResult(i);
+			String parts[] = line.split(":");
+			final String volt = parts[1].substring(1, parts[1].length()-3);
+
+			Log.d(LOG_TAG, line);
+			
+			EditTextPreference ed = new EditTextPreference(this);
+			ed.setKey("uvmvtable_" + i);
+			ed.setTitle(parts[0]);
+			ed.setDialogTitle(parts[0]);
+			ed.setSummary(parts[1]);
+			ed.setText(volt);
+			ed.setOnPreferenceChangeListener(this);
+			ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+			ed.setEnabled(enabled);
+			c.addPreference(ed);
+			
+			armVoltages.add(volt);
+		}
+		saveVoltages(getString(R.string.key_uvmvtable_pref), armVoltages, null);
 	}
 
 	private void readVoltages(String maxKey, String catKey, String voltPrefix, String voltDevice, List<String>voltList) {
 		// read max arm volt
 		EditTextPreference p = (EditTextPreference)findPreference(maxKey);
 		String volt = preferences.getString(maxKey, "-1");
+		boolean enabled = !preferences.getBoolean(getString(R.string.key_default_voltage), true);
 		if(!volt.equals("-1")) {
 			// Max volt
 			p.setText(volt);
 			p.setSummary(volt + " mV");
 			p.setOnPreferenceChangeListener(this);
+			p.setEnabled(enabled);
 			
 			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
 			SysCommand sc = SysCommand.getInstance();
@@ -103,6 +135,7 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 				ed.setText(volt);
 				ed.setOnPreferenceChangeListener(this);
 				ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+				ed.setEnabled(enabled);
 				c.addPreference(ed);
 				
 				voltList.add(volt);
@@ -151,6 +184,13 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			preference.setSummary(newValue + " mV");
 			((EditTextPreference)preference).setText(newValue.toString());
 			saveVoltages(getString(R.string.key_arm_volt_pref), armVoltages, "/sys/class/misc/customvoltage/arm_volt");
+		}else if(preference.getKey().startsWith("uvmvtable_")) {
+			String parts[] = preference.getKey().split("_");
+			int i = Integer.parseInt(parts[1]);
+			armVoltages.set(i, newValue.toString());
+			preference.setSummary(newValue + " mV");
+			((EditTextPreference)preference).setText(newValue.toString());
+			saveVoltages(getString(R.string.key_uvmvtable_pref), armVoltages, "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
 		}else if(preference.getKey().equals(getString(R.string.key_max_arm_volt))) {
 			preference.setSummary(newValue + " mV");
 			((EditTextPreference)preference).setText(newValue.toString());
@@ -166,6 +206,20 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			preference.setSummary(newValue + " mV");
 			((EditTextPreference)preference).setText(newValue.toString());
 			saveVoltage(getString(R.string.key_max_int_volt), newValue.toString(), "/sys/class/misc/customvoltage/max_int_volt");
+		}else if(preference.getKey().equals(getString(R.string.key_default_voltage))) {
+			boolean enabled = !Boolean.parseBoolean(newValue.toString());
+			PreferenceCategory c = (PreferenceCategory)findPreference(getString(R.string.key_arm_volt_pref));
+			for(int i = 0; i < c.getPreferenceCount(); ++i) {
+				c.getPreference(i).setEnabled(enabled);
+			}
+			c = (PreferenceCategory)findPreference(getString(R.string.key_int_volt_pref));
+			for(int i = 0; i < c.getPreferenceCount(); ++i) {
+				c.getPreference(i).setEnabled(enabled);
+			}
+			if(enabled) {
+				showWarningDialog();
+			}
+			return true;
 		}
 		return false;
 	}

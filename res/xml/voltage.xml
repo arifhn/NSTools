@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <CheckBoxPreference
+        android:key="@string/key_default_voltage"
+        android:summaryOff="@string/summaryOff_default_voltage"
+        android:summaryOn="@string/summaryOn_default_voltage"
+        android:title="@string/label_default_voltage" android:defaultValue="true"/>
+
     <PreferenceCategory
         android:key="@string/key_arm_volt_pref"
         android:title="@string/arm_voltage" >

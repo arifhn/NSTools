@@ -43,7 +43,13 @@
 	<!-- VoltageControlActivity -->
 	<string name="voltage_control">Custom Voltage</string>
 	
+	<string name="key_default_voltage">key_default_voltage</string>
+	<string name="label_default_voltage">Default voltages</string>
+	<string name="summaryOn_default_voltage">Use voltage settings from kernel</string>
+	<string name="summaryOff_default_voltage">Use customized voltage settings below</string>
+	
 	<string name="key_arm_volt_pref">key_arm_volt_pref</string>
+	<string name="key_uvmvtable_pref">key_uvmvtable_pref</string>
 	<string name="arm_voltage">Arm Voltage</string>
 	<string name="key_max_arm_volt">key_max_arm_volt</string>
 	<string name="label_max_arm_volt">Max Arm Volt</string>
