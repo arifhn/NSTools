@@ -83,12 +83,6 @@ public class OnBootCompleteService extends IntentService {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/deepidle/enabled");
 			}
 			
-			// Liveoc
-			status = preferences.getString(getString(R.string.key_liveoc), "-1");
-			if(!status.equals("-1")) {
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
-			}
-			
 			// Touchwake
 			status = preferences.getString(getString(R.string.key_touchwake_status), "-1");
 			if(!status.equals("-1")) {
@@ -119,6 +113,12 @@ public class OnBootCompleteService extends IntentService {
 			status = preferences.getString(getString(R.string.key_screenoff_maxfreq), "-1");
 			if(!status.equals("-1")) {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq");
+			}
+			
+			// Liveoc
+			status = preferences.getString(getString(R.string.key_liveoc), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
 			}
 		}
 	}
