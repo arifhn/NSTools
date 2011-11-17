@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- NSTweakActivity -->
+    <string name="ns_tweak">Tweaks</string>
+        
+    <string name="bld_tweak">Backlight Dimmer</string>
+    <string name="key_bld_status">key_bld_status</string>
+    <string name="key_bld_delay">key_bld_delay</string>
+
+    <string name="bln_tweak">Backlight Notification</string>
+    <string name="key_bln_status">key_bln_status</string>
+    
+    <string name="blx_tweak">Battery Life Extender</string>
+    <string name="key_blx_charging_limit">key_blx_charging_limit</string>
+    <string name="label_charging_limit">Ladebegrenzung</string>
+    
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="key_deepidle_status">key_deepidle_status</string>
+    <string name="key_deepidle_stats">key_deepidle_stats</string>
+    <string name="label_deepidle_stats">Idle Status</string>
+    
+    <string name="label_state">Status</string>
+    <string name="label_time">Zeit (ms)</string>
+    <string name="label_average">Ø (ms)</string>
+    <string name="label_reset">Zurücksetzen</string>
+    <string name="label_close">Schließen</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+        
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="key_liveoc">key_liveoc</string>
+    <string name="label_liveoc_ocvalue">Übertaktungswert</string>
+    
+    <string name="screendimmer_tweak">Screen Dimmer</string>
+    <string name="key_screendimmer_status">key_screendimmer_status</string>
+    <string name="key_screendimmer_delay">key_screendimmer_delay</string>
+
+    <string name="touchwake_tweak">Touchwake</string>
+    <string name="key_touchwake_status">key_touchwake_status</string>
+    <string name="key_touchwake_delay">key_touchwake_delay</string>
+    
+    <!-- VoltageControlActivity -->
+    <string name="voltage_control">Benutzerdefinierte Spannung</string>
+    
+    <string name="key_default_voltage">key_default_voltage</string>
+    <string name="label_default_voltage">Voreingestellte Werte</string>
+    <string name="summaryOn_default_voltage">Verwende die standard Kernelspannung</string>
+    <string name="summaryOff_default_voltage">Verwende benutzerdefinierte Kernelspannung</string>
+    
+    <string name="key_arm_volt_pref">key_arm_volt_pref</string>
+    <string name="key_uvmvtable_pref">key_uvmvtable_pref</string>
+    <string name="arm_voltage">Arm Spannung</string>
+    <string name="key_max_arm_volt">key_max_arm_volt</string>
+    <string name="label_max_arm_volt">Maximale Arm Spannung</string>
+    
+    <string name="key_int_volt_pref">key_int_volt_pref</string>
+    <string name="int_voltage">Int Spannung</string>
+    <string name="key_max_int_volt">key_max_int_volt</string>
+    <string name="label_max_int_volt">Maximale Int Spannung</string>
+    <string name="warning_message">Diese Einstellungen sind gefährlich. Benutzung auf eigene Gefahr.</string>
+    <string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
+    <string name="dontshow_message">Diese Nachricht nicht mehr anzeigen</string>
+    
+    <!-- common  -->
+    <string name="app_name">NSTools</string>
+    
+    <string name="label_status">Status</string>
+    <string name="label_delay">Verzögerung</string>
+    <string name="label_ok">Ok</string>
+    <string name="label_cancel">Abbrechen</string>
+    <string name="label_yes">Ja</string>
+    <string name="label_no">Nein</string>
+    <string name="label_warning">WARNUNG</string>
+    
+    <string name="status_on"><b>Eingeschaltet</b></string>
+    <string name="status_off"><b>Ausgeschaltet</b></string>
+    <string name="status_not_available"><i>nicht verfügbar</i></string>    
+
+    <!-- Setting Activity -->
+    <string name="label_setting">Einstellungen</string>
+    
+    <string name="key_restore_on_boot">key_restore_on_boot</string>
+    <string name="label_restore_on_boot">Setze Werte beim Start</string>
+    <string name="summaryOn_restore_on_boot">Diese Einstellungen nach einem Neustart verwenden</string>
+    <string name="summaryOff_restore_on_boot">Diese Einstellungen nicht nach einem Neustart verwenden</string>
+    
+    <string name="key_about">key_about</string>
+    <string name="label_about">Über</string>
+    <string name="about_text">NSTools bei XDA</string>
+    <string name="about_desc">Besuche den NSTools Forum-Thread bei XDA</string>
+    <string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
+    
+    <!-- CPU Activity -->
+    <string name="label_cpu_tweak">CPU</string>
+    <string name="key_governor">key_governor</string>
+    <string name="label_governor">Governor</string>
+    <string name="key_min_cpufreq">key_min_cpufreq</string>
+    <string name="label_min_cpufreq">Minimale CPU Frequenz</string>
+    <string name="key_max_cpufreq">key_max_cpufreq</string>
+    <string name="label_max_cpufreq">Maximale CPU Frequenz</string>
+    <string name="label_lazy">Lazy</string>
+    <string name="key_screenoff_maxfreq">key_screenoff_maxfreq</string>
+    <string name="label_screenoff_maxfreq">Max. Frequenz bei Screen off</string>
+</resources>
