@@ -51,7 +51,7 @@ case "$STAT" in
 	1)
 	echo "key_bln_status=1" >> $OUT_FILE
 	;;
-	2)
+	0)
 	echo "key_bln_status=0" >> $OUT_FILE
 	;;
 	*)
