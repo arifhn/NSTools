@@ -4,18 +4,24 @@
  */
 package mobi.cyann.nstools;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * @author arif
@@ -37,13 +43,19 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		// set preference layout
 		addPreferencesFromResource(R.xml.cpu);
 		
-		// set prefernece change listener
+		// governor
 		findPreference(getString(R.string.key_governor)).setOnPreferenceChangeListener(this);
+		// scaling min/max freq
 		findPreference(getString(R.string.key_min_cpufreq)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_max_cpufreq)).setOnPreferenceChangeListener(this);
-		// set preference click listener
+		// Liveoc oc value
+		findPreference(getString(R.string.key_liveoc)).setOnPreferenceChangeListener(this);
+		// deepidle status
+		findPreference(getString(R.string.key_deepidle_status)).setOnPreferenceClickListener(this);
+		// deepidle stats
+		findPreference(getString(R.string.key_deepidle_stats)).setOnPreferenceClickListener(this);
+		// lazy screen off
 		findPreference(getString(R.string.key_screenoff_maxfreq)).setOnPreferenceClickListener(this);
-		
 		
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
@@ -157,6 +169,34 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 			p.setSummary(getString(R.string.status_not_available));
 			p.setEnabled(false);
 		}
+		
+		// update display for Liveoc
+		p = findPreference(getString(R.string.key_liveoc));
+		value = preferences.getString(getString(R.string.key_liveoc), "-1");
+		if(value.equals("-1")) {
+			p.setEnabled(false);
+			p.setSummary(getString(R.string.status_not_available));
+		}else {
+			p.setEnabled(true);
+			p.setSummary(value);
+		}
+		
+		// update display for Deepidle
+		p = findPreference(getString(R.string.key_deepidle_status));
+		value = preferences.getString(getString(R.string.key_deepidle_status), "-1");
+		if(value.equals("1")) {
+			p.setEnabled(true);
+			p.setSummary(getString(R.string.status_on));
+			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(true);
+		}else if(value.equals("0")) {
+			p.setEnabled(true);
+			p.setSummary(getString(R.string.status_off));
+			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(true);
+		}else {
+			p.setEnabled(false);
+			p.setSummary(getString(R.string.status_not_available));
+			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(false);
+		}
 	}
 	
 	private void setPreference(String key, String value) {
@@ -165,33 +205,86 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		ed.commit();
 	}
 	
+	private void showIdleStatsDialog() {
+		// display dialog
+		final int timeText[] = {R.id.time1, R.id.time2, R.id.time3};
+		final int avgText[] = {R.id.avg1, R.id.avg2, R.id.avg3};
+		
+		final View content = getLayoutInflater().inflate(R.layout.idle_stats_dialog, null);
+		
+		Pattern time = Pattern.compile("([0-9]+)ms");
+		Pattern average = Pattern.compile("\\(([0-9]+)ms\\)");
+		
+		SysCommand.getInstance().suRun("cat", "/sys/class/misc/deepidle/idle_stats");
+		for(int i = 0; i < 3; ++i) {
+			String line = SysCommand.getInstance().getLastResult(i + 2);
+			Log.d(LOG_TAG, line);
+			Matcher m = time.matcher(line);
+			if(m.find())
+				((TextView)content.findViewById(timeText[i])).setText(m.group(1));
+			m = average.matcher(line);
+			if(m.find())
+				((TextView)content.findViewById(avgText[i])).setText(m.group(1));
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(R.string.label_deepidle_stats));
+		builder.setView(content);
+		builder.setPositiveButton(getString(R.string.label_reset), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
+					Log.d(LOG_TAG, "failed to reset deepidle stats");
+					SysCommand.getInstance().logLastError(LOG_TAG);
+				}
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(getString(R.string.label_close), new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+	}
+	
+	private void toggleTweakStatus(String keyStatus, String deviceString) {
+		String status = preferences.getString(keyStatus, "-1");
+		if(status.equals("1")) {
+			// disable tweak
+			if(SysCommand.getInstance().suRun("echo", "0", ">", deviceString) >= 0) {
+				setPreference(keyStatus, "0");
+			}else {
+				Log.e(LOG_TAG, "failed to set 0 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
+		}else if(status.equals("0")) {
+			// enable tweak
+			if(SysCommand.getInstance().suRun("echo", "1", ">", deviceString) >= 0) {
+				setPreference(keyStatus, "1");
+			}else {
+				Log.e(LOG_TAG, "failed to set 1 for " + keyStatus);
+				SysCommand.getInstance().logLastError(LOG_TAG);
+			}
+		}
+		updateDisplay();
+	}
+	
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
+		boolean ret = false;
 		if(preference.getKey().equals(getString(R.string.key_screenoff_maxfreq))) {
-			String keyStatus = preference.getKey();
-			String status = preferences.getString(keyStatus, "-1");
-			if(status.equals("1")) {
-				// disable tweak
-				if(SysCommand.getInstance().suRun("echo", "0", ">", "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq") >= 0) {
-					setPreference(keyStatus, "0");
-				}else {
-					Log.e(LOG_TAG, "failed to set 0 for " + keyStatus);
-					SysCommand.getInstance().logLastError(LOG_TAG);
-				}
-			}else if(status.equals("0")) {
-				// enable tweak
-				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq") >= 0) {
-					setPreference(keyStatus, "1");
-				}else {
-					Log.e(LOG_TAG, "failed to set 1 for " + keyStatus);
-					SysCommand.getInstance().logLastError(LOG_TAG);
-				}
-			}
-			updateDisplay();
+			toggleTweakStatus(preference.getKey(), "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq");
+			ret = true;
+		}else if(preference.getKey().equals(getString(R.string.key_deepidle_status))) {
+			toggleTweakStatus(preference.getKey(), "/sys/class/misc/deepidle/enabled");
+			ret = true;
+		}else if(preference.getKey().equals(getString(R.string.key_deepidle_stats))) {
+			showIdleStatsDialog();
+			ret = true;
 		}
-		return false;
+		return ret;
 	}
-
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -214,6 +307,10 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		}else if(preference.getKey().equals(getString(R.string.key_max_cpufreq))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
 			setPreference(preference.getKey(), newValue.toString());
+			updateDisplay();
+		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
+			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
+			setPreference(getString(R.string.key_liveoc), newValue.toString());
 			updateDisplay();
 		}
 		return false;

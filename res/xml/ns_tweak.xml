@@ -28,26 +28,6 @@
             android:title="@string/label_charging_limit" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/deepidle_tweak" >
-
-        <PreferenceScreen
-            android:key="@string/key_deepidle_status"
-            android:title="@string/label_status" />
-
-        <PreferenceScreen
-            android:key="@string/key_deepidle_stats"
-            android:title="@string/label_deepidle_stats" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/liveoc_tweak" >
-
-        <EditTextPreference
-            android:inputType="number"
-            android:key="@string/key_liveoc"
-            android:title="@string/label_liveoc_ocvalue" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/touchwake_tweak" >
 
         <PreferenceScreen

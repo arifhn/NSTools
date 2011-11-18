@@ -1,11 +1,5 @@
 package mobi.cyann.nstools;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -15,8 +9,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
 public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.NSTweakActivity";
@@ -41,12 +33,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p = findPreference(getString(R.string.key_bln_status));
 		p.setOnPreferenceClickListener(this);
 		
-		// Deepidle status & stas
-		p = findPreference(getString(R.string.key_deepidle_status));
-		p.setOnPreferenceClickListener(this);
-		p = findPreference(getString(R.string.key_deepidle_stats));
-		p.setOnPreferenceClickListener(this);
-
 		// Touchwake status
 		p = findPreference(getString(R.string.key_touchwake_status));
 		p.setOnPreferenceClickListener(this);
@@ -59,10 +45,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		p = findPreference(getString(R.string.key_blx_charging_limit));
 		p.setOnPreferenceChangeListener(this);
 
-		// Liveoc oc value
-		p = findPreference(getString(R.string.key_liveoc));
-		p.setOnPreferenceChangeListener(this);
-		
 		// Touchwake delay
 		p = findPreference(getString(R.string.key_touchwake_delay));
 		p.setOnPreferenceChangeListener(this);
@@ -83,26 +65,9 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		updateDisplay(getString(R.string.key_bln_status));
 		updateDisplay(getString(R.string.key_touchwake_status), getString(R.string.key_touchwake_delay));
 		
-		// update display for Deepidle
-		Preference pref = findPreference(getString(R.string.key_deepidle_status));
-		String value = preferences.getString(getString(R.string.key_deepidle_status), "-1");
-		if(value.equals("1")) {
-			pref.setEnabled(true);
-			pref.setSummary(getString(R.string.status_on));
-			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(true);
-		}else if(value.equals("0")) {
-			pref.setEnabled(true);
-			pref.setSummary(getString(R.string.status_off));
-			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(true);
-		}else {
-			pref.setEnabled(false);
-			pref.setSummary(getString(R.string.status_not_available));
-			findPreference(getString(R.string.key_deepidle_stats)).setEnabled(false);
-		}
-		
 		// update display for BLX
-		pref = findPreference(getString(R.string.key_blx_charging_limit));
-		value = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
+		Preference pref = findPreference(getString(R.string.key_blx_charging_limit));
+		String value = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
 		if(value.equals("-1")) {
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
@@ -111,16 +76,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			pref.setSummary(value);
 		}
 		
-		// update display for Liveoc
-		pref = findPreference(getString(R.string.key_liveoc));
-		value = preferences.getString(getString(R.string.key_liveoc), "-1");
-		if(value.equals("-1")) {
-			pref.setEnabled(false);
-			pref.setSummary(getString(R.string.status_not_available));
-		}else {
-			pref.setEnabled(true);
-			pref.setSummary(value);
-		}
 	}
 	
 	/**
@@ -207,49 +162,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		ed.commit();
 	}
 	
-	private void showIdleStatsDialog() {
-		// display dialog
-		final int timeText[] = {R.id.time1, R.id.time2, R.id.time3};
-		final int avgText[] = {R.id.avg1, R.id.avg2, R.id.avg3};
-		
-		final View content = getLayoutInflater().inflate(R.layout.idle_stats_dialog, null);
-		
-		Pattern time = Pattern.compile("([0-9]+)ms");
-		Pattern average = Pattern.compile("\\(([0-9]+)ms\\)");
-		
-		SysCommand.getInstance().suRun("cat", "/sys/class/misc/deepidle/idle_stats");
-		for(int i = 0; i < 3; ++i) {
-			String line = SysCommand.getInstance().getLastResult(i + 2);
-			Log.d(LOG_TAG, line);
-			Matcher m = time.matcher(line);
-			if(m.find())
-				((TextView)content.findViewById(timeText[i])).setText(m.group(1));
-			m = average.matcher(line);
-			if(m.find())
-				((TextView)content.findViewById(avgText[i])).setText(m.group(1));
-		}
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getString(R.string.label_deepidle_stats));
-		builder.setView(content);
-		builder.setPositiveButton(getString(R.string.label_reset), new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
-					Log.d(LOG_TAG, "failed to reset deepidle stats");
-					SysCommand.getInstance().logLastError(LOG_TAG);
-				}
-				dialog.dismiss();
-			}
-		});
-		builder.setNegativeButton(getString(R.string.label_close), new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.show();
-	}
-	
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		boolean ret = false;
@@ -260,12 +172,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_bln_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/backlightnotification/enabled");
-				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_deepidle_status))) {
-				toggleTweakStatus(preference.getKey(), "/sys/class/misc/deepidle/enabled");
-				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_deepidle_stats))) {
-				showIdleStatsDialog();
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");
@@ -284,10 +190,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_blx_charging_limit))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/batterylifeextender/charging_limit");
 			setPreference(getString(R.string.key_blx_charging_limit), newValue.toString());
-			reloadPreferences();
-		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
-			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
-			setPreference(getString(R.string.key_liveoc), newValue.toString());
 			reloadPreferences();
 		}else if(preference.getKey().equals(getString(R.string.key_touchwake_delay))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/touchwake/delay");
