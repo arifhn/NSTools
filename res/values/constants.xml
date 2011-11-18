@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
-    <string name="SCRIPT_VERSION">5</string>
+    <string name="SCRIPT_VERSION">6</string>
+
     <string-array name="scripts">
-		<item>read_ns_tweak.sh</item>
-	</string-array>
-	
+        <item>read_ns_tweak.sh</item>
+    </string-array>
+
     <string name="NS_TWEAK_FILE">/data/data/mobi.cyann.nstools/nstweak.prop</string>
     <string name="NS_TWEAK_SCRIPT">/data/data/mobi.cyann.nstools/scripts/read_ns_tweak.sh</string>
     <string name="NS_TEMP_SCRIPT">/data/data/mobi.cyann.nstools/temp.sh</string>
+    
+	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
+        
+    <string name="key_bld_status">key_bld_status</string>
+    <string name="key_bld_delay">key_bld_delay</string>
+    <string name="key_bln_status">key_bln_status</string>
+    <string name="key_blx_charging_limit">key_blx_charging_limit</string>
+    <string name="key_deepidle_status">key_deepidle_status</string>
+	<string name="key_deepidle_stats">key_deepidle_stats</string>
+    <string name="key_liveoc">key_liveoc</string>
+    <string name="key_screendimmer_status">key_screendimmer_status</string>
+    <string name="key_screendimmer_delay">key_screendimmer_delay</string>
+    <string name="key_touchwake_status">key_touchwake_status</string>
+    <string name="key_touchwake_delay">key_touchwake_delay</string>
+    <string name="key_default_voltage">key_default_voltage</string>
+    <string name="key_arm_volt_pref">key_arm_volt_pref</string>
+    <string name="key_uvmvtable_pref">key_uvmvtable_pref</string>
+    <string name="key_max_arm_volt">key_max_arm_volt</string>
+    <string name="key_int_volt_pref">key_int_volt_pref</string>
+    <string name="key_max_int_volt">key_max_int_volt</string>
+    <string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
+    <string name="key_restore_on_boot">key_restore_on_boot</string>
+    <string name="key_about">key_about</string>
+    <string name="key_governor">key_governor</string>
+    <string name="key_max_cpufreq">key_max_cpufreq</string>
+    <string name="key_screenoff_maxfreq">key_screenoff_maxfreq</string>
+    <string name="key_min_cpufreq">key_min_cpufreq</string>
 </resources>

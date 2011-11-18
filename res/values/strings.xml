@@ -1,105 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- NSTweakActivity -->
-	<string name="ns_tweak">Tweak</string>
-	    
+
+    <!-- NSTweakActivity -->
+    <string name="ns_tweak">Tweak</string>
     <string name="bld_tweak">Backlight Dimmer</string>
-    <string name="key_bld_status">key_bld_status</string>
-    <string name="key_bld_delay">key_bld_delay</string>
-
     <string name="bln_tweak">Backlight Notification</string>
-    <string name="key_bln_status">key_bln_status</string>
-    
     <string name="blx_tweak">Battery Life Extender</string>
-    <string name="key_blx_charging_limit">key_blx_charging_limit</string>
     <string name="label_charging_limit">Charging Limit</string>
-    
     <string name="deepidle_tweak">Deep Idle</string>
-    <string name="key_deepidle_status">key_deepidle_status</string>
-    <string name="key_deepidle_stats">key_deepidle_stats</string>
     <string name="label_deepidle_stats">Idle Stats</string>
-    
-	<string name="label_state">State</string>
-	<string name="label_time">Time (ms)</string>
-	<string name="label_average">Avg (ms)</string>
-	<string name="label_reset">Reset</string>
-	<string name="label_close">Close</string>
-	<string name="label_idle1">Idle</string>
-	<string name="label_idle2">Deep Idle (TOP=ON)</string>
-	<string name="label_idle3">Deep Idle (TOP=OFF)</string>
-        
-	<string name="liveoc_tweak">Live OC</string>
-	<string name="key_liveoc">key_liveoc</string>
-	<string name="label_liveoc_ocvalue">OC Value</string>
-	
-	<string name="screendimmer_tweak">Screen Dimmer</string>
-    <string name="key_screendimmer_status">key_screendimmer_status</string>
-    <string name="key_screendimmer_delay">key_screendimmer_delay</string>
-
+    <string name="label_state">State</string>
+    <string name="label_time">Time (ms)</string>
+    <string name="label_average">Avg (ms)</string>
+    <string name="label_reset">Reset</string>
+    <string name="label_close">Close</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="label_liveoc_ocvalue">OC Value</string>
+    <string name="screendimmer_tweak">Screen Dimmer</string>
     <string name="touchwake_tweak">Touchwake</string>
-    <string name="key_touchwake_status">key_touchwake_status</string>
-    <string name="key_touchwake_delay">key_touchwake_delay</string>
-    
-	<!-- VoltageControlActivity -->
-	<string name="voltage_control">Custom Voltage</string>
-	
-	<string name="key_default_voltage">key_default_voltage</string>
-	<string name="label_default_voltage">Default voltages</string>
-	<string name="summaryOn_default_voltage">Use voltage settings from kernel</string>
-	<string name="summaryOff_default_voltage">Use customized voltage settings below</string>
-	
-	<string name="key_arm_volt_pref">key_arm_volt_pref</string>
-	<string name="key_uvmvtable_pref">key_uvmvtable_pref</string>
-	<string name="arm_voltage">Arm Voltage</string>
-	<string name="key_max_arm_volt">key_max_arm_volt</string>
-	<string name="label_max_arm_volt">Max Arm Volt</string>
-	
-	<string name="key_int_volt_pref">key_int_volt_pref</string>
-	<string name="int_voltage">Int Voltage</string>
-	<string name="key_max_int_volt">key_max_int_volt</string>
-	<string name="label_max_int_volt">Max Int Volt</string>
-	<string name="warning_message">These settings are dangerous. Use at your own risk.</string>
-	<string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
-	<string name="dontshow_message">Don\'t show this message again</string>
-	
-	<!-- common  -->
-	<string name="app_name">NSTools</string>
-    
-	<string name="label_status">Status</string>
-	<string name="label_delay">Delay</string>
-	<string name="label_ok">Ok</string>
-	<string name="label_cancel">Cancel</string>
-	<string name="label_yes">Yes</string>
-	<string name="label_no">No</string>
-	<string name="label_warning">WARNING</string>
-	
-	<string name="status_on"><b>ON</b></string>
-	<string name="status_off"><b>OFF</b></string>
-	<string name="status_not_available"><i>not available</i></string>    
 
-	<!-- Setting Activity -->
-	<string name="label_setting">Setting</string>
-	
-	<string name="key_restore_on_boot">key_restore_on_boot</string>
-	<string name="label_restore_on_boot">Set on boot</string>
-	<string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
-	<string name="summaryOff_restore_on_boot">Reset to default settings on boot</string>
-	
-	<string name="key_about">key_about</string>
-	<string name="label_about">About</string>
-	<string name="about_text">NSTools on XDA</string>
-	<string name="about_desc">Visit NSTools thread on XDA</string>
-	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
-	
-	<!-- CPU Activity -->
-	<string name="label_cpu_tweak">CPU</string>
-	<string name="key_governor">key_governor</string>
-	<string name="label_governor">Governor</string>
-	<string name="key_min_cpufreq">key_min_cpufreq</string>
-	<string name="label_min_cpufreq">Min CPU freq</string>
-	<string name="key_max_cpufreq">key_max_cpufreq</string>
-	<string name="label_max_cpufreq">Max CPU freq</string>
-	<string name="label_lazy">Lazy</string>
-	<string name="key_screenoff_maxfreq">key_screenoff_maxfreq</string>
-	<string name="label_screenoff_maxfreq">Screen off max freq</string>
+    <!-- VoltageControlActivity -->
+    <string name="voltage_control">Custom Voltage</string>
+    <string name="label_default_voltage">Default voltages</string>
+    <string name="summaryOn_default_voltage">Use voltage settings from kernel</string>
+    <string name="summaryOff_default_voltage">Use customized voltage settings below</string>
+    <string name="arm_voltage">Arm Voltage</string>
+    <string name="label_max_arm_volt">Max Arm Volt</string>
+    <string name="int_voltage">Int Voltage</string>
+    <string name="label_max_int_volt">Max Int Volt</string>
+    <string name="warning_message">These settings are dangerous. Use at your own risk.</string>
+    <string name="dontshow_message">Don\'t show this message again</string>
+
+    <!-- common -->
+    <string name="app_name">NSTools</string>
+    <string name="label_status">Status</string>
+    <string name="label_delay">Delay</string>
+    <string name="label_ok">Ok</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_yes">Yes</string>
+    <string name="label_no">No</string>
+    <string name="label_warning">WARNING</string>
+    <string name="status_on"><b>ON</b></string>
+    <string name="status_off"><b>OFF</b></string>
+    <string name="status_not_available"><i>not available</i></string>
+
+    <!-- Setting Activity -->
+    <string name="label_setting">Setting</string>
+    <string name="label_restore_on_boot">Set on boot</string>
+    <string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
+    <string name="summaryOff_restore_on_boot">Reset to default settings on boot</string>
+    <string name="label_about">About</string>
+    <string name="about_text">NSTools on XDA</string>
+    <string name="about_desc">Visit NSTools thread on XDA</string>
+
+    <!-- CPU Activity -->
+    <string name="label_cpu_tweak">CPU</string>
+    <string name="label_governor">Governor</string>
+    <string name="label_min_cpufreq">Min CPU freq</string>
+    <string name="label_max_cpufreq">Max CPU freq</string>
+    <string name="label_lazy">Lazy</string>
+    <string name="label_screenoff_maxfreq">Screen off max freq</string>
+
 </resources>
