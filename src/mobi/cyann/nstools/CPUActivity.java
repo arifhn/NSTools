@@ -66,7 +66,12 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 			availableGovernors = temp.split(" ");
 		}
 		
-		n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
+		reloadFrequencies();
+	}
+
+	private void reloadFrequencies() {
+		SysCommand sc = SysCommand.getInstance();
+		int n = -1;//sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
 		if(n >= 0) {
 			String temp = sc.getLastResult(0);
 			availableFreqeuncies = temp.split(" ");
@@ -75,21 +80,21 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 				availableFreqInMhz[i] = toMHzString(availableFreqeuncies[i]);
 			}
 		}else {
-			// try read available frequencies from uv_mv_table
-			n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
+			// try read available frequencies from time_in_state
+			n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state");
 			if(n >= 0) {
 				availableFreqeuncies = new String[n];
 				availableFreqInMhz = new String[n];
 				for(int i = 0; i < n; ++i) {
 					String line = sc.getLastResult(i);
-					String parts[] = line.split("mhz");
-					availableFreqeuncies[i] = String.valueOf(Integer.parseInt(parts[0]) * 1000);
-					availableFreqInMhz[i] = parts[0] + " MHz";
+					String parts[] = line.split(" ");
+					availableFreqeuncies[i] = parts[0];
+					availableFreqInMhz[i] = toMHzString(parts[0]);
 				}
 			}
 		}
 	}
-
+	
 	private String toMHzString(String freqStr) {
 		int freq = Integer.parseInt(freqStr);
 		return (freq/1000) + " MHz";
@@ -309,9 +314,22 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 			setPreference(preference.getKey(), newValue.toString());
 			updateDisplay();
 		}else if(preference.getKey().equals(getString(R.string.key_liveoc))) {
-			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
-			setPreference(getString(R.string.key_liveoc), newValue.toString());
-			updateDisplay();
+			if(!preferences.getString(preference.getKey(), "-1").equals(newValue)) {
+				SysCommand sc = SysCommand.getInstance();
+				
+				sc.suRun("echo", newValue.toString(), ">", "/sys/class/misc/liveoc/oc_value");
+				setPreference(getString(R.string.key_liveoc), newValue.toString());
+				
+				// reload min freq
+				sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+				setPreference(getString(R.string.key_min_cpufreq), sc.getLastResult(0));
+				// reload max freq
+				sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+				setPreference(getString(R.string.key_max_cpufreq), sc.getLastResult(0));
+				
+				reloadFrequencies();
+				updateDisplay();
+			}
 		}
 		return false;
 	}

@@ -56,7 +56,6 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		findPreference(getString(R.string.key_default_voltage)).setOnPreferenceChangeListener(this);
 	}
 	
-
 	private void showWarningDialog() {
 		if(!preferences.getBoolean(getString(R.string.key_dont_show_volt_warning), false)) {
 			final View content = getLayoutInflater().inflate(R.layout.warning_dialog, null);
@@ -118,6 +117,12 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 			p.setEnabled(enabled);
 			
 			PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
+			
+			while(c.getPreferenceCount() > 1) { // clear all preference except the first one
+				Preference tp = c.getPreference(1);
+				c.removePreference(tp);
+			}
+			
 			SysCommand sc = SysCommand.getInstance();
 			int count = sc.suRun("cat", voltDevice);
 			for(int i = 0; i < count; ++i) {
