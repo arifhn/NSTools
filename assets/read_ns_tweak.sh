@@ -93,7 +93,7 @@ case "$?" in
 	;;
 	*)
 	echo "key_cmled_blink=-1" >> $OUT_FILE
-	echo "key_cmled_blinktimeout=-1" >> $OUT_FILE
+	echo "key_cmled_blinktimeout=0" >> $OUT_FILE
 	;;
 esac
 

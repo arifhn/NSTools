@@ -41,4 +41,5 @@
     <string name="key_cmled_bltimeout">key_cmled_bltimeout</string>
     <string name="key_cmled_blink">key_cmled_blink</string>
     <string name="key_cmled_blinktimeout">key_cmled_blinktimeout</string>
+    <string name="key_iosched">key_iosched</string>
 </resources>

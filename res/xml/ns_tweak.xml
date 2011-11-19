@@ -28,6 +28,18 @@
             android:title="@string/label_charging_limit" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/touchwake_tweak" >
+
+        <PreferenceScreen
+            android:key="@string/key_touchwake_status"
+            android:title="@string/label_status" />
+
+        <EditTextPreference
+            android:inputType="number"
+            android:key="@string/key_touchwake_delay"
+            android:title="@string/label_delay" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/cmled_tweak" >
 
         <EditTextPreference
@@ -42,17 +54,12 @@
             android:key="@string/key_cmled_blinktimeout"
             android:title="@string/label_cmled_blinktimeout" />
     </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/iosched_tweak" >
 
-    <PreferenceCategory android:title="@string/touchwake_tweak" >
+        <ListPreference
+            android:key="@string/key_iosched"
+            android:title="@string/label_iosched" />
 
-        <PreferenceScreen
-            android:key="@string/key_touchwake_status"
-            android:title="@string/label_status" />
-
-        <EditTextPreference
-            android:inputType="number"
-            android:key="@string/key_touchwake_delay"
-            android:title="@string/label_delay" />
     </PreferenceCategory>
-
 </PreferenceScreen>

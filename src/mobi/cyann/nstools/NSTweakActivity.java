@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -58,6 +59,28 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		
 		p = findPreference(getString(R.string.key_cmled_blinktimeout));
 		p.setOnPreferenceChangeListener(this);
+		
+		// load scheduler
+		int n = SysCommand.getInstance().suRun("cat", "/sys/block/mmcblk0/queue/scheduler");
+		if(n > 0) {
+			String tmp = SysCommand.getInstance().getLastResult(0);
+			String sched[] = tmp.split(" ");
+			int idx = 0;
+			for(int i = 0; i < sched.length; ++i) {
+				if(sched[i].startsWith("[")) {
+					sched[i] = sched[i].substring(1, sched[i].length() - 1);
+					idx = i;
+					break;
+				}
+			}
+			ListPreference l = (ListPreference)findPreference(getString(R.string.key_iosched));
+			l.setEntries(sched);
+			l.setEntryValues(sched);
+			l.setValueIndex(idx);
+			l.setOnPreferenceChangeListener(this);
+			preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			setPreference(getString(R.string.key_iosched), sched[idx]);
+		}
 	}
 	
 	@Override
@@ -90,6 +113,17 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		// update display for cmled timeout
 		pref = findPreference(getString(R.string.key_cmled_bltimeout));
 		value = preferences.getString(getString(R.string.key_cmled_bltimeout), "-1");
+		if(value.equals("-1")) {
+			pref.setEnabled(false);
+			pref.setSummary(getString(R.string.status_not_available));
+		}else {
+			pref.setEnabled(true);
+			pref.setSummary(value);
+		}
+		
+		// update iosched
+		pref = findPreference(getString(R.string.key_iosched));
+		value = preferences.getString(getString(R.string.key_iosched), "-1");
 		if(value.equals("-1")) {
 			pref.setEnabled(false);
 			pref.setSummary(getString(R.string.status_not_available));
@@ -227,6 +261,15 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/notification/blinktimeout");
 			setPreference(getString(R.string.key_cmled_blinktimeout), newValue.toString());
 			reloadPreferences();
+		}else if(preference.getKey().equals(getString(R.string.key_iosched))) {
+			if(!preferences.getString(preference.getKey(), "-1").equals(newValue)) {
+				// /system and /data
+				SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/block/mmcblk0/queue/scheduler");
+				// /cache
+				SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/block/mtdblock4/queue/scheduler");
+				setPreference(getString(R.string.key_iosched), newValue.toString());
+				reloadPreferences();
+			}
 		}
 		return false;
 	}

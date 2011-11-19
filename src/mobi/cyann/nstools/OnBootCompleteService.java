@@ -120,13 +120,20 @@ public class OnBootCompleteService extends IntentService {
 			if(!status.equals("-1")) {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/bl_timeout");
 			}
-			status = preferences.getString(getString(R.string.key_cmled_blinktimeout), "-1");
-			if(!status.equals("-1")) {
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/blinktimeout");
-			}
 			status = preferences.getString(getString(R.string.key_cmled_blink), "-1");
 			if(!status.equals("-1")) {
+				String timeout = preferences.getString(getString(R.string.key_cmled_blinktimeout), "5");
+				SysCommand.getInstance().suRun("echo", timeout, ">", "/sys/class/misc/notification/blinktimeout");
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/blink");
+			}
+			
+			// io scheduler
+			status = preferences.getString(getString(R.string.key_iosched), "-1");
+			if(!status.equals("-1")) {
+				// for /system and /data
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/block/mmcblk0/queue/scheduler");
+				// for /cache
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/block/mtdblock4/queue/scheduler");
 			}
 			
 			// Liveoc
