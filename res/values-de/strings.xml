@@ -7,19 +7,10 @@
     <string name="bln_tweak">Backlight Notification</string>
     <string name="blx_tweak">Battery Life Extender</string>
     <string name="label_charging_limit">Ladebegrenzung</string>
-    <string name="deepidle_tweak">Deep Idle</string>
-    <string name="label_deepidle_stats">Idle Status</string>
-    <string name="label_state">Status</string>
-    <string name="label_time">Zeit (ms)</string>
-    <string name="label_average">Ø (ms)</string>
-    <string name="label_reset">Zurücksetzen</string>
-    <string name="label_close">Schließen</string>
-    <string name="label_idle1">Idle</string>
-    <string name="label_idle2">Deep Idle (TOP=ON)</string>
-    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
-    <string name="liveoc_tweak">Live OC</string>
-    <string name="label_liveoc_ocvalue">Übertaktungswert</string>
-    <string name="screendimmer_tweak">Screen Dimmer</string>
+	<string name="cmled_tweak">CMLed</string>
+    <string name="label_cmled_bltimeout">Led Timeout</string>
+    <string name="label_cmled_blink">Blink</string>
+    <string name="label_cmled_blinktimeout">Blink Timeout</string>
     <string name="touchwake_tweak">Touchwake</string>
 
     <!-- VoltageControlActivity -->
@@ -63,5 +54,17 @@
     <string name="label_max_cpufreq">Maximale CPU Frequenz</string>
     <string name="label_lazy">Lazy</string>
     <string name="label_screenoff_maxfreq">Max. Frequenz bei Screen off</string>
-
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="label_deepidle_stats">Idle Status</string>
+    <string name="label_state">Status</string>
+    <string name="label_time">Zeit (ms)</string>
+    <string name="label_average">Ø (ms)</string>
+    <string name="label_reset">Zurücksetzen</string>
+    <string name="label_close">Schließen</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="label_liveoc_ocvalue">Übertaktungswert</string>
+        
 </resources>

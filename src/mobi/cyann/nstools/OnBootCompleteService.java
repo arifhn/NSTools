@@ -115,6 +115,20 @@ public class OnBootCompleteService extends IntentService {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq");
 			}
 			
+			// cmled
+			status = preferences.getString(getString(R.string.key_cmled_bltimeout), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/bl_timeout");
+			}
+			status = preferences.getString(getString(R.string.key_cmled_blinktimeout), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/blinktimeout");
+			}
+			status = preferences.getString(getString(R.string.key_cmled_blink), "-1");
+			if(!status.equals("-1")) {
+				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/notification/blink");
+			}
+			
 			// Liveoc
 			status = preferences.getString(getString(R.string.key_liveoc), "-1");
 			if(!status.equals("-1")) {

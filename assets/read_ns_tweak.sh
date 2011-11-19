@@ -84,6 +84,29 @@ case "$STAT" in
 	;;
 esac
 
+# cmled
+STAT=`ls /sys/class/misc/notification/`
+case "$?" in
+	0)
+	echo "key_cmled_blink=`cat /sys/class/misc/notification/blink`" >> $OUT_FILE
+	echo "key_cmled_blinktimeout=`cat /sys/class/misc/notification/blinktimeout`" >> $OUT_FILE
+	;;
+	*)
+	echo "key_cmled_blink=-1" >> $OUT_FILE
+	echo "key_cmled_blinktimeout=-1" >> $OUT_FILE
+	;;
+esac
+
+STAT=`cat /sys/class/misc/notification/bl_timeout`
+case "$?" in
+	0)
+	echo "key_cmled_bltimeout=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_cmled_bltimeout=-1" >> $OUT_FILE
+	;;
+esac
+
 # liveoc
 STAT=`cat /sys/class/misc/liveoc/oc_value`
 case "$?" in

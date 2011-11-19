@@ -48,6 +48,16 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		// Touchwake delay
 		p = findPreference(getString(R.string.key_touchwake_delay));
 		p.setOnPreferenceChangeListener(this);
+		
+		// CMLed
+		p = findPreference(getString(R.string.key_cmled_bltimeout));
+		p.setOnPreferenceChangeListener(this);
+		
+		p = findPreference(getString(R.string.key_cmled_blink));
+		p.setOnPreferenceClickListener(this);
+		
+		p = findPreference(getString(R.string.key_cmled_blinktimeout));
+		p.setOnPreferenceChangeListener(this);
 	}
 	
 	@Override
@@ -64,7 +74,7 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
 		updateDisplay(getString(R.string.key_bln_status));
 		updateDisplay(getString(R.string.key_touchwake_status), getString(R.string.key_touchwake_delay));
-		
+				
 		// update display for BLX
 		Preference pref = findPreference(getString(R.string.key_blx_charging_limit));
 		String value = preferences.getString(getString(R.string.key_blx_charging_limit), "-1");
@@ -75,7 +85,18 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			pref.setEnabled(true);
 			pref.setSummary(value);
 		}
-		
+		// cmled blink+timeout
+		updateDisplay(getString(R.string.key_cmled_blink), getString(R.string.key_cmled_blinktimeout));		
+		// update display for cmled timeout
+		pref = findPreference(getString(R.string.key_cmled_bltimeout));
+		value = preferences.getString(getString(R.string.key_cmled_bltimeout), "-1");
+		if(value.equals("-1")) {
+			pref.setEnabled(false);
+			pref.setSummary(getString(R.string.status_not_available));
+		}else {
+			pref.setEnabled(true);
+			pref.setSummary(value);
+		}
 	}
 	
 	/**
@@ -176,6 +197,9 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");
 				ret = true;
+			}else if(preference.getKey().equals(getString(R.string.key_cmled_blink))) {
+				toggleTweakStatus(preference.getKey(), "/sys/class/misc/notification/blink");
+				ret = true;
 			}
 		}
 		return ret;
@@ -194,6 +218,14 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_touchwake_delay))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/touchwake/delay");
 			setPreference(getString(R.string.key_touchwake_delay), newValue.toString());
+			reloadPreferences();
+		}else if(preference.getKey().equals(getString(R.string.key_cmled_bltimeout))) {
+			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/notification/bl_timeout");
+			setPreference(getString(R.string.key_cmled_bltimeout), newValue.toString());
+			reloadPreferences();
+		}else if(preference.getKey().equals(getString(R.string.key_cmled_blinktimeout))) {
+			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/notification/blinktimeout");
+			setPreference(getString(R.string.key_cmled_blinktimeout), newValue.toString());
 			reloadPreferences();
 		}
 		return false;
