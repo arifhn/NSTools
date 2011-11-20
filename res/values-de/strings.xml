@@ -12,6 +12,8 @@
     <string name="label_cmled_blink">Blink</string>
     <string name="label_cmled_blinktimeout">Blink Timeout</string>
     <string name="touchwake_tweak">Touchwake</string>
+    <string name="iosched_tweak">IO Scheduler</string>
+    <string name="label_iosched">Aktiver Scheduler</string>
 
     <!-- VoltageControlActivity -->
     <string name="voltage_control">Benutzerdefinierte Spannung</string>
