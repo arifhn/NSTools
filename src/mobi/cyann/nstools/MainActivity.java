@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -42,24 +43,25 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.main);
 		
 		TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
-		
+		Resources res = getResources();
+
 		TabSpec tab1 = tabHost.newTabSpec("tid1");
-		tab1.setIndicator(getString(R.string.ns_tweak));
+		tab1.setIndicator(getString(R.string.ns_tweak), res.getDrawable(R.drawable.ic_tab_tweaks));
 		tab1.setContent(new Intent(this, NSTweakActivity.class));
 		tabHost.addTab(tab1);
 		
 		TabSpec tab2 = tabHost.newTabSpec("tid2");
-		tab2.setIndicator(getString(R.string.label_cpu_tweak));
+		tab2.setIndicator(getString(R.string.label_cpu_tweak), res.getDrawable(R.drawable.ic_tab_cpu));
 		tab2.setContent(new Intent(this, CPUActivity.class));
 		tabHost.addTab(tab2);
 		
 		TabSpec tab3 = tabHost.newTabSpec("tid3");
-		tab3.setIndicator(getString(R.string.voltage_control));
+		tab3.setIndicator(getString(R.string.voltage_control), res.getDrawable(R.drawable.ic_tab_voltages));
 		tab3.setContent(new Intent(this, VoltageControlActivity.class));
 		tabHost.addTab(tab3);
 		
 		TabSpec tab4 = tabHost.newTabSpec("tid4");
-		tab4.setIndicator(getString(R.string.label_setting));
+		tab4.setIndicator(getString(R.string.label_setting), res.getDrawable(R.drawable.ic_tab_settings));
 		tab4.setContent(new Intent(this, SettingActivity.class));
 		tabHost.addTab(tab4);
 	}
