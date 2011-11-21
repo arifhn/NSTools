@@ -71,7 +71,7 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 
 	private void reloadFrequencies() {
 		SysCommand sc = SysCommand.getInstance();
-		int n = -1;//sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
+		int n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
 		if(n >= 0) {
 			String temp = sc.getLastResult(0);
 			availableFreqeuncies = temp.split(" ");

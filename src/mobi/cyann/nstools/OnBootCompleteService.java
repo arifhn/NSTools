@@ -97,18 +97,6 @@ public class OnBootCompleteService extends IntentService {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
 			}
 			
-			// cpu min freq
-			status = preferences.getString(getString(R.string.key_min_cpufreq), "-1");
-			if(!status.equals("-1")) {
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
-			}
-			
-			// cpu max freq
-			status = preferences.getString(getString(R.string.key_max_cpufreq), "-1");
-			if(!status.equals("-1")) {
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
-			}
-			
 			// lazy screenoff max freq
 			status = preferences.getString(getString(R.string.key_screenoff_maxfreq), "-1");
 			if(!status.equals("-1")) {
@@ -136,10 +124,36 @@ public class OnBootCompleteService extends IntentService {
 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/block/mtdblock4/queue/scheduler");
 			}
 			
-			// Liveoc
-			status = preferences.getString(getString(R.string.key_liveoc), "-1");
-			if(!status.equals("-1")) {
-				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
+ 			// Liveoc
+ 			status = preferences.getString(getString(R.string.key_liveoc), "-1");
+			if(!status.equals("-1") && !status.equals("100")) {
+				int liveoc = Integer.parseInt(status);
+				
+				int minFreq = Integer.parseInt(preferences.getString(getString(R.string.key_min_cpufreq), "-1"));
+				if(minFreq != -1) {
+					minFreq = minFreq * 100 / liveoc;
+					SysCommand.getInstance().suRun("echo", String.valueOf(minFreq), ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+				}
+				
+				int maxFreq = Integer.parseInt(preferences.getString(getString(R.string.key_max_cpufreq), "-1"));
+				if(maxFreq != -1) {
+					maxFreq = maxFreq * 100 / liveoc;
+					SysCommand.getInstance().suRun("echo", String.valueOf(maxFreq), ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+				}
+				
+ 				SysCommand.getInstance().suRun("echo", status, ">", "/sys/class/misc/liveoc/oc_value");
+			}else {
+				// cpu min freq
+				status = preferences.getString(getString(R.string.key_min_cpufreq), "-1");
+				if(!status.equals("-1")) {
+					SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
+				}
+				
+				// cpu max freq
+				status = preferences.getString(getString(R.string.key_max_cpufreq), "-1");
+				if(!status.equals("-1")) {
+					SysCommand.getInstance().suRun("echo", status, ">", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+				}
 			}
 		}
 	}
