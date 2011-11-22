@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
@@ -23,12 +25,13 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 /**
  * @author arif
  *
  */
-public class VoltageControlActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class VoltageControlActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener, DialogInterface.OnClickListener {
 	private final static String LOG_TAG = "NSTools.VoltageControlActivity";
 	
 	private SharedPreferences preferences;
@@ -56,6 +59,35 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		findPreference(getString(R.string.key_default_voltage)).setOnPreferenceChangeListener(this);
 	}
 	
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle args) {
+		Dialog ret = null;
+		switch(id) {
+		case 1:
+			ret = new SeekbarDialog(this, this, this);
+			break;
+		default:
+			ret = super.onCreateDialog(id, args);
+		}
+		return ret;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog, Bundle args) {
+		switch(id) {
+		case 1:
+			SeekbarDialog d = (SeekbarDialog)dialog;
+			d.setMax(args.getInt("max"));
+			d.setMin(args.getInt("min"));
+			d.setValue(args.getInt("value"));
+			d.setStep(args.getInt("step"));
+			d.setKey(args.getString("key"));
+			d.setTitle(args.getString("title"));
+		default:
+			super.onPrepareDialog(id, dialog, args);
+		}
+	}
+
 	private void showWarningDialog() {
 		if(!preferences.getBoolean(getString(R.string.key_dont_show_volt_warning), false)) {
 			final View content = getLayoutInflater().inflate(R.layout.warning_dialog, null);
@@ -88,14 +120,16 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 
 			Log.d(LOG_TAG, line);
 			
-			EditTextPreference ed = new EditTextPreference(this);
+			//EditTextPreference ed = new EditTextPreference(this);
+			Preference ed = new Preference(this);
 			ed.setKey("uvmvtable_" + i);
 			ed.setTitle(parts[0]);
-			ed.setDialogTitle(parts[0]);
+			//ed.setDialogTitle(parts[0]);
 			ed.setSummary(parts[1]);
-			ed.setText(volt);
-			ed.setOnPreferenceChangeListener(this);
-			ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+			//ed.setText(volt);
+			//ed.setOnPreferenceChangeListener(this);
+			//ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+			ed.setOnPreferenceClickListener(this);
 			ed.setEnabled(enabled);
 			c.addPreference(ed);
 			
@@ -132,14 +166,16 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 	
 				Log.d(LOG_TAG, line);
 				
-				EditTextPreference ed = new EditTextPreference(this);
+				//EditTextPreference ed = new EditTextPreference(this);
+				Preference ed = new Preference(this);
 				ed.setKey(voltPrefix + i);
 				ed.setTitle(parts[0]);
-				ed.setDialogTitle(parts[0]);
+				//ed.setDialogTitle(parts[0]);
 				ed.setSummary(parts[1]);
-				ed.setText(volt);
-				ed.setOnPreferenceChangeListener(this);
-				ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+				//ed.setText(volt);
+				//ed.setOnPreferenceChangeListener(this);
+				//ed.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+				ed.setOnPreferenceClickListener(this);
 				ed.setEnabled(enabled);
 				c.addPreference(ed);
 				
@@ -180,6 +216,24 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		ed.commit();
 	}
 	
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if(preference.getKey().startsWith("armvolt_")) {
+			String parts[] = preference.getKey().split("_");
+			int i = Integer.parseInt(parts[1]);
+			int val = Integer.parseInt(armVoltages.get(i));
+			Bundle b = new Bundle();
+			b.putString("key", preference.getKey());
+			b.putInt("max", Integer.parseInt(preferences.getString(getString(R.string.key_max_arm_volt), "1450")));
+			b.putInt("min", 700);
+			b.putInt("step", 25);
+			b.putInt("value", val);
+			b.putString("title", String.valueOf(preference.getTitle()));
+			showDialog(1, b);
+		}
+		return false;
+	}
+
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if(preference.getKey().startsWith("armvolt_")) {
@@ -228,4 +282,17 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		}
 		return false;
 	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		if(dialog instanceof SeekbarDialog) {
+			SeekbarDialog d = (SeekbarDialog)dialog;
+			if(which == DialogInterface.BUTTON_POSITIVE) {
+				Toast.makeText(this, "key:" + d.getKey() + " value = " + d.getValue(), Toast.LENGTH_LONG).show();
+			}else {
+				Toast.makeText(this, "cancel", Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
 }
