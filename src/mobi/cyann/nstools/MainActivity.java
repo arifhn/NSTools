@@ -76,6 +76,7 @@ public class MainActivity extends TabActivity {
 	}
 
     private void reloadTweak() {
+    	/*
     	// execute our reader script to get values for each tweak
 		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
 		// reload preference from prop file
@@ -103,7 +104,14 @@ public class MainActivity extends TabActivity {
 		editor.remove(getString(R.string.key_bln_status));
 		editor.remove(getString(R.string.key_touchwake_status));
 		editor.remove(getString(R.string.key_touchwake_delay));
+		editor.remove(getString(R.string.key_blx_charging_limit));
 		editor.commit();
+		
+    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    	Editor editor = preferences.edit();
+    	editor.clear();
+    	editor.commit();
+    	*/
     }
     
 	private void copyAsset(String srcPath, String dstPath) throws IOException {

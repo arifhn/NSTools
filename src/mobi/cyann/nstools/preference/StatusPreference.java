@@ -6,7 +6,6 @@ package mobi.cyann.nstools.preference;
 
 import mobi.cyann.nstools.R;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +21,9 @@ public class StatusPreference extends BasePreference {
 	
 	public StatusPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		
+		// init value
+		value = getValue();
 	}
 
 	public StatusPreference(Context context, AttributeSet attrs) {
@@ -65,7 +67,7 @@ public class StatusPreference extends BasePreference {
 		String str = readFromInterface();
 		try {
 			ret = Integer.parseInt(str);
-		}catch(NullPointerException ex) {
+		}catch(NumberFormatException ex) {
 			
 		}catch(Exception ex) {
 			Log.e(LOG_TAG, "str:"+str, ex);
@@ -96,30 +98,6 @@ public class StatusPreference extends BasePreference {
             return;
         }
         setValue(newValue);
-	}
-
-	@Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-		Object ret = getValue();
-		Log.d(LOG_TAG, "defaultValue=" + ret);
-		return ret;
-    }
-	
-	@Override
-	protected void onSetInitialValue(boolean restorePersistedValue,
-			Object defaultValue) {
-		
-		Log.d(LOG_TAG, "onSetInitialValue");
-		if(restorePersistedValue) {
-			// TODO: remove try-catch block
-			// currently we need this for upgrading from old nstools version
-			try {
-				value = getPersistedInt(-1);
-			}catch(Exception ex) {
-				value = Integer.parseInt(getPersistedString("-1"));
-			}
-		}
-		setValue(getValue());
 	}
 
 	@Override

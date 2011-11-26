@@ -4,13 +4,23 @@
 
     <PreferenceCategory android:title="@string/bld_tweak" >
 
-        <PreferenceScreen
+        <mobi.cyann.nstools.preference.StatusPreference
+            android:defaultValue="0"
+            custom:interfacePath="/sys/class/misc/backlightdimmer/enabled"
             android:key="@string/key_bld_status"
+            android:summary="@string/status_not_available"
             android:title="@string/label_status" />
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:defaultValue="5000"
+            android:dependency="@string/key_bld_status"
+            custom:interfacePath="/sys/class/misc/backlightdimmer/delay"
             android:key="@string/key_bld_delay"
+            custom:maxValue="60000"
+            custom:metrics="ms"
+            custom:minValue="0"
+            custom:step="500"
+            android:summary="0"
             android:title="@string/label_delay" />
     </PreferenceCategory>
 
@@ -26,9 +36,15 @@
 
     <PreferenceCategory android:title="@string/blx_tweak" >
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:defaultValue="95"
+            custom:interfacePath="/sys/class/misc/batterylifeextender/charging_limit"
             android:key="@string/key_blx_charging_limit"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="80"
+            custom:step="1"
+            android:summary="0"
             android:title="@string/label_charging_limit" />
     </PreferenceCategory>
 
@@ -56,18 +72,34 @@
 
     <PreferenceCategory android:title="@string/cmled_tweak" >
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:defaultValue="5000"
+            custom:interfacePath="/sys/class/misc/notification/bl_timeout"
             android:key="@string/key_cmled_bltimeout"
+            custom:maxValue="60000"
+            custom:metrics="ms"
+            custom:minValue="0"
+            custom:step="500"
+            android:summary="0"
             android:title="@string/label_cmled_bltimeout" />
 
-        <PreferenceScreen
+        <mobi.cyann.nstools.preference.StatusPreference
+            android:defaultValue="0"
+            custom:interfacePath="/sys/class/misc/notification/blink"
             android:key="@string/key_cmled_blink"
+            android:summary="@string/status_not_available"
             android:title="@string/label_cmled_blink" />
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:defaultValue="5000"
+            android:dependency="@string/key_cmled_blink"
+            custom:interfacePath="/sys/class/misc/notification/blinktimeout"
             android:key="@string/key_cmled_blinktimeout"
+            custom:maxValue="60000"
+            custom:metrics="ms"
+            custom:minValue="0"
+            custom:step="500"
+            android:summary="0"
             android:title="@string/label_cmled_blinktimeout" />
     </PreferenceCategory>
 
