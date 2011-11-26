@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="mobi.cyann.nstools.preference.BasePreference">
+		<attr name="reloadOnResume" format="boolean"/>
+	</declare-styleable>
+	
+	<declare-styleable name="mobi.cyann.nstools.preference.StatusPreference">
+		<attr name="devicePath" format="string"/>
+	</declare-styleable>
+</resources>

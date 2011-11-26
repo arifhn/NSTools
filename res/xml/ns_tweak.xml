@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" >
 
     <PreferenceCategory android:title="@string/bld_tweak" >
 
@@ -15,9 +16,12 @@
 
     <PreferenceCategory android:title="@string/bln_tweak" >
 
-        <PreferenceScreen
+        <mobi.cyann.nstools.preference.StatusPreference
+            custom:devicePath="/sys/class/misc/backlightnotification/enabled"
             android:key="@string/key_bln_status"
-            android:title="@string/label_status" />
+            android:summary="@string/status_not_available"
+            android:title="@string/label_status"
+            android:defaultValue="0" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/blx_tweak" >
@@ -46,20 +50,22 @@
             android:inputType="number"
             android:key="@string/key_cmled_bltimeout"
             android:title="@string/label_cmled_bltimeout" />
+
         <PreferenceScreen
             android:key="@string/key_cmled_blink"
             android:title="@string/label_cmled_blink" />
+
         <EditTextPreference
             android:inputType="number"
             android:key="@string/key_cmled_blinktimeout"
             android:title="@string/label_cmled_blinktimeout" />
     </PreferenceCategory>
-    
+
     <PreferenceCategory android:title="@string/iosched_tweak" >
 
         <ListPreference
             android:key="@string/key_iosched"
             android:title="@string/label_iosched" />
-
     </PreferenceCategory>
+
 </PreferenceScreen>

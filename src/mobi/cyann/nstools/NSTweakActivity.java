@@ -11,7 +11,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class NSTweakActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
+public class NSTweakActivity extends BasePreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.NSTweakActivity";
 	
 	private SharedPreferences preferences;
@@ -28,10 +28,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		
 		// BLD status
 		Preference p = findPreference(getString(R.string.key_bld_status));
-		p.setOnPreferenceClickListener(this);
-		
-		// BLN status
-		p = findPreference(getString(R.string.key_bln_status));
 		p.setOnPreferenceClickListener(this);
 		
 		// Touchwake status
@@ -95,7 +91,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		
 		// setup display for each preference
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
-		updateDisplay(getString(R.string.key_bln_status));
 		updateDisplay(getString(R.string.key_touchwake_status), getString(R.string.key_touchwake_delay));
 				
 		// update display for BLX
@@ -224,9 +219,6 @@ public class NSTweakActivity extends PreferenceActivity implements OnPreferenceC
 		if(preference.isEnabled()) {
 			if(preference.getKey().equals(getString(R.string.key_bld_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/backlightdimmer/enabled");
-				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_bln_status))) {
-				toggleTweakStatus(preference.getKey(), "/sys/class/misc/backlightnotification/enabled");
 				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");

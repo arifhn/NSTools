@@ -98,6 +98,10 @@ public class MainActivity extends TabActivity {
 				editor.putString(key.toString(), parts[0].trim());
 			}
 		}
+		// TODO: remove these lines below
+		// currently we need to remove the old keys for upgrading
+		editor.remove(getString(R.string.key_bln_status));
+		
 		editor.commit();
     }
     
