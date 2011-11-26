@@ -101,7 +101,8 @@ public class MainActivity extends TabActivity {
 		// TODO: remove these lines below
 		// currently we need to remove the old keys for upgrading
 		editor.remove(getString(R.string.key_bln_status));
-		
+		editor.remove(getString(R.string.key_touchwake_status));
+		editor.remove(getString(R.string.key_touchwake_delay));
 		editor.commit();
     }
     

@@ -17,11 +17,11 @@
     <PreferenceCategory android:title="@string/bln_tweak" >
 
         <mobi.cyann.nstools.preference.StatusPreference
+            android:defaultValue="0"
             custom:interfacePath="/sys/class/misc/backlightnotification/enabled"
             android:key="@string/key_bln_status"
             android:summary="@string/status_not_available"
-            android:title="@string/label_status"
-            android:defaultValue="0" />
+            android:title="@string/label_status" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/blx_tweak" >
@@ -34,13 +34,23 @@
 
     <PreferenceCategory android:title="@string/touchwake_tweak" >
 
-        <PreferenceScreen
+        <mobi.cyann.nstools.preference.StatusPreference
+            android:defaultValue="0"
+            custom:interfacePath="/sys/class/misc/touchwake/enabled"
             android:key="@string/key_touchwake_status"
+            android:summary="@string/status_not_available"
             android:title="@string/label_status" />
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:defaultValue="45000"
+            android:dependency="@string/key_touchwake_status"
+            custom:interfacePath="/sys/class/misc/touchwake/delay"
             android:key="@string/key_touchwake_delay"
+            custom:maxValue="90000"
+            custom:metrics="ms"
+            custom:minValue="1000"
+            custom:step="1000"
+            android:summary="0"
             android:title="@string/label_delay" />
     </PreferenceCategory>
 

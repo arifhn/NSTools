@@ -3,11 +3,10 @@ package mobi.cyann.nstools;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.ListPreference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -30,20 +29,12 @@ public class NSTweakActivity extends BasePreferenceActivity implements OnPrefere
 		Preference p = findPreference(getString(R.string.key_bld_status));
 		p.setOnPreferenceClickListener(this);
 		
-		// Touchwake status
-		p = findPreference(getString(R.string.key_touchwake_status));
-		p.setOnPreferenceClickListener(this);
-		
 		// BLD delay
 		p = findPreference(getString(R.string.key_bld_delay));
 		p.setOnPreferenceChangeListener(this);
 
 		// BLX charging limit
 		p = findPreference(getString(R.string.key_blx_charging_limit));
-		p.setOnPreferenceChangeListener(this);
-
-		// Touchwake delay
-		p = findPreference(getString(R.string.key_touchwake_delay));
 		p.setOnPreferenceChangeListener(this);
 		
 		// CMLed
@@ -91,7 +82,6 @@ public class NSTweakActivity extends BasePreferenceActivity implements OnPrefere
 		
 		// setup display for each preference
 		updateDisplay(getString(R.string.key_bld_status), getString(R.string.key_bld_delay));
-		updateDisplay(getString(R.string.key_touchwake_status), getString(R.string.key_touchwake_delay));
 				
 		// update display for BLX
 		Preference pref = findPreference(getString(R.string.key_blx_charging_limit));
@@ -220,9 +210,6 @@ public class NSTweakActivity extends BasePreferenceActivity implements OnPrefere
 			if(preference.getKey().equals(getString(R.string.key_bld_status))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/backlightdimmer/enabled");
 				ret = true;
-			}else if(preference.getKey().equals(getString(R.string.key_touchwake_status))) {
-				toggleTweakStatus(preference.getKey(), "/sys/class/misc/touchwake/enabled");
-				ret = true;
 			}else if(preference.getKey().equals(getString(R.string.key_cmled_blink))) {
 				toggleTweakStatus(preference.getKey(), "/sys/class/misc/notification/blink");
 				ret = true;
@@ -240,10 +227,6 @@ public class NSTweakActivity extends BasePreferenceActivity implements OnPrefere
 		}else if(preference.getKey().equals(getString(R.string.key_blx_charging_limit))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/batterylifeextender/charging_limit");
 			setPreference(getString(R.string.key_blx_charging_limit), newValue.toString());
-			reloadPreferences();
-		}else if(preference.getKey().equals(getString(R.string.key_touchwake_delay))) {
-			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/touchwake/delay");
-			setPreference(getString(R.string.key_touchwake_delay), newValue.toString());
 			reloadPreferences();
 		}else if(preference.getKey().equals(getString(R.string.key_cmled_bltimeout))) {
 			SysCommand.getInstance().suRun("echo", newValue.toString(), ">", "/sys/class/misc/notification/bl_timeout");

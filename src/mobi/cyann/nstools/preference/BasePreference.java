@@ -19,7 +19,7 @@ import android.util.Log;
 public abstract class BasePreference extends Preference {
 	private final static String LOG_TAG = "NSTools.BasePreference";
 	
-	private String interfacePath;
+	private final String interfacePath;
 	private boolean reloadOnResume;
 
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
