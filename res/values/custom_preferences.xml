@@ -2,9 +2,7 @@
 <resources>
     <declare-styleable name="mobi.cyann.nstools.preference.BasePreference">
 		<attr name="reloadOnResume" format="boolean"/>
+		<attr name="interfacePath" format="string"/>
 	</declare-styleable>
 	
-	<declare-styleable name="mobi.cyann.nstools.preference.StatusPreference">
-		<attr name="devicePath" format="string"/>
-	</declare-styleable>
 </resources>

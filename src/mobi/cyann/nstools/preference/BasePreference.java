@@ -5,18 +5,21 @@
 package mobi.cyann.nstools.preference;
 
 import mobi.cyann.nstools.R;
+import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * @author arif
  *
  */
 public abstract class BasePreference extends Preference {
-	//private final static String LOG_TAG = "NSTools.BasePreference";
-
+	private final static String LOG_TAG = "NSTools.BasePreference";
+	
+	private String interfacePath;
 	private boolean reloadOnResume;
 
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
@@ -24,6 +27,7 @@ public abstract class BasePreference extends Preference {
 		
 		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_BasePreference, defStyle, 0);
 		reloadOnResume = a.getBoolean(R.styleable.mobi_cyann_nstools_preference_BasePreference_reloadOnResume, false);
+		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);
 		a.recycle();
 	}
 
@@ -34,15 +38,42 @@ public abstract class BasePreference extends Preference {
 	public BasePreference(Context context) {
 		this(context, null);
 	}
+
+	protected String readFromInterface() {
+		String ret = null;
+		if(interfacePath != null) {
+			Log.d(LOG_TAG, "read from " + interfacePath);
+			SysCommand sc = SysCommand.getInstance();
+			if(sc.suRun("cat", interfacePath) > 0) {
+				ret = sc.getLastResult(0); 
+				Log.d(LOG_TAG, "ROK:" + ret);
+			}else {
+				Log.e(LOG_TAG, "RER:" + sc.getLastError(0));
+			}
+		}
+		return ret;
+	}
 	
-	protected abstract void reload();
+	protected void writeToInterface(String value) {
+		// echo to interfacePath
+		if(interfacePath != null) {
+			SysCommand sc = SysCommand.getInstance();
+			if(sc.suRun("echo", value, ">", interfacePath) >= 0) {
+				Log.d(LOG_TAG, "WOK");
+			}else {
+				Log.e(LOG_TAG, "WER:" + sc.getLastError(0));
+			}
+		}
+	}
+	
+	public abstract void reload();
 	
 	public void onResume() {
 		if(reloadOnResume) {
 			reload();
 		}
 	}
-	
+
 	public boolean isReloadOnResume() {
 		return reloadOnResume;
 	}
