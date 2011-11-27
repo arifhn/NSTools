@@ -79,7 +79,7 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
-	        setValue(newValue);
+	        setValue(newValue, true);
 		}
 	}
 }

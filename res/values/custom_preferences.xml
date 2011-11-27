@@ -17,4 +17,10 @@
 	<declare-styleable name="mobi.cyann.nstools.preference.IoSchedPreference">
 		<attr name="writeToInterface" format="reference"/>    
 	</declare-styleable>
+	<declare-styleable name="mobi.cyann.nstools.preference.ListPreference">
+		<attr name="valueType">
+		   <enum name="integer" value="0"/>
+		   <enum name="string" value="1"/>
+		</attr>
+	</declare-styleable>
 </resources>

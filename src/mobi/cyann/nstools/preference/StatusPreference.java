@@ -49,8 +49,8 @@ public class StatusPreference extends BasePreference {
         }
 	}
 
-	protected void setValue(int newValue) {
-		if(value > -1 && newValue != value) {
+	protected void setValue(int newValue, boolean writeInterface) {
+		if(writeInterface && value > -1 && newValue != value) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
 			newValue = getValue();
@@ -78,7 +78,7 @@ public class StatusPreference extends BasePreference {
 	}
 	
 	public void reload() {
-		setValue(getValue());
+		setValue(getValue(), false);
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class StatusPreference extends BasePreference {
         if (!callChangeListener(newValue)) {
             return;
         }
-        setValue(newValue);
+        setValue(newValue, true);
 	}
 	
 	@Override
@@ -111,7 +111,7 @@ public class StatusPreference extends BasePreference {
     		value = getPersistedInt(-1);
     	}
 		int v = PreloadValues.getInstance().getInt(getKey());
-		setValue(v);
+		setValue(v, false);
     }
     
 	@Override
