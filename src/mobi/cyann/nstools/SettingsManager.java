@@ -30,35 +30,35 @@ public class SettingsManager {
 		StringBuilder command = new StringBuilder();
 		
 		String status = null;
+		int value = -1;
 		if(!preferences.getBoolean(c.getString(R.string.key_default_voltage), true)) {
 			// restore voltage setting if and only if key_default_voltage is false
 			
 			// customvoltage
 			// -----------------
 			// arm voltages
-			status = preferences.getString(c.getString(R.string.key_max_arm_volt), "-1");
-			if(!status.equals("-1")) {
+			value = preferences.getInt(c.getString(R.string.key_max_arm_volt), -1);
+			if(value > -1) {
 				String armvolts = preferences.getString(c.getString(R.string.key_arm_volt_pref), "0");
-				command.append("echo " + status + " > " + "/sys/class/misc/customvoltage/max_arm_volt\n");
+				command.append("echo " + value + " > " + "/sys/class/misc/customvoltage/max_arm_volt\n");
 				command.append("echo " + armvolts + " > " + "/sys/class/misc/customvoltage/arm_volt\n");
+			}else {
+				// uv_mv_table
+				status = preferences.getString(c.getString(R.string.key_uvmvtable_pref), "-1");
+				if(!status.equals("-1")) {
+					command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table\n");
+				}
 			}
-			
-			// uv_mv_table
-			status = preferences.getString(c.getString(R.string.key_uvmvtable_pref), "-1");
-			if(!status.equals("-1")) {
-				command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table\n");
-			}
-			
 			// int voltages
-			status = preferences.getString(c.getString(R.string.key_max_int_volt), "-1");
-			if(!status.equals("-1")) {
+			value = preferences.getInt(c.getString(R.string.key_max_int_volt), -1);
+			if(value > -1) {
 				String armvolts = preferences.getString(c.getString(R.string.key_int_volt_pref), "0");
-				command.append("echo " + status + " > " + "/sys/class/misc/customvoltage/max_int_volt\n");
+				command.append("echo " + value + " > " + "/sys/class/misc/customvoltage/max_int_volt\n");
 				command.append("echo " + armvolts + " > " + "/sys/class/misc/customvoltage/int_volt\n");
 			}
 		}
 		// BLD
-		int value = preferences.getInt(c.getString(R.string.key_bld_status), -1);
+		value = preferences.getInt(c.getString(R.string.key_bld_status), -1);
 		if(value > -1) {
 			command.append("echo " + value + " > " + "/sys/class/misc/backlightdimmer/enabled\n");
 			value = preferences.getInt(c.getString(R.string.key_bld_delay), -1);

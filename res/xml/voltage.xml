@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" >
 
     <CheckBoxPreference
         android:key="@string/key_default_voltage"
         android:summaryOff="@string/summaryOff_default_voltage"
         android:summaryOn="@string/summaryOn_default_voltage"
-        android:title="@string/label_default_voltage" android:defaultValue="true"/>
+        android:title="@string/label_default_voltage" android:defaultValue="true"
+        android:disableDependentsState="true"/>
 
     <PreferenceCategory
         android:key="@string/key_arm_volt_pref"
         android:title="@string/arm_voltage" >
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.VoltagePreference
+            android:dependency="@string/key_default_voltage"
+            custom:interfacePath="/sys/class/misc/customvoltage/max_arm_volt"
             android:key="@string/key_max_arm_volt"
+            custom:maxValue="1500"
+            custom:metrics="mV"
+            custom:minValue="500"
+            custom:step="25"
+            android:summary="0"
             android:title="@string/label_max_arm_volt" />
     </PreferenceCategory>
 
@@ -21,9 +29,15 @@
         android:key="@string/key_int_volt_pref"
         android:title="@string/int_voltage" >
 
-        <EditTextPreference
-            android:inputType="number"
+        <mobi.cyann.nstools.preference.VoltagePreference
+            android:dependency="@string/key_default_voltage"
+            custom:interfacePath="/sys/class/misc/customvoltage/max_int_volt"
             android:key="@string/key_max_int_volt"
+            custom:maxValue="1500"
+            custom:metrics="mV"
+            custom:minValue="500"
+            custom:step="25"
+            android:summary="0"
             android:title="@string/label_max_int_volt" />
     </PreferenceCategory>
 

@@ -64,7 +64,7 @@ public class StatusPreference extends BasePreference {
 		}
 	}
 
-	private int readValue() {
+	protected int readValue() {
 		int ret = -1;
 		String str = readFromInterface();
 		try {
@@ -102,7 +102,7 @@ public class StatusPreference extends BasePreference {
 	
 	@Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return  PreloadValues.getInstance().getInt(getKey());
+        return  null;
     }
     
     @Override
@@ -110,8 +110,7 @@ public class StatusPreference extends BasePreference {
     	if(restoreValue) {
     		value = getPersistedInt(-1);
     	}
-		int v = PreloadValues.getInstance().getInt(getKey());
-		writeValue(v, false);
+		writeValue(PreloadValues.getInstance().getInt(getKey()), false);
     }
     
 	@Override

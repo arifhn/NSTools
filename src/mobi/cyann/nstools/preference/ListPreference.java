@@ -123,7 +123,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 	
 	@Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return  null;//PreloadValues.getInstance().getInt(getKey());
+		return null;
     }
     
     @Override
@@ -136,8 +136,8 @@ public class ListPreference extends BasePreference implements DialogInterface.On
     		}
     	}
     	Object preloadVal = null;
-    	if(valueType == 0) { // int
-    		preloadVal = PreloadValues.getInstance().getInt(getKey());
+		if(valueType == 0) { // int
+			preloadVal = PreloadValues.getInstance().getInt(getKey());
     	}else { // string
     		preloadVal = PreloadValues.getInstance().getString(getKey());
     	}

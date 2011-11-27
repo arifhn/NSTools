@@ -130,7 +130,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 	
 	@Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return  PreloadValues.getInstance().getInt(getKey());
+        return  null;
     }
     
     @Override

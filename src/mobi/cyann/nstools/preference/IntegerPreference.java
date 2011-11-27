@@ -21,7 +21,7 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 	//private final static String LOG_TAG = "NSTools.IntegerPreference";
 	
 	private final SeekbarDialog dialog;
-	private final String metrics;
+	private String metrics;
 	
 	public IntegerPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -81,6 +81,11 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 	        }
 	        writeValue(newValue, true);
 		}
+	}
+	
+	public void setMetrics(String metrics) {
+		this.metrics = metrics;
+		dialog.setMetrics(metrics);
 	}
 	
 	public void setMinValue(int minValue) {
