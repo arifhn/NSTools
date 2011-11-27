@@ -99,4 +99,10 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 	public void setStep(int step) {
 		dialog.setStep(step);
 	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		super.setTitle(title);
+		dialog.setTitle(title);
+	}
 }
