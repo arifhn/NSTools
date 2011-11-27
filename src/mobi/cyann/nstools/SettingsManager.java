@@ -79,9 +79,9 @@ public class SettingsManager {
 		}
 		
 		// Deepidle
-		status = preferences.getString(c.getString(R.string.key_deepidle_status), "-1");
-		if(!status.equals("-1")) {
-			command.append("echo" + status + " > " + "/sys/class/misc/deepidle/enabled\n");
+		value = preferences.getInt(c.getString(R.string.key_deepidle_status), -1);
+		if(value > -1) {
+			command.append("echo " + value + " > " + "/sys/class/misc/deepidle/enabled\n");
 		}
 		
 		// Touchwake
@@ -100,9 +100,9 @@ public class SettingsManager {
 		}
 		
 		// lazy screenoff max freq
-		status = preferences.getString(c.getString(R.string.key_screenoff_maxfreq), "-1");
-		if(!status.equals("-1")) {
-			command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq\n");
+		value = preferences.getInt(c.getString(R.string.key_screenoff_maxfreq), -1);
+		if(value > -1) {
+			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq\n");
 		}
 		
 		// cmled
@@ -132,34 +132,33 @@ public class SettingsManager {
 		}
 		
 		// Liveoc
-		status = preferences.getString(c.getString(R.string.key_liveoc), "-1");
-		if(!status.equals("-1") && !status.equals("100")) {
-			int liveoc = Integer.parseInt(status);
-			
-			int minFreq = Integer.parseInt(preferences.getString(c.getString(R.string.key_min_cpufreq), "-1"));
-			if(minFreq != -1) {
-				minFreq = minFreq * 100 / liveoc;
-				command.append("echo " + String.valueOf(minFreq) + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
+		value = preferences.getInt(c.getString(R.string.key_liveoc), -1);
+		if(value > -1 && value != 100) {
+			// cpu minfreq
+			int minFreq = preferences.getInt(c.getString(R.string.key_min_cpufreq), -1);
+			if(minFreq > -1) {
+				minFreq = minFreq * 100 / value;
+				command.append("echo " + minFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
 			}
-			
-			int maxFreq = Integer.parseInt(preferences.getString(c.getString(R.string.key_max_cpufreq), "-1"));
-			if(maxFreq != -1) {
-				maxFreq = maxFreq * 100 / liveoc;
-				command.append("echo " + String.valueOf(maxFreq) + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
+			// cpu maxfreq
+			int maxFreq = preferences.getInt(c.getString(R.string.key_max_cpufreq), -1);
+			if(maxFreq > -1) {
+				maxFreq = maxFreq * 100 / value;
+				command.append("echo " + maxFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
 			}
-			
-			command.append("echo " + status + " > " + "/sys/class/misc/liveoc/oc_value\n");
+			// liveoc
+			command.append("echo " + value + " > " + "/sys/class/misc/liveoc/oc_value\n");
 		}else {
-			// cpu min freq
-			status = preferences.getString(c.getString(R.string.key_min_cpufreq), "-1");
-			if(!status.equals("-1")) {
-				command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
+			// cpu minfreq
+			int minFreq = preferences.getInt(c.getString(R.string.key_min_cpufreq), -1);
+			if(minFreq > -1) {
+				command.append("echo " + minFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
 			}
 			
-			// cpu max freq
-			status = preferences.getString(c.getString(R.string.key_max_cpufreq), "-1");
-			if(!status.equals("-1")) {
-				command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
+			// cpu maxfreq
+			int maxFreq = preferences.getInt(c.getString(R.string.key_max_cpufreq), -1);
+			if(maxFreq > -1) {
+				command.append("echo " + maxFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
 			}
 		}
 		SysCommand.getInstance().suRun(command.toString());
