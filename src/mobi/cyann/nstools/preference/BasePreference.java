@@ -23,6 +23,17 @@ public abstract class BasePreference extends Preference {
 	private boolean reloadOnResume;
 	private int dependencyType;
 	
+	private OnPreferenceChangedListener changedListener;
+	
+	public interface OnPreferenceChangedListener {
+        /**
+         * Called when a Preference has been changed
+         * 
+         * @param preference The changed Preference.
+         */
+        void onPreferenceChanged(Preference preference);
+    }
+	
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
@@ -72,6 +83,19 @@ public abstract class BasePreference extends Preference {
 	
 	public abstract void reload();
 	
+
+	public void setChangedListener(OnPreferenceChangedListener changedListener) {
+		this.changedListener = changedListener;
+	}
+
+	@Override
+	protected void notifyChanged() {
+		super.notifyChanged();
+		if(changedListener != null) {
+			changedListener.onPreferenceChanged(this);
+		}
+	}
+
 	public void onResume() {
 		if(reloadOnResume) {
 			reload();
