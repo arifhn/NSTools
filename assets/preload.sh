@@ -41,7 +41,7 @@ case "$STAT" in
 	;;
 	*)
 	echo "key_bld_status=-1" >> $OUT_FILE
-	echo "key_bld_delay=0" >> $OUT_FILE
+	echo "key_bld_delay=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -93,7 +93,7 @@ case "$?" in
 	;;
 	*)
 	echo "key_cmled_blink=-1" >> $OUT_FILE
-	echo "key_cmled_blinktimeout=0" >> $OUT_FILE
+	echo "key_cmled_blinktimeout=-1" >> $OUT_FILE
 	;;
 esac
 
@@ -131,7 +131,7 @@ case "$STAT" in
 	;;
 	*)
 	echo "key_touchwake_status=-1" >> $OUT_FILE
-	echo "key_touchwake_delay=0" >> $OUT_FILE
+	echo "key_touchwake_delay=-1" >> $OUT_FILE
 	;;
 esac
 
