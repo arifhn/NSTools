@@ -13,8 +13,11 @@ import android.preference.PreferenceManager;
  *
  */
 public class SettingsManager {
+	public final static int SUCCESS = 0;
+	public final static int ERR_SET_ON_BOOT_FALSE = -1;
+	public final static int ERR_DIFFERENT_KERNEL = -2;
 	
-	public static void writeToInterface(Context c, String sharedPreferenceName, boolean onBoot) {
+	public static int writeToInterface(Context c, String sharedPreferenceName, boolean onBoot) {
 		SharedPreferences preferences = null;
 		if(sharedPreferenceName != null) {
 			preferences = c.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
@@ -22,9 +25,24 @@ public class SettingsManager {
 			preferences = PreferenceManager.getDefaultSharedPreferences(c);
 		}
 		
+		// check 'set on boot' preference
 		boolean restore = preferences.getBoolean(c.getString(R.string.key_restore_on_boot), true);
 		if(onBoot && !restore) {
-			return;
+			return ERR_SET_ON_BOOT_FALSE;
+		}
+
+		// now check current kernel version with saved value
+		restore = false;
+		SysCommand sysCommand = SysCommand.getInstance();
+		if(sysCommand.suRun("cat", "/proc/version") > 0) {
+			String kernel = sysCommand.getLastResult(0);
+			String savedKernelVersion = preferences.getString(c.getString(R.string.key_kernel_version), null);
+			if(kernel.equals(savedKernelVersion)) {
+				restore = true;
+			}
+		}
+		if(!restore) {
+			return ERR_DIFFERENT_KERNEL;
 		}
 		
 		StringBuilder command = new StringBuilder();
@@ -162,5 +180,7 @@ public class SettingsManager {
 			}
 		}
 		SysCommand.getInstance().suRun(command.toString());
+		
+		return SUCCESS;
 	}
 }

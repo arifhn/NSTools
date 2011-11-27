@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
     <string name="SCRIPT_VERSION">7</string>
 
@@ -40,6 +39,7 @@
     <string name="key_cmled_blink">key_cmled_blink</string>
     <string name="key_cmled_blinktimeout">key_cmled_blinktimeout</string>
     <string name="key_iosched">key_iosched</string>
+    <string name="key_kernel_version">key_kernel_version</string>
     
 	<string-array name="iosched_interfaces">
 	    <item>/sys/block/mtdblock4/queue/scheduler</item>

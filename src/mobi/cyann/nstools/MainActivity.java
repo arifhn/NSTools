@@ -9,6 +9,7 @@ import java.io.InputStream;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -73,8 +74,20 @@ public class MainActivity extends TabActivity {
 	}
 
     private void reloadTweak() {
-    	// execute our preload script to get values from sys interface
-		SysCommand.getInstance().suRun(getString(R.string.PRELOAD_SCRIPT));
+		SysCommand sc = SysCommand.getInstance();
+		
+		// execute our preload script to get values from sys interface
+		sc.suRun(getString(R.string.PRELOAD_SCRIPT));
+		
+		// save kernel version
+		if(sc.suRun("cat", "/proc/version") > 0) {
+			String kernel = sc.getLastResult(0);
+			
+			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+			Editor ed = pref.edit();
+			ed.putString(getString(R.string.key_kernel_version), kernel);
+			ed.commit();
+		}
     }
     
 	private void copyAsset(String srcPath, String dstPath) throws IOException {

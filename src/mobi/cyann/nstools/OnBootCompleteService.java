@@ -21,9 +21,15 @@ public class OnBootCompleteService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		try {
-			Log.d(LOG_TAG, "load & write settings to kernel...");
-			SettingsManager.writeToInterface(this, null, true);
-			Log.d(LOG_TAG, "write finished");
+			Log.d(LOG_TAG, "trying to load & write settings to kernel...");
+			int ret = SettingsManager.writeToInterface(this, null, true);
+			if(ret == SettingsManager.SUCCESS) {
+				Log.d(LOG_TAG, "write success");
+			}else if(ret == SettingsManager.ERR_SET_ON_BOOT_FALSE) {
+				Log.d(LOG_TAG, "write canceled, set_on_boot flag is false");
+			}else if(ret == SettingsManager.ERR_DIFFERENT_KERNEL) {
+				Log.d(LOG_TAG, "write canceled, different kernel version");
+			}
 		}catch(Exception ex) {
 			Log.e(LOG_TAG, "write failed", ex);
 		}
