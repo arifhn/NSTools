@@ -3,6 +3,10 @@
     <declare-styleable name="mobi.cyann.nstools.preference.BasePreference">
 		<attr name="reloadOnResume" format="boolean"/>
 		<attr name="interfacePath" format="string"/>
+		<attr name="dependencyType">
+		    <enum name="android_default" value="0"/>
+		    <enum name="reload_value" value="1"/>
+		</attr>
 	</declare-styleable>
 	<declare-styleable name="mobi.cyann.nstools.preference.IntegerPreference">
 	    <attr name="minValue" format="integer"/>

@@ -21,7 +21,8 @@ public abstract class BasePreference extends Preference {
 	
 	private final String interfacePath;
 	private boolean reloadOnResume;
-
+	private int dependencyType;
+	
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
@@ -30,6 +31,7 @@ public abstract class BasePreference extends Preference {
 		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_BasePreference, defStyle, 0);
 		reloadOnResume = a.getBoolean(R.styleable.mobi_cyann_nstools_preference_BasePreference_reloadOnResume, false);
 		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);
+		dependencyType = a.getInt(R.styleable.mobi_cyann_nstools_preference_BasePreference_dependencyType, 0);
 		a.recycle();
 	}
 
@@ -82,5 +84,16 @@ public abstract class BasePreference extends Preference {
 
 	public void setReloadOnResume(boolean reloadOnResume) {
 		this.reloadOnResume = reloadOnResume;
+	}
+
+	@Override
+	public void onDependencyChanged(Preference dependency,
+			boolean disableDependent) {
+
+		if(dependencyType == 0) { // android_default
+			super.onDependencyChanged(dependency, disableDependent);
+		}else if(dependencyType == 1) { // reload_value
+			reload();
+		}
 	}
 }
