@@ -79,7 +79,19 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
-	        setValue(newValue, true);
+	        writeValue(newValue, true);
 		}
+	}
+	
+	public void setMinValue(int minValue) {
+		dialog.setMin(minValue);
+	}
+	
+	public void setMaxValue(int maxValue) {
+		dialog.setMax(maxValue);
+	}
+	
+	public void setStep(int step) {
+		dialog.setStep(step);
 	}
 }

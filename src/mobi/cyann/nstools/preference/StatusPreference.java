@@ -49,11 +49,11 @@ public class StatusPreference extends BasePreference {
         }
 	}
 
-	protected void setValue(int newValue, boolean writeInterface) {
+	protected void writeValue(int newValue, boolean writeInterface) {
 		if(writeInterface && value > -1 && newValue != value) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
-			newValue = getValue();
+			newValue = readValue();
 		}
 		if(newValue != value) {
 			value = newValue;
@@ -64,7 +64,7 @@ public class StatusPreference extends BasePreference {
 		}
 	}
 
-	private int getValue() {
+	private int readValue() {
 		int ret = -1;
 		String str = readFromInterface();
 		try {
@@ -78,7 +78,7 @@ public class StatusPreference extends BasePreference {
 	}
 	
 	public void reload() {
-		setValue(getValue(), false);
+		writeValue(readValue(), false);
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class StatusPreference extends BasePreference {
         if (!callChangeListener(newValue)) {
             return;
         }
-        setValue(newValue, true);
+        writeValue(newValue, true);
 	}
 	
 	@Override
@@ -111,11 +111,19 @@ public class StatusPreference extends BasePreference {
     		value = getPersistedInt(-1);
     	}
 		int v = PreloadValues.getInstance().getInt(getKey());
-		setValue(v, false);
+		writeValue(v, false);
     }
     
 	@Override
 	public boolean shouldDisableDependents() {
 		return (value != 1) || super.shouldDisableDependents();
+	}
+	
+	public int getValue() {
+		return value;
+	}
+	
+	public void setValue(int value) {
+		this.value = value;
 	}
 }

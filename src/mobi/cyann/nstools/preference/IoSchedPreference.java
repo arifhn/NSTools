@@ -73,10 +73,10 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		}
 	}
 
-	protected void setValue(String newValue) {
+	private void writeValue(String newValue) {
 		if(value != null && !newValue.equals(value)) {
 			writeToInterface(newValue);
-			newValue = getValue();
+			newValue = readValue();
 		}
 		if(!newValue.equals(value)) {
 			value = newValue;
@@ -87,7 +87,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		}
 	}
 
-	private String getValue() {
+	private String readValue() {
 		return parseValue(readFromInterface());
 	}
 	
@@ -110,7 +110,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 	}
 	
 	public void reload() {
-		setValue(getValue());
+		writeValue(readValue());
 	}
 	
 	@Override
@@ -138,7 +138,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
     	if(restoreValue) {
     		value = getPersistedString(null);
     	}
-		setValue(parseValue(PreloadValues.getInstance().getString(getKey())));
+		writeValue(parseValue(PreloadValues.getInstance().getString(getKey())));
     }
     
 	@Override
@@ -153,7 +153,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
-	        setValue(newValue);
+	        writeValue(newValue);
 		}
 		d.dismiss();
 	}

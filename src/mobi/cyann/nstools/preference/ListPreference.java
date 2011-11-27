@@ -56,12 +56,12 @@ public class ListPreference extends BasePreference implements DialogInterface.On
         }
 	}
 
-	protected void setValue(Object newValue, boolean writeInterface) {
+	private void writeValue(Object newValue, boolean writeInterface) {
 		Log.d(LOG_TAG, "setValue=" + newValue);
 		if(writeInterface && value != null && !newValue.equals(value)) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
-			newValue = getValue();
+			newValue = readValue();
 		}
 		if(!newValue.equals(value)) {
 			value = newValue;
@@ -76,7 +76,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 		}
 	}
 
-	private Object getValue() {
+	private Object readValue() {
 		Object ret = null;
 		String str = readFromInterface();
 		try {
@@ -94,7 +94,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 	}
 	
 	public void reload() {
-		setValue(getValue(), false);
+		writeValue(readValue(), false);
 	}
 	
 	@Override
@@ -141,7 +141,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
     	}else { // string
     		preloadVal = PreloadValues.getInstance().getString(getKey());
     	}
-		setValue(preloadVal, false);
+		writeValue(preloadVal, false);
     }
     
 	@Override
@@ -156,7 +156,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
-	        setValue(newValue, true);
+	        writeValue(newValue, true);
 		}
 		d.dismiss();
 	}
