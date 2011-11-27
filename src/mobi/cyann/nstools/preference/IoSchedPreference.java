@@ -1,5 +1,5 @@
 /**
- * IOSchedPreference.java
+ * IoSchedPreference.java
  * Nov 27, 2011 10:03:52 AM
  */
 package mobi.cyann.nstools.preference;
@@ -22,25 +22,25 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class IOSchedPreference extends BasePreference implements DialogInterface.OnClickListener {
+public class IoSchedPreference extends BasePreference implements DialogInterface.OnClickListener {
 	private final static String LOG_TAG = "NSTools.IOSchedPreference";
 	private String value;
 	private String schedValues[];
 	private CharSequence writeToInterfaces[];
 	
-	public IOSchedPreference(Context context, AttributeSet attrs, int defStyle) {
+	public IoSchedPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
-		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_IOSchedPreference, defStyle, 0);
-		writeToInterfaces = a.getTextArray(R.styleable.mobi_cyann_nstools_preference_IOSchedPreference_writeToInterface);
+		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_IoSchedPreference, defStyle, 0);
+		writeToInterfaces = a.getTextArray(R.styleable.mobi_cyann_nstools_preference_IoSchedPreference_writeToInterface);
 		a.recycle();
 	}
 
-	public IOSchedPreference(Context context, AttributeSet attrs) {
+	public IoSchedPreference(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public IOSchedPreference(Context context) {
+	public IoSchedPreference(Context context) {
 		this(context, null);
 	}
 	
