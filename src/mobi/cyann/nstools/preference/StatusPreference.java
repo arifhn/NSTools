@@ -4,8 +4,10 @@
  */
 package mobi.cyann.nstools.preference;
 
+import mobi.cyann.nstools.PreloadValues;
 import mobi.cyann.nstools.R;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -17,13 +19,10 @@ import android.widget.TextView;
  */
 public class StatusPreference extends BasePreference {
 	private final static String LOG_TAG = "NSTools.StatusPreference";
-	private int value = -1;
+	protected int value = -1;
 	
 	public StatusPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		
-		// init value
-		value = getValue();
 	}
 
 	public StatusPreference(Context context, AttributeSet attrs) {
@@ -50,12 +49,15 @@ public class StatusPreference extends BasePreference {
         }
 	}
 
-	private void setValue(int newValue) {
+	protected void setValue(int newValue) {
+		if(value > -1 && newValue != value) {
+			writeToInterface(String.valueOf(newValue));
+			// re-read from interface (to detect error)
+			newValue = getValue();
+		}
 		if(newValue != value) {
 			value = newValue;
 			persistInt(newValue);
-			
-			writeToInterface(String.valueOf(newValue));
 			
 			notifyDependencyChange(shouldDisableDependents());
             notifyChanged();
@@ -86,8 +88,6 @@ public class StatusPreference extends BasePreference {
 
 	@Override
 	protected void onClick() {
-		 super.onClick();
-	        
 		int newValue = -1;
 		if(value == 0) {
 			newValue = 1;
@@ -99,7 +99,21 @@ public class StatusPreference extends BasePreference {
         }
         setValue(newValue);
 	}
-
+	
+	@Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return  PreloadValues.getInstance().getInt(getKey());
+    }
+    
+    @Override
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+    	if(restoreValue) {
+    		value = getPersistedInt(-1);
+    	}
+		int v = PreloadValues.getInstance().getInt(getKey());
+		setValue(v);
+    }
+    
 	@Override
 	public boolean shouldDisableDependents() {
 		return (value != 1) || super.shouldDisableDependents();

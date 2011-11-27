@@ -25,6 +25,8 @@ public abstract class BasePreference extends Preference {
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
+		setDefaultValue(-1);
+		
 		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_BasePreference, defStyle, 0);
 		reloadOnResume = a.getBoolean(R.styleable.mobi_cyann_nstools_preference_BasePreference_reloadOnResume, false);
 		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);

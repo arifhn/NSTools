@@ -5,14 +5,12 @@
     <PreferenceCategory android:title="@string/bld_tweak" >
 
         <mobi.cyann.nstools.preference.StatusPreference
-            android:defaultValue="0"
             custom:interfacePath="/sys/class/misc/backlightdimmer/enabled"
             android:key="@string/key_bld_status"
             android:summary="@string/status_not_available"
             android:title="@string/label_status" />
 
         <mobi.cyann.nstools.preference.IntegerPreference
-            android:defaultValue="5000"
             android:dependency="@string/key_bld_status"
             custom:interfacePath="/sys/class/misc/backlightdimmer/delay"
             android:key="@string/key_bld_delay"
@@ -27,7 +25,6 @@
     <PreferenceCategory android:title="@string/bln_tweak" >
 
         <mobi.cyann.nstools.preference.StatusPreference
-            android:defaultValue="0"
             custom:interfacePath="/sys/class/misc/backlightnotification/enabled"
             android:key="@string/key_bln_status"
             android:summary="@string/status_not_available"
@@ -37,7 +34,6 @@
     <PreferenceCategory android:title="@string/blx_tweak" >
 
         <mobi.cyann.nstools.preference.IntegerPreference
-            android:defaultValue="95"
             custom:interfacePath="/sys/class/misc/batterylifeextender/charging_limit"
             android:key="@string/key_blx_charging_limit"
             custom:maxValue="100"
@@ -51,14 +47,12 @@
     <PreferenceCategory android:title="@string/touchwake_tweak" >
 
         <mobi.cyann.nstools.preference.StatusPreference
-            android:defaultValue="0"
             custom:interfacePath="/sys/class/misc/touchwake/enabled"
             android:key="@string/key_touchwake_status"
             android:summary="@string/status_not_available"
             android:title="@string/label_status" />
 
         <mobi.cyann.nstools.preference.IntegerPreference
-            android:defaultValue="45000"
             android:dependency="@string/key_touchwake_status"
             custom:interfacePath="/sys/class/misc/touchwake/delay"
             android:key="@string/key_touchwake_delay"
@@ -73,7 +67,6 @@
     <PreferenceCategory android:title="@string/cmled_tweak" >
 
         <mobi.cyann.nstools.preference.IntegerPreference
-            android:defaultValue="5000"
             custom:interfacePath="/sys/class/misc/notification/bl_timeout"
             android:key="@string/key_cmled_bltimeout"
             custom:maxValue="60000"
@@ -84,14 +77,12 @@
             android:title="@string/label_cmled_bltimeout" />
 
         <mobi.cyann.nstools.preference.StatusPreference
-            android:defaultValue="0"
             custom:interfacePath="/sys/class/misc/notification/blink"
             android:key="@string/key_cmled_blink"
             android:summary="@string/status_not_available"
             android:title="@string/label_cmled_blink" />
 
         <mobi.cyann.nstools.preference.IntegerPreference
-            android:defaultValue="5000"
             android:dependency="@string/key_cmled_blink"
             custom:interfacePath="/sys/class/misc/notification/blinktimeout"
             android:key="@string/key_cmled_blinktimeout"

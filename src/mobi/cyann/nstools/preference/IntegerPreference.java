@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,10 +17,9 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class IntegerPreference extends BasePreference implements DialogInterface.OnClickListener {
-	private final static String LOG_TAG = "NSTools.IntegerPreference";
+public class IntegerPreference extends StatusPreference implements DialogInterface.OnClickListener {
+	//private final static String LOG_TAG = "NSTools.IntegerPreference";
 	
-	protected int value;
 	private final SeekbarDialog dialog;
 	private final String metrics;
 	
@@ -41,9 +39,6 @@ public class IntegerPreference extends BasePreference implements DialogInterface
 		dialog.setStep(step);
 		dialog.setTitle(getTitle());
 		dialog.setMetrics(metrics);
-		
-		// initialize value
-		value = getValue();
 	}
 
 	public IntegerPreference(Context context, AttributeSet attrs) {
@@ -53,7 +48,7 @@ public class IntegerPreference extends BasePreference implements DialogInterface
 	public IntegerPreference(Context context) {
 		this(context, null);
 	}
-
+	
 	@Override
 	protected void onBindView(View view) {
 		super.onBindView(view);
@@ -69,48 +64,9 @@ public class IntegerPreference extends BasePreference implements DialogInterface
         	}
         }
 	}
-
-	private void setValue(int newValue) {
-		if(value > -1) {
-			writeToInterface(String.valueOf(newValue));
-			// re-read from interface (to detect error)
-			newValue = getValue();
-			if(newValue != value) {
-				value = newValue;
-				persistInt(newValue);
-				
-				notifyDependencyChange(shouldDisableDependents());
-	            notifyChanged();
-			}
-		}
-	}
-
-	private int getValue() {
-		int ret = -1;
-		String str = readFromInterface();
-		try {
-			ret = Integer.parseInt(str);
-		}catch(NumberFormatException ex) {
-			
-		}catch(Exception ex) {
-			Log.e(LOG_TAG, "str:"+str, ex);
-		}
-		return ret;
-	}
-	
-	public void reload() {
-		setValue(getValue());
-	}
-	
-	@Override
-	public boolean isEnabled() {
-		return (value > -1) && super.isEnabled();
-	}
 	
 	@Override
 	protected void onClick() {
-		super.onClick();
-	        
 		dialog.setValue(value);
 		dialog.show();
 	}
@@ -125,10 +81,5 @@ public class IntegerPreference extends BasePreference implements DialogInterface
 	        }
 	        setValue(newValue);
 		}
-	}
-	
-	@Override
-	public boolean shouldDisableDependents() {
-		return (value == -1) || super.shouldDisableDependents();
 	}
 }

@@ -76,9 +76,10 @@ public class MainActivity extends TabActivity {
 	}
 
     private void reloadTweak() {
-    	/*
+    	
     	// execute our reader script to get values for each tweak
 		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
+		/*
 		// reload preference from prop file
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		Properties prop = new Properties();
