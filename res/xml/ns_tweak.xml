@@ -96,9 +96,12 @@
 
     <PreferenceCategory android:title="@string/iosched_tweak" >
 
-        <ListPreference
+        <mobi.cyann.nstools.preference.IOSchedPreference
+            custom:interfacePath="/sys/block/mmcblk0/queue/scheduler"
+            custom:writeToInterface="@array/iosched_interfaces"
             android:key="@string/key_iosched"
-            android:title="@string/label_iosched" />
+            android:summary="@string/status_not_available"
+            android:title="@string/label_iosched"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

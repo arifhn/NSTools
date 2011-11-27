@@ -1,17 +1,14 @@
 package mobi.cyann.nstools;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Properties;
 
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -76,43 +73,8 @@ public class MainActivity extends TabActivity {
 	}
 
     private void reloadTweak() {
-    	
-    	// execute our reader script to get values for each tweak
-		SysCommand.getInstance().suRun(getString(R.string.NS_TWEAK_SCRIPT));
-		/*
-		// reload preference from prop file
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		Properties prop = new Properties();
-		try {
-			FileInputStream fis = new FileInputStream(getString(R.string.NS_TWEAK_FILE));
-			prop.load(fis);
-			fis.close();
-		}catch(Exception ex) {
-			Log.e(LOG_TAG, "fail to load ns_tweak_file", ex);
-		}
-		Editor editor = preferences.edit();
-		for(Object key: prop.keySet()) {
-			if(!key.toString().equals(getString(R.string.key_max_arm_volt)) &&
-					!key.toString().equals(getString(R.string.key_max_int_volt))) {
-				editor.putString(key.toString(), prop.getProperty(key.toString()));
-			}else {
-				String parts[] = prop.getProperty(key.toString()).split(" ");
-				editor.putString(key.toString(), parts[0].trim());
-			}
-		}
-		// TODO: remove these lines below
-		// currently we need to remove the old keys for upgrading
-		editor.remove(getString(R.string.key_bln_status));
-		editor.remove(getString(R.string.key_touchwake_status));
-		editor.remove(getString(R.string.key_touchwake_delay));
-		editor.remove(getString(R.string.key_blx_charging_limit));
-		editor.commit();
-		
-    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	Editor editor = preferences.edit();
-    	editor.clear();
-    	editor.commit();
-    	*/
+    	// execute our preload script to get values from sys interface
+		SysCommand.getInstance().suRun(getString(R.string.PRELOAD_SCRIPT));
     }
     
 	private void copyAsset(String srcPath, String dstPath) throws IOException {

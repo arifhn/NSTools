@@ -10,4 +10,7 @@
 		<attr name="step" format="integer"/>
 		<attr name="metrics" format="string"/>
 	</declare-styleable>
+	<declare-styleable name="mobi.cyann.nstools.preference.IOSchedPreference">
+		<attr name="writeToInterface" format="reference"/>    
+	</declare-styleable>
 </resources>

@@ -2,15 +2,13 @@
 <resources>
 
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
-    <string name="SCRIPT_VERSION">6</string>
+    <string name="SCRIPT_VERSION">7</string>
 
     <string-array name="scripts">
-        <item>read_ns_tweak.sh</item>
+        <item>preload.sh</item>
     </string-array>
 
-    <string name="NS_TWEAK_FILE">/data/data/mobi.cyann.nstools/nstweak.prop</string>
-    <string name="NS_TWEAK_SCRIPT">/data/data/mobi.cyann.nstools/scripts/read_ns_tweak.sh</string>
-    <string name="NS_TEMP_SCRIPT">/data/data/mobi.cyann.nstools/temp.sh</string>
+    <string name="PRELOAD_SCRIPT">/data/data/mobi.cyann.nstools/scripts/preload.sh</string>
     
 	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
         
@@ -42,4 +40,9 @@
     <string name="key_cmled_blink">key_cmled_blink</string>
     <string name="key_cmled_blinktimeout">key_cmled_blinktimeout</string>
     <string name="key_iosched">key_iosched</string>
+    
+	<string-array name="iosched_interfaces">
+	    <item>/sys/block/mtdblock4/queue/scheduler</item>
+	    <item>/sys/block/mmcblk0/queue/scheduler</item>
+	</string-array>
 </resources>

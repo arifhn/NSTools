@@ -31,11 +31,11 @@ public class PreloadValues {
 	private PreloadValues() {
 		prop = new Properties();
 		try {
-			FileInputStream fis = new FileInputStream("/data/data/mobi.cyann.nstools/nstweak.prop");
+			FileInputStream fis = new FileInputStream("/data/data/mobi.cyann.nstools/preload.prop");
 			prop.load(fis);
 			fis.close();
 		}catch(Exception ex) {
-			Log.e(LOG_TAG, "fail to load ns_tweak_file", ex);
+			Log.e(LOG_TAG, "fail to read preload file", ex);
 		}
 	}
 	

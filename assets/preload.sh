@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # outputfile to save result
-OUT_FILE="/data/data/mobi.cyann.nstools/nstweak.prop"
+OUT_FILE="/data/data/mobi.cyann.nstools/preload.prop"
 
 # prepare the file
 echo "" > $OUT_FILE
@@ -176,5 +176,16 @@ case "$?" in
 	;;
 	*)
 	echo "key_screenoff_maxfreq=-1" >> $OUT_FILE
+	;;
+esac
+
+# iosched
+STAT=`cat /sys/block/mmcblk0/queue/scheduler`
+case "$?" in
+	0)
+	echo "key_iosched=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_iosched=-1" >> $OUT_FILE
 	;;
 esac
