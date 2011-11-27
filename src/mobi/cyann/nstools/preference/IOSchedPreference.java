@@ -88,7 +88,25 @@ public class IOSchedPreference extends BasePreference implements DialogInterface
 	}
 
 	private String getValue() {
-		return readFromInterface();
+		return parseValue(readFromInterface());
+	}
+	
+	private String parseValue(String tmp) {
+		String ret = null;
+		if(tmp != null && !tmp.equals("-1")) {
+			schedValues = tmp.split(" ");
+			int idx = 0;
+			for(int i = 0; i < schedValues.length; ++i) {
+				if(schedValues[i].startsWith("[")) {
+					schedValues[i] = schedValues[i].substring(1, schedValues[i].length() - 1);
+					idx = i;
+					break;
+				}
+			}
+			ret = schedValues[idx];
+			Arrays.sort(schedValues);
+		}
+		return ret;
 	}
 	
 	public void reload() {
@@ -120,19 +138,7 @@ public class IOSchedPreference extends BasePreference implements DialogInterface
     	if(restoreValue) {
     		value = getPersistedString(null);
     	}
-		String tmp = PreloadValues.getInstance().getString(getKey());
-		if(tmp != null && !tmp.equals("-1")) {
-			schedValues = tmp.split(" ");
-			int idx = 0;
-			for(int i = 0; i < schedValues.length; ++i) {
-				if(schedValues[i].startsWith("[")) {
-					schedValues[i] = schedValues[i].substring(1, schedValues[i].length() - 1);
-					idx = i;
-					break;
-				}
-			}
-			setValue(schedValues[idx]);
-		}
+		setValue(parseValue(PreloadValues.getInstance().getString(getKey())));
     }
     
 	@Override
@@ -149,5 +155,6 @@ public class IOSchedPreference extends BasePreference implements DialogInterface
 	        }
 	        setValue(newValue);
 		}
+		d.dismiss();
 	}
 }

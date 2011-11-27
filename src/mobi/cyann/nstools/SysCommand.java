@@ -39,7 +39,7 @@ public class SysCommand {
 			cmds.append(cmd[i]);
 			cmds.append(" ");
 		}
-		Log.d(LOG_TAG, "su:" + cmds.toString());
+		Log.d(LOG_TAG, cmds.toString());
 		int result = 0;
 		try {
 			// build process

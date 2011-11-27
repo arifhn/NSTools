@@ -87,10 +87,10 @@ public class SettingsManager {
 		// Touchwake
 		value = preferences.getInt(c.getString(R.string.key_touchwake_status), -1);
 		if(value > -1) {
-			command.append("echo" + value + " > " + "/sys/class/misc/touchwake/enabled\n");
+			command.append("echo " + value + " > " + "/sys/class/misc/touchwake/enabled\n");
 			value = preferences.getInt(c.getString(R.string.key_touchwake_delay), -1);
 			if(value > -1)
-				command.append("echo" + value + " > " + "/sys/class/misc/touchwake/delay\n");
+				command.append("echo " + value + " > " + "/sys/class/misc/touchwake/delay\n");
 		}
 		
 		// governor
