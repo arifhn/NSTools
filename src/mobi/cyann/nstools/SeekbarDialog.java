@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -47,8 +46,7 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 	protected void onCreate(Bundle savedInstanceState) {
 		View customView = getLayoutInflater().inflate(R.layout.seekbar_dialog, null);
 		
-		//setTitle(R.string.about_text);
-		//setIcon(null);
+		setIcon(0);
 		setView(customView);
 		setButton(BUTTON_POSITIVE, getContext().getString(R.string.label_ok), okButtonListener);
 		setButton(BUTTON_NEGATIVE, getContext().getString(R.string.label_cancel), cancelButtonListener);
