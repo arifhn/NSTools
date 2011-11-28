@@ -5,6 +5,7 @@
     <string name="ns_tweak">Tweaks</string>
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="bln_tweak">Backlight Notification</string>
+    <string name="label_bln_blink">Blink Status</string>
     <string name="blx_tweak">Battery Life Extender</string>
     <string name="label_charging_limit">Ladebegrenzung</string>
 	<string name="cmled_tweak">CMLed</string>
@@ -68,5 +69,6 @@
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">Übertaktungswert</string>
-        
+    
+    <string name="msg_kernel_changed">Die Einstellungen werden verworfen weil sich die Kernelversion geändert hat</string>
 </resources>
