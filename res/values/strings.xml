@@ -69,5 +69,6 @@
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">OC Value</string>
-        
+
+	<string name="msg_kernel_changed">Your settings were not set, kernel version have changed</string>
 </resources>
