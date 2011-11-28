@@ -88,6 +88,9 @@ public class SettingsManager {
 		value = preferences.getInt(c.getString(R.string.key_bln_status), -1);
 		if(value > -1) {
 			command.append("echo " + value + " > " + "/sys/class/misc/backlightnotification/enabled\n");
+			value = preferences.getInt(c.getString(R.string.key_bln_blink), -1);
+			if(value > -1)
+				command.append("echo " + value + " > " + "/sys/class/misc/backlightnotification/in_kernel_blink\n");
 		}
 
 		// BLX

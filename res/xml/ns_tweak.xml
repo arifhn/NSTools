@@ -29,6 +29,11 @@
             android:key="@string/key_bln_status"
             android:summary="@string/status_not_available"
             android:title="@string/label_status" />
+        <mobi.cyann.nstools.preference.StatusPreference
+            custom:interfacePath="/sys/class/misc/backlightnotification/in_kernel_blink"
+            android:key="@string/key_bln_blink"
+            android:summary="@string/status_not_available"
+            android:title="@string/label_bln_blink" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/blx_tweak" >

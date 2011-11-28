@@ -14,6 +14,7 @@
     <string name="key_bld_status">key_bld_status</string>
     <string name="key_bld_delay">key_bld_delay</string>
     <string name="key_bln_status">key_bln_status</string>
+    <string name="key_bln_blink">key_bln_blink</string>
     <string name="key_blx_charging_limit">key_blx_charging_limit</string>
     <string name="key_deepidle_status">key_deepidle_status</string>
 	<string name="key_deepidle_stats">key_deepidle_stats</string>

@@ -50,9 +50,11 @@ STAT=`cat /sys/class/misc/backlightnotification/enabled`
 case "$STAT" in
 	1)
 	echo "key_bln_status=1" >> $OUT_FILE
+	echo "key_bln_blink=`cat /sys/class/misc/backlightnotification/in_kernel_blink`" >> $OUT_FILE
 	;;
 	0)
 	echo "key_bln_status=0" >> $OUT_FILE
+	echo "key_bln_blink=`cat /sys/class/misc/backlightnotification/in_kernel_blink`" >> $OUT_FILE
 	;;
 	*)
 	echo "key_bln_status=-1" >> $OUT_FILE
