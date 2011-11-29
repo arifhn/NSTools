@@ -186,4 +186,19 @@ public class SettingsManager {
 		
 		return SUCCESS;
 	}
+	
+	public static void saveSettings(Context c, String preferenceName) {
+		// TODO:
+		// load default preference
+		// save to new file name = preferenceName
+		// maybe we need to create new constants as a base path for saved settings
+		// (i.e. /data/data/mobi.cyann.nstools/settings/ )
+	}
+	
+	public static void loadSettings(Context c, String preferenceName) {
+		// TODO:
+		// set preferencePath with 'basepath' constants + preferenceName
+		String preferencePath = null;
+		writeToInterface(c, preferencePath, false);
+	}
 }
