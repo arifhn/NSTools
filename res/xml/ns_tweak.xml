@@ -14,7 +14,7 @@
             android:dependency="@string/key_bld_status"
             custom:interfacePath="/sys/class/misc/backlightdimmer/delay"
             android:key="@string/key_bld_delay"
-            custom:maxValue="60000"
+            custom:maxValue="120000"
             custom:metrics="ms"
             custom:minValue="0"
             custom:step="500"
