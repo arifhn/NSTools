@@ -46,7 +46,14 @@ public class SysCommand {
 			ProcessBuilder pb = new ProcessBuilder("su", "-c", "/system/bin/sh");
 			// start the process
 			Process p = pb.start();
-			
+
+			// create stream eater
+			err = new StreamGobbler(p.getErrorStream());
+			out = new StreamGobbler(p.getInputStream());
+			// start them all
+			err.start();
+			out.start();
+
 			OutputStream os = p.getOutputStream();
 			OutputStreamWriter osw = new OutputStreamWriter(os);
 			osw.write(cmds.toString());
@@ -54,12 +61,6 @@ public class SysCommand {
 			osw.flush();
 			osw.close();
 			
-			// create stream eater
-			err = new StreamGobbler(p.getErrorStream());
-			out = new StreamGobbler(p.getInputStream());
-			// start them all
-			err.start();
-			out.start();
 			// wait until they finished
 			p.waitFor();
 			err.waitFor();

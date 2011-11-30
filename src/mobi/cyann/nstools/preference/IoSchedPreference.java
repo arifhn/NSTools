@@ -74,6 +74,9 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 	}
 
 	private void writeValue(String newValue) {
+		if(newValue == null) {
+			return;
+		}
 		if(value != null && !newValue.equals(value)) {
 			writeToInterface(newValue);
 			newValue = readValue();

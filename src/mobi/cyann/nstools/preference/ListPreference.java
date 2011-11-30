@@ -50,13 +50,16 @@ public class ListPreference extends BasePreference implements DialogInterface.On
         if (summaryView != null) {
         	if(value == null) {
         		summaryView.setText(R.string.status_not_available);
-        	}else if(listValues != null) {
+        	}else if(listValues != null && listValues.length > 0) {
     			summaryView.setText(listLabels[selectedIndex()]);
         	}
         }
 	}
 
 	private void writeValue(Object newValue, boolean writeInterface) {
+		if(newValue == null) {
+			return;
+		}
 		Log.d(LOG_TAG, "setValue=" + newValue);
 		if(writeInterface && value != null && !newValue.equals(value)) {
 			writeToInterface(String.valueOf(newValue));

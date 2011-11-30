@@ -29,6 +29,10 @@ public class PreloadValues {
 	private Properties prop;
 	
 	private PreloadValues() {
+		reload();
+	}
+	
+	public void reload() {
 		prop = new Properties();
 		try {
 			FileInputStream fis = new FileInputStream("/data/data/mobi.cyann.nstools/preload.prop");

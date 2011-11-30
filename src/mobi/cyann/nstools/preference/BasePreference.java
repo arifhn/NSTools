@@ -59,11 +59,14 @@ public abstract class BasePreference extends Preference {
 		if(interfacePath != null) {
 			Log.d(LOG_TAG, "read from " + interfacePath);
 			SysCommand sc = SysCommand.getInstance();
-			if(sc.suRun("cat", interfacePath) > 0) {
+			int n = sc.suRun("cat", interfacePath); 
+			if(n > 0) {
 				ret = sc.getLastResult(0); 
 				Log.d(LOG_TAG, "ROK:" + ret);
-			}else {
+			}else if(n < 0) {
 				Log.e(LOG_TAG, "RER:" + sc.getLastError(0));
+			}else {
+				Log.e(LOG_TAG, "RER:<empty>");
 			}
 		}
 		return ret;

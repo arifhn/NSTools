@@ -79,6 +79,8 @@ public class MainActivity extends TabActivity {
 		// execute our preload script to get values from sys interface
 		sc.suRun(getString(R.string.PRELOAD_SCRIPT));
 		
+		PreloadValues.getInstance().reload();
+		
 		// save kernel version
 		if(sc.suRun("cat", "/proc/version") > 0) {
 			String kernel = sc.getLastResult(0);
