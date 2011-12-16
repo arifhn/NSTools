@@ -63,7 +63,7 @@
             android:key="@string/key_touchwake_delay"
             custom:maxValue="90000"
             custom:metrics="ms"
-            custom:minValue="1000"
+            custom:minValue="0"
             custom:step="1000"
             android:summary="0"
             android:title="@string/label_delay" />
