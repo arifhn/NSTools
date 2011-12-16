@@ -94,8 +94,10 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		}
 		minFreq.setListValues(availableFreqs);
 		minFreq.setListLabels(availableFreqsStr);
+		minFreq.reload();
 		maxFreq.setListValues(availableFreqs);
 		maxFreq.setListLabels(availableFreqsStr);
+		maxFreq.reload();
 	}
 	
 	private void showIdleStatsDialog() {
