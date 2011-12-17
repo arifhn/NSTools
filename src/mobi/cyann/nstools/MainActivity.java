@@ -72,6 +72,11 @@ public class MainActivity extends TabActivity {
 		}
 		onCreate = false;
 	}
+    
+    @Override
+    protected void onStop() {
+    	System.exit(0);
+    }
 
     private void reloadTweak() {
 		SysCommand sc = SysCommand.getInstance();
