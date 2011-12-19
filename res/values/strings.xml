@@ -17,7 +17,7 @@
 	<string name="label_iosched">Active scheduler</string>
 	
     <!-- VoltageControlActivity -->
-    <string name="voltage_control">Custom Voltage</string>
+    <string name="voltage_control">Volt</string>
     <string name="label_default_voltage">Default voltages</string>
     <string name="summaryOn_default_voltage">Use voltage settings from kernel</string>
     <string name="summaryOff_default_voltage">Use customized voltage settings below</string>
