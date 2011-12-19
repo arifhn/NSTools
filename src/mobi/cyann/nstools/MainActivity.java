@@ -75,7 +75,7 @@ public class MainActivity extends TabActivity {
     
     @Override
     protected void onStop() {
-    	System.exit(0);
+    	finish();
     }
 
     private void reloadTweak() {
