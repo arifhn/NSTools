@@ -54,7 +54,7 @@
         <mobi.cyann.nstools.preference.StatusPreference
             android:dependency="@string/key_governor"
             custom:dependencyType="reload_value"
-            custom:interfacePath="/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq"
             android:key="@string/key_screenoff_maxfreq"
             android:summary="@string/status_not_available"
             android:title="@string/label_screenoff_maxfreq" />
