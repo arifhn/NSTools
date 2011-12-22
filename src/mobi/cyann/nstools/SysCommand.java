@@ -1,6 +1,7 @@
 package mobi.cyann.nstools;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +28,16 @@ public class SysCommand {
 		return singleton;
 	}
 
+	/**
+	 * this method is a work arround for hacking su (3.0.3.2) problem on ICS
+	 * 
+	 */
+	public void chmod(String device) {
+		if(!new File(device).canWrite()) {
+			suRun("chmod", "666", device);
+		}
+	}
+	
 	/**
 	 * run shell command with super user permission
 	 * 
