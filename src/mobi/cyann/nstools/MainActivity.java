@@ -15,6 +15,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -75,6 +77,7 @@ public class MainActivity extends TabActivity {
     
     @Override
     protected void onStop() {
+    	super.onStop();
     	finish();
     }
 
