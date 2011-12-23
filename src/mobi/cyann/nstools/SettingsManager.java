@@ -123,7 +123,7 @@ public class SettingsManager {
 		// lazy screenoff max freq
 		value = preferences.getInt(c.getString(R.string.key_screenoff_maxfreq), -1);
 		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq\n");
+			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq\n");
 		}
 		
 		// cmled
