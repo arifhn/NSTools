@@ -8,8 +8,6 @@ import mobi.cyann.nstools.R;
 import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
-import android.os.Environment;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -78,23 +76,10 @@ public abstract class BasePreference extends Preference {
 		// echo to interfacePath
 		if(interfacePath != null) {
 			SysCommand sc = SysCommand.getInstance();
-			if(Build.VERSION.SDK_INT >= 14) {
-				// hack su binary problem (v 3.0.3.2 on ICS)
-				sc.chmod(interfacePath); //chmod with su
-				// write the value without su
-				if(sc.run("/system/bin/sh", "-c", "echo " + value + " > " + interfacePath) >= 0) {
-					Log.d(LOG_TAG, "WOK");
-				}else {
-					Log.e(LOG_TAG, "WER:" + sc.getLastError(0));
-				}
+			if(sc.suRun("echo", value, ">", interfacePath) >= 0) {
+				Log.d(LOG_TAG, "WOK");
 			}else {
-				// don't change anything for older android version
-				sc.chmod(interfacePath);
-				if(sc.run("echo", value, ">", interfacePath) >= 0) {
-					Log.d(LOG_TAG, "WOK");
-				}else {
-					Log.e(LOG_TAG, "WER:" + sc.getLastError(0));
-				}
+				Log.e(LOG_TAG, "WER:" + sc.getLastError(0));
 			}
 		}
 	}
