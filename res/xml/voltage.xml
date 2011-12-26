@@ -19,7 +19,7 @@
             android:key="@string/key_max_arm_volt"
             custom:maxValue="1500"
             custom:metrics="mV"
-            custom:minValue="500"
+            custom:minValue="750"
             custom:step="25"
             android:summary="0"
             android:title="@string/label_max_arm_volt" />
@@ -35,7 +35,7 @@
             android:key="@string/key_max_int_volt"
             custom:maxValue="1500"
             custom:metrics="mV"
-            custom:minValue="500"
+            custom:minValue="750"
             custom:step="25"
             android:summary="0"
             android:title="@string/label_max_int_volt" />

@@ -95,7 +95,7 @@ public class VoltageControlActivity extends PreferenceActivity implements OnPref
 		vp.setValue(value);
 		vp.setSummary("0");
 		vp.setMaxValue(1500);
-		vp.setMinValue(500);
+		vp.setMinValue(750);
 		vp.setStep(25);
 		vp.setMetrics("mV");
 		vp.setPersistent(false);
