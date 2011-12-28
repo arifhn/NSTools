@@ -2,7 +2,7 @@
 <resources>
     
     <!-- NSTweakActivity -->
-    <string name="ns_tweak">Réglages</string>
+    <string name="ns_tweak">Tweak</string>
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="bln_tweak">Backlight Notification</string>
     <string name="label_bln_blink">Clignotement</string>
@@ -17,7 +17,7 @@
     <string name="label_iosched">Activer Planificateur</string>
     
     <!-- VoltageControlActivity -->
-    <string name="voltage_control">Contrôle du voltage</string>
+    <string name="voltage_control">Volt</string>
     <string name="label_default_voltage">Voltage par défaut</string>
     <string name="summaryOn_default_voltage">Utiliser un voltage standard</string>
     <string name="summaryOff_default_voltage">Utiliser un voltage personnalisé</string>
@@ -30,15 +30,15 @@
 
 	<!-- common -->
     <string name="app_name">NSTools</string>
-    <string name="label_status">Statu</string>
+    <string name="label_status">Statut</string>
     <string name="label_delay">Délai</string>
     <string name="label_ok">Ok</string>
     <string name="label_cancel">Annuler</string>
     <string name="label_yes">Oui</string>
     <string name="label_no">Non</string>
     <string name="label_warning">Attention</string>
-    <string name="status_on"><b>Activer</b></string>
-    <string name="status_off"><b>Désactiver</b></string>
+    <string name="status_on"><b>Activé</b></string>
+    <string name="status_off"><b>Désactivé</b></string>
     <string name="status_not_available"><i>Etat indisponible</i></string>
 
 	<!-- Setting Activity -->
@@ -51,7 +51,7 @@
     <string name="about_desc">Visitez le forum NSTools sur XDA</string>
 
 	<!-- CPU Activity -->
-    <string name="label_cpu_tweak">Processeur</string>
+    <string name="label_cpu_tweak">CPU</string>
     <string name="label_governor">Gouverneur</string>
     <string name="label_min_cpufreq">Fréquence min processeur</string>
     <string name="label_max_cpufreq">Fréquence max processeur</string>
