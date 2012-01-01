@@ -36,16 +36,25 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
+    <string name="label_save">Save</string>
+    <string name="label_load">Load</string>
     <string name="label_warning">WARNING</string>
     <string name="status_on"><b>ON</b></string>
     <string name="status_off"><b>OFF</b></string>
     <string name="status_not_available"><i>not available</i></string>
+	
 
     <!-- Setting Activity -->
     <string name="label_setting">Setting</string>
     <string name="label_restore_on_boot">Set on boot</string>
     <string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
     <string name="summaryOff_restore_on_boot">Reset to default settings on boot</string>
+    <string name="label_load_settings">Load</string>
+    <string name="summary_load_settings">Load settings from saved file</string>
+    <string name="label_save_settings">Save</string>
+    <string name="summary_save_settings">Save current settings to file</string>
+    <string name="save_success_message">Settings saved</string>
+    <string name="save_failed_message">Failed to save settings</string>
     <string name="label_about">About</string>
     <string name="about_text">NSTools on XDA</string>
     <string name="about_desc">Visit NSTools thread on XDA</string>

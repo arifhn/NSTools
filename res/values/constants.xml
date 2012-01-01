@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="SETTINGS_DIR">/data/data/mobi.cyann.nstools/settings/</string>
-	<string name="DEFAULT_PREFERENCE_FILE">/data/data/mobi.cyann.nstools/shared_prefs/mobi.cyann.nstools_preferences.xml</string>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
     <string name="SCRIPT_VERSION">7</string>
 
@@ -33,6 +32,8 @@
     <string name="key_max_int_volt">key_max_int_volt</string>
     <string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
     <string name="key_restore_on_boot">key_restore_on_boot</string>
+    <string name="key_load_settings">key_load_settings</string>
+    <string name="key_save_settings">key_save_settings</string>
     <string name="key_about">key_about</string>
     <string name="key_governor">key_governor</string>
     <string name="key_max_cpufreq">key_max_cpufreq</string>

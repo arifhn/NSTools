@@ -23,4 +23,7 @@
 		   <enum name="string" value="1"/>
 		</attr>
 	</declare-styleable>
+	<declare-styleable name="mobi.cyann.nstools.preference.FileSelectPreference">
+		<attr name="path" format="string"/>    
+	</declare-styleable>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools">
 
     <CheckBoxPreference
         android:defaultValue="true"
@@ -8,8 +9,23 @@
         android:summaryOn="@string/summaryOn_restore_on_boot"
         android:title="@string/label_restore_on_boot" />
 
-    <PreferenceCategory android:title="@string/label_about" >
+    <mobi.cyann.nstools.preference.FileSelectPreference
+        android:key="@string/key_load_settings"
+        android:summary="@string/summary_load_settings"
+        android:title="@string/label_load_settings"
+		custom:path="@string/SETTINGS_DIR"
+        android:negativeButtonText="@string/label_cancel"
+        android:persistent="false"/>
 
+    <EditTextPreference
+        android:key="@string/key_save_settings"
+        android:summary="@string/summary_save_settings"
+        android:title="@string/label_save_settings"
+        android:positiveButtonText="@string/label_save"
+        android:negativeButtonText="@string/label_cancel"
+        android:persistent="false"/>
+
+    <PreferenceCategory android:title="@string/label_about" >
         <PreferenceScreen
             android:key="@string/key_about"
             android:summary="@string/about_desc"

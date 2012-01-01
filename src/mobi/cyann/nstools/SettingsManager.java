@@ -5,11 +5,9 @@
 package mobi.cyann.nstools;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,35 +25,7 @@ public class SettingsManager {
 	public final static int ERR_SET_ON_BOOT_FALSE = -1;
 	public final static int ERR_DIFFERENT_KERNEL = -2;
 	
-	private static int writeToInterface(Context c, String sharedPreferenceName, boolean onBoot, boolean skipKernelChecking) {
-		SharedPreferences preferences = null;
-		if(sharedPreferenceName != null) {
-			preferences = c.getSharedPreferences(sharedPreferenceName, Context.MODE_PRIVATE);
-		}else {
-			preferences = PreferenceManager.getDefaultSharedPreferences(c);
-		}
-		
-		// check 'set on boot' preference
-		boolean restore = preferences.getBoolean(c.getString(R.string.key_restore_on_boot), true);
-		if(onBoot && !restore) {
-			return ERR_SET_ON_BOOT_FALSE;
-		}
-
-		if(!skipKernelChecking) {
-			// now check current kernel version with saved value
-			restore = false;
-			SysCommand sysCommand = SysCommand.getInstance();
-			if(sysCommand.suRun("cat", "/proc/version") > 0) {
-				String kernel = sysCommand.getLastResult(0);
-				String savedKernelVersion = preferences.getString(c.getString(R.string.key_kernel_version), null);
-				if(kernel.equals(savedKernelVersion)) {
-					restore = true;
-				}
-			}
-			if(!restore) {
-				return ERR_DIFFERENT_KERNEL;
-			}
-		}
+	private static String buildCommand(Context c, SharedPreferences preferences) {
 		StringBuilder command = new StringBuilder();
 		
 		String status = null;
@@ -193,42 +163,31 @@ public class SettingsManager {
 				command.append("echo " + maxFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
 			}
 		}
-		SysCommand.getInstance().suRun(command.toString());
-		
-		return SUCCESS;
+		return command.toString();
 	}
 	
-	public static void saveSettings(Context c, String preferenceName) {
-		File source = new File(c.getString(R.string.DEFAULT_PREFERENCE_FILE));
+	public static boolean saveSettings(Context c, String preferenceName) {
+		boolean ret = false;
 		File destDir = new File(c.getString(R.string.SETTINGS_DIR));
 		if(!destDir.exists())
 			destDir.mkdirs(); // create dir if not exists
 		File destination = new File(destDir, preferenceName);
-		// copy file
-		InputStream is = null;
-		OutputStream os = null;
-		try {
-			is = new FileInputStream(source);
-			os = new FileOutputStream(destination);
+
+		if(!destination.exists()) {
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
+	
+			String command = buildCommand(c, preferences);
 			
-			byte buffer[] = new byte [1024];
-			int count = 0;
-			do {
-				count = is.read(buffer);
-				if(count > 0)
-					os.write(buffer, 0, count);
-			}while(count > 0);
-			os.flush();
-		}catch(IOException ex) {
-			Log.e(LOG_TAG, "", ex);
-		}finally {
 			try {
-				if(is != null)
-					is.close();	
-				if(os != null)
-					os.close();
-			}catch(IOException e) {}
+				FileWriter fw = new FileWriter(destination);
+				fw.write(command);
+				fw.close();
+				ret = true;
+			}catch(IOException e) {
+				Log.e(LOG_TAG, "", e);
+			}
 		}
+		return ret;
 	}
 	
 	/**
@@ -237,24 +196,25 @@ public class SettingsManager {
 	 * @param preferenceName
 	 * @return
 	 */
-	public static int loadSettings(Context c, String preferenceName) {
-		StringBuilder preferencePath = new StringBuilder(c.getString(R.string.SETTINGS_DIR));
-		preferencePath.append(preferenceName);
-		return writeToInterface(c, preferencePath.toString(), false, false);
-	}
-	
-	/**
-	 * call this method to force-load settings
-	 * 
-	 * @param c
-	 * @param preferenceName
-	 * @return
-	 */
-	public static int forceLoadSettings(Context c, String preferenceName) {
-		StringBuilder preferencePath = new StringBuilder(c.getString(R.string.SETTINGS_DIR));
-		preferencePath.append(preferenceName);
-		// skipKernelChecking = true (we want to force load the settings)
-		return writeToInterface(c, preferencePath.toString(), false, true);
+	public static void loadSettings(Context c, String preferenceName) {
+		File source = new File(c.getString(R.string.SETTINGS_DIR), preferenceName);
+		StringBuilder command = new StringBuilder();
+		try {
+			FileReader fr = new FileReader(source);
+			int count = 0;
+			char buff[] = new char[1024];
+			do {
+				count = fr.read(buff);
+				if(count > 0)
+					command.append(buff, 0, count);
+			}while(count > 0);
+			fr.close();
+		}catch(IOException e) {
+			Log.e(LOG_TAG, "", e);
+		}
+		if(command.length() > 0) {
+			SysCommand.getInstance().suRun(command.toString());
+		}
 	}
 	
 	/**
@@ -264,7 +224,31 @@ public class SettingsManager {
 	 * @return
 	 */
 	public static int loadSettingsOnBoot(Context c) {
-		// onBoot = true, skipKernelChecking = false
-		return writeToInterface(c, null, true, false);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(c);
+		
+		// check 'set on boot' preference
+		boolean restore = preferences.getBoolean(c.getString(R.string.key_restore_on_boot), true);
+		if(!restore) {
+			return ERR_SET_ON_BOOT_FALSE;
+		}
+
+		// now check current kernel version with saved value
+		restore = false;
+		SysCommand sysCommand = SysCommand.getInstance();
+		if(sysCommand.suRun("cat", "/proc/version") > 0) {
+			String kernel = sysCommand.getLastResult(0);
+			String savedKernelVersion = preferences.getString(c.getString(R.string.key_kernel_version), null);
+			if(kernel.equals(savedKernelVersion)) {
+				restore = true;
+			}
+		}
+		if(!restore) {
+			return ERR_DIFFERENT_KERNEL;
+		}
+
+		String command = buildCommand(c, preferences);
+		SysCommand.getInstance().suRun(command);
+		
+		return SUCCESS;
 	}
 }
