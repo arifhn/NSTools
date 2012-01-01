@@ -37,7 +37,7 @@ public class OnBootCompleteService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		try {
 			Log.d(LOG_TAG, "trying to load & write settings to kernel...");
-			int ret = SettingsManager.writeToInterface(this, null, true);
+			int ret = SettingsManager.loadSettingsOnBoot(this);
 			if(ret == SettingsManager.SUCCESS) {
 				Log.d(LOG_TAG, "write success");
 			}else if(ret == SettingsManager.ERR_SET_ON_BOOT_FALSE) {

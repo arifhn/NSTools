@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="SETTINGS_DIR">/data/data/mobi.cyann.nstools/settings/</string>
+	<string name="DEFAULT_PREFERENCE_FILE">/data/data/mobi.cyann.nstools/shared_prefs/mobi.cyann.nstools_preferences.xml</string>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
     <string name="SCRIPT_VERSION">7</string>
 
