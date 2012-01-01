@@ -34,6 +34,7 @@
     <string name="key_restore_on_boot">key_restore_on_boot</string>
     <string name="key_load_settings">key_load_settings</string>
     <string name="key_save_settings">key_save_settings</string>
+    <string name="key_delete_settings">key_delete_settings</string>
     <string name="key_about">key_about</string>
     <string name="key_governor">key_governor</string>
     <string name="key_max_cpufreq">key_max_cpufreq</string>

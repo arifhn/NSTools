@@ -166,6 +166,11 @@ public class SettingsManager {
 		return command.toString();
 	}
 	
+	public static void deleteSettings(Context c, String preferenceName) {
+		File destination = new File(c.getString(R.string.SETTINGS_DIR), preferenceName);
+		destination.delete();
+	}
+	
 	public static boolean saveSettings(Context c, String preferenceName) {
 		boolean ret = false;
 		File destDir = new File(c.getString(R.string.SETTINGS_DIR));

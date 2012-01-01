@@ -55,6 +55,8 @@
     <string name="summary_save_settings">Save current settings to file</string>
     <string name="save_success_message">Settings saved</string>
     <string name="save_failed_message">Failed to save settings</string>
+    <string name="label_delete_settings">Delete</string>
+    <string name="summary_delete_settings">Delete saved file</string>
     <string name="label_about">About</string>
     <string name="about_text">NSTools on XDA</string>
     <string name="about_desc">Visit NSTools thread on XDA</string>

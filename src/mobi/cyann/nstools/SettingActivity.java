@@ -30,6 +30,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 		findPreference(getString(R.string.key_load_settings)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceClickListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceChangeListener(this);
+		findPreference(getString(R.string.key_delete_settings)).setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -60,6 +61,11 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 				}else {
 					Toast.makeText(this, getString(R.string.save_failed_message), Toast.LENGTH_LONG).show();
 				}
+			}
+			return true;
+		}else if(preference.getKey().equals(getString(R.string.key_delete_settings))) {
+			if(newValue != null && newValue.toString().length() > 0) {
+				SettingsManager.deleteSettings(this, newValue.toString());
 			}
 			return true;
 		}

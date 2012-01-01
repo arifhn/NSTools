@@ -25,6 +25,14 @@
         android:negativeButtonText="@string/label_cancel"
         android:persistent="false"/>
 
+	<mobi.cyann.nstools.preference.FileSelectPreference
+        android:key="@string/key_delete_settings"
+        android:summary="@string/summary_delete_settings"
+        android:title="@string/label_delete_settings"
+		custom:path="@string/SETTINGS_DIR"
+        android:negativeButtonText="@string/label_cancel"
+        android:persistent="false"/>
+        
     <PreferenceCategory android:title="@string/label_about" >
         <PreferenceScreen
             android:key="@string/key_about"
