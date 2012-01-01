@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="ns_tweak">조정</string>
+    <string name="bld_tweak">백라이트 끄기</string>
+    <string name="bln_tweak">백라이트 알림</string>
+    <string name="label_bln_blink">깜박임</string>
+    <string name="blx_tweak">배터리 충전 용량</string>
+    <string name="label_charging_limit">충전 제한</string>
+    <string name="cmled_tweak">CM방식 LED</string>
+    <string name="label_cmled_bltimeout">LED 켜짐 시간</string>
+    <string name="label_cmled_blink">깜박임</string>
+    <string name="label_cmled_blinktimeout">깜박임 시간</string>
+    <string name="touchwake_tweak">터치로 켜기</string>
+    <string name="iosched_tweak">IO 스케줄러</string>
+    <string name="label_iosched">활성 스케줄러</string>
+    <string name="voltage_control">전압 설정</string>
+    <string name="label_default_voltage">기본 전압</string>
+    <string name="summaryOn_default_voltage">커널 기본전압을 사용합니다.</string>
+    <string name="summaryOff_default_voltage">사용자 설정 전압을 사용합니다</string>
+    <string name="arm_voltage">arm_전압</string>
+    <string name="label_max_arm_volt">최대 arm_전압</string>
+    <string name="int_voltage">int_전압</string>
+    <string name="label_max_int_volt">최대 int_전압</string>
+    <string name="warning_message">이러한 설정은 위험 할 수 있습니다. 전 책임 안 집니다.</string>
+    <string name="dontshow_message">이 메시지를 다시 표시하지 않음</string>
+    <string name="app_name">NSTools</string>
+    <string name="label_status">상태</string>
+    <string name="label_delay">지연 시간</string>
+    <string name="label_ok">확인</string>
+    <string name="label_cancel">취소</string>
+    <string name="label_yes">예</string>
+    <string name="label_no">아니오</string>
+    <string name="label_warning">경고</string>
+    <string name="status_on"><b>켜짐</b></string>
+    <string name="status_off"><b>꺼짐</b></string>
+    <string name="status_not_available"><i>사용할 수 없습니다</i></string>
+    <string name="label_setting">설정</string>
+    <string name="label_restore_on_boot">부팅 설정</string>
+    <string name="summaryOn_restore_on_boot">재부팅시에도 유지</string>
+    <string name="summaryOff_restore_on_boot">재부팅시 기본설정으로 초기화</string>
+    <string name="label_about">앱 정보</string>
+    <string name="about_text">arifhn/한글 by led25,thoth77</string>
+    <string name="about_desc">XDA의 NSTools 스레드를 방문하세요</string>
+    <string name="label_cpu_tweak">CPU</string>
+    <string name="label_governor">정책</string>
+    <string name="label_min_cpufreq">최소클럭</string>
+    <string name="label_max_cpufreq">최대클럭</string>
+    <string name="label_lazy">lazy일 경우</string>
+    <string name="label_screenoff_maxfreq">화면 끌 때 최대클럭</string>
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="label_deepidle_stats">Idle 통계</string>
+    <string name="label_state">상태</string>
+    <string name="label_time">시간 (ms)</string>
+    <string name="label_average">평균 (ms)</string>
+    <string name="label_reset">초기화</string>
+    <string name="label_close">닫기</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="label_liveoc_ocvalue">오버클럭 값</string>
+    <string name="msg_kernel_changed">커널 변경으로 인해 기존설정은 폐기되었습니다.</string>
+</resources>
