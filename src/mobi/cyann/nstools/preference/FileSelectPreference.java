@@ -43,4 +43,18 @@ public class FileSelectPreference extends ListPreference {
 		}
 		super.onPrepareDialogBuilder(builder);
 	}
+
+	@Override
+	public boolean isEnabled() {
+		boolean enabled = false;
+		File dir = new File(path);
+		if(dir.exists()) {
+			String files[] = dir.list();
+			if(files.length > 0)
+				enabled = true;
+		}
+		return enabled && super.isEnabled();
+	}
+	
+	
 }
