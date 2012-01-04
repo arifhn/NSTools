@@ -51,10 +51,14 @@ case "$STAT" in
 	1)
 	echo "key_bln_status=1" >> $OUT_FILE
 	echo "key_bln_blink=`cat /sys/class/misc/backlightnotification/in_kernel_blink`" >> $OUT_FILE
+	echo "key_bln_blink_interval=`cat /sys/class/misc/backlightnotification/blink_interval`" >> $OUT_FILE
+	echo "key_bln_blink_count=`cat /sys/class/misc/backlightnotification/max_blink_count`" >> $OUT_FILE
 	;;
 	0)
 	echo "key_bln_status=0" >> $OUT_FILE
 	echo "key_bln_blink=`cat /sys/class/misc/backlightnotification/in_kernel_blink`" >> $OUT_FILE
+	echo "key_bln_blink_interval=`cat /sys/class/misc/backlightnotification/blink_interval`" >> $OUT_FILE
+	echo "key_bln_blink_count=`cat /sys/class/misc/backlightnotification/max_blink_count`" >> $OUT_FILE
 	;;
 	*)
 	echo "key_bln_status=-1" >> $OUT_FILE

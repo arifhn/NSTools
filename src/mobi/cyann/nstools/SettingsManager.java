@@ -72,6 +72,12 @@ public class SettingsManager {
 			value = preferences.getInt(c.getString(R.string.key_bln_blink), -1);
 			if(value > -1)
 				command.append("echo " + value + " > " + "/sys/class/misc/backlightnotification/in_kernel_blink\n");
+			value = preferences.getInt(c.getString(R.string.key_bln_blink_interval), -1);
+			if(value > -1)
+				command.append("echo " + value + " > " + "/sys/class/misc/backlightnotification/blink_interval\n");
+			value = preferences.getInt(c.getString(R.string.key_bln_blink_count), -1);
+			if(value > -1)
+				command.append("echo " + value + " > " + "/sys/class/misc/backlightnotification/max_blink_count\n");
 		}
 
 		// BLX

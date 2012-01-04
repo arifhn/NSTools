@@ -2,7 +2,7 @@
 <resources>
 	<string name="SETTINGS_DIR">/data/data/mobi.cyann.nstools/settings/</string>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
-    <string name="SCRIPT_VERSION">7</string>
+    <string name="SCRIPT_VERSION">8</string>
 
     <string-array name="scripts">
         <item>preload.sh</item>
@@ -16,6 +16,8 @@
     <string name="key_bld_delay">key_bld_delay</string>
     <string name="key_bln_status">key_bln_status</string>
     <string name="key_bln_blink">key_bln_blink</string>
+    <string name="key_bln_blink_interval">key_bln_blink_interval</string>
+    <string name="key_bln_blink_count">key_bln_blink_count</string>
     <string name="key_blx_charging_limit">key_blx_charging_limit</string>
     <string name="key_deepidle_status">key_deepidle_status</string>
 	<string name="key_deepidle_stats">key_deepidle_stats</string>
