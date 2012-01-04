@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- NSTweakActivity -->
+    <string name="ns_tweak">Tweak</string>
+    <string name="bld_tweak">Backlight Dimmer</string>
+    <string name="bln_tweak">Backlight Notification</string>
+    <string name="label_bln_blink">Blink Status</string>
+    <string name="blx_tweak">Battery Life Extender</string>
+    <string name="label_charging_limit">Charging Limit</string>
+	<string name="cmled_tweak">CMLed</string>
+    <string name="label_cmled_bltimeout">Led Timeout</string>
+    <string name="label_cmled_blink">Blink</string>
+    <string name="label_cmled_blinktimeout">Blink Timeout</string>
+    <string name="touchwake_tweak">Touchwake</string>
+	<string name="iosched_tweak">IO Scheduler</string>
+	<string name="label_iosched">Active scheduler</string>
+	
+    <!-- VoltageControlActivity -->
+    <string name="voltage_control">Spanningen</string>
+    <string name="label_default_voltage">Standaard spanningen</string>
+    <string name="summaryOn_default_voltage">Gebruik standaard spanningen van kernel</string>
+    <string name="summaryOff_default_voltage">Gebruik aangepaste spanningen van onderstaand</string>
+    <string name="arm_voltage">Arm spanning</string>
+    <string name="label_max_arm_volt">Maximum Arm spanning</string>
+    <string name="int_voltage">Int Spanning</string>
+    <string name="label_max_int_volt">Maximum Int spanning</string>
+    <string name="warning_message">Deze instellingen zijn gevaarlijk. Gebruik op eigen risico.</string>
+    <string name="dontshow_message">Toon dit bericht niet opnieuw</string>
+
+    <!-- common -->
+    <string name="app_name">NSTools</string>
+    <string name="label_status">Status</string>
+    <string name="label_delay">Vertraging</string>
+    <string name="label_ok">Ok</string>
+    <string name="label_cancel">Annuleer</string>
+    <string name="label_yes">Ja</string>
+    <string name="label_no">Neen</string>
+    <string name="label_save">Sla op</string>
+    <string name="label_load">Load</string>
+    <string name="label_warning">WAARSCHUWING</string>
+    <string name="status_on"><b>AAN</b></string>
+    <string name="status_off"><b>UIT</b></string>
+    <string name="status_not_available"><i>Niet beschikbaar</i></string>
+	
+
+    <!-- Setting Activity -->
+    <string name="label_setting">Settings</string>
+    <string name="label_restore_on_boot">Stel in on opstart</string>
+    <string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
+    <string name="summaryOff_restore_on_boot">Reset to default settings on opstart</string>
+    <string name="label_load_settings">Laad</string>
+    <string name="summary_load_settings">Laad instellingen from opgeslagen bestand</string>
+    <string name="label_save_settings">Sla op</string>
+    <string name="summary_save_settings">Sla op current instellingen to bestand</string>
+    <string name="save_success_message">Instellingen opgeslagen</string>
+    <string name="save_failed_message">Failed to sla op instellingen</string>
+    <string name="label_delete_settings">Verwijder</string>
+    <string name="summary_delete_settings">Verwijder opgeslagen bestand</string>
+    <string name="label_about">Over</string>
+    <string name="about_text">NSTools on XDA</string>
+    <string name="about_desc">Visit NSTools thread on XDA</string>
+
+    <!-- CPU Activity -->
+    <string name="label_cpu_tweak">CPU</string>
+    <string name="label_governor">Governor</string>
+    <string name="label_min_cpufreq">Min CPU freq</string>
+    <string name="label_max_cpufreq">Max CPU freq</string>
+    <string name="label_lazy">Lazy</string>
+    <string name="label_screenoff_maxfreq">Screen off max freq</string>
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="label_deepidle_stats">Idle statistieken</string>
+    <string name="label_state">Status</string>
+    <string name="label_time">Tijd (ms)</string>
+    <string name="label_average">Gemiddelde (ms)</string>
+    <string name="label_reset">Reset</string>
+    <string name="label_close">Sluit</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="label_liveoc_ocvalue">OC Value</string>
+
+	<string name="msg_kernel_changed">De instellingen zijn verworpen wegens kernel-verandering</string>
+</resources>
