@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ns_tweak">조정</string>
     <string name="bld_tweak">백라이트 끄기</string>
@@ -60,4 +60,14 @@
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">오버클럭 값</string>
     <string name="msg_kernel_changed">커널 변경으로 인해 기존설정은 폐기되었습니다.</string>
+    <string name="label_save">저장</string>
+    <string name="label_load">불러오기</string>
+    <string name="label_load_settings">불러오기</string>
+    <string name="summary_load_settings">저장된 설정 불러오기</string>
+    <string name="label_save_settings">저장</string>
+    <string name="summary_save_settings">현재 설정 저장</string>
+    <string name="save_success_message">설정이 저장 되었습니다</string>
+    <string name="save_failed_message">설정 저장에 실패 했습니다</string>
+    <string name="label_delete_settings">삭제</string>
+    <string name="summary_delete_settings">저장된 설정 파일 삭제</string>
 </resources>
