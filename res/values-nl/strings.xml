@@ -29,7 +29,6 @@
     <string name="dontshow_message">Toon dit bericht niet opnieuw</string>
 
     <!-- common -->
-    <string name="app_name">NSTools</string>
     <string name="label_status">Status</string>
     <string name="label_delay">Vertraging</string>
     <string name="label_ok">Ok</string>

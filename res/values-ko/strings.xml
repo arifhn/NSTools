@@ -23,7 +23,6 @@
     <string name="label_max_int_volt">최대 int_전압</string>
     <string name="warning_message">이러한 설정은 위험 할 수 있습니다. 전 책임 안 집니다.</string>
     <string name="dontshow_message">이 메시지를 다시 표시하지 않음</string>
-    <string name="app_name">NSTools</string>
     <string name="label_status">상태</string>
     <string name="label_delay">지연 시간</string>
     <string name="label_ok">확인</string>

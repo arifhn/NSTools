@@ -31,7 +31,6 @@
     <string name="dontshow_message">Don\'t show this message again</string>
 
     <!-- common -->
-    <string name="app_name">NSTools</string>
     <string name="label_status">Status</string>
     <string name="label_delay">Delay</string>
     <string name="label_ok">Ok</string>

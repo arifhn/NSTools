@@ -25,7 +25,6 @@
     <string name="label_max_int_volt">Tension puce graphique max</string>
     <string name="warning_message">Ces paramètres sont dangereux. A utiliser à vos risques et périls.</string>
     <string name="dontshow_message">Ne plus afficher ce message</string>
-    <string name="app_name">NSTools</string>
     <string name="label_status">Statut</string>
     <string name="label_delay">Délai</string>
     <string name="label_ok">Ok</string>

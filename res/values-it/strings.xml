@@ -29,7 +29,6 @@
     <string name="dontshow_message">Non mostrare di nuovo questo messaggio</string>
  
     <!-- common -->
-    <string name="app_name">NSTools</string>
     <string name="label_status">Stato</string>
     <string name="label_delay">Ritardo</string>
     <string name="label_ok">Ok</string>

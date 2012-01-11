@@ -29,7 +29,6 @@
     <string name="dontshow_message">Diese Nachricht nicht mehr anzeigen</string>
 
     <!-- common -->
-    <string name="app_name">NSTools</string>
     <string name="label_status">Status</string>
     <string name="label_delay">Verzögerung</string>
     <string name="label_ok">Ok</string>

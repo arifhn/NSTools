@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mobi.cyann.nstools"
     android:versionCode="13"
-    android:versionName="1.10" >
+    android:versionName="@string/app_version" >
 
     <uses-sdk android:minSdkVersion="8"
         	  android:targetSdkVersion="14" />
