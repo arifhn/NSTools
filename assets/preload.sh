@@ -175,7 +175,7 @@ case "$?" in
 esac
 
 # lazy screenoff
-STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/lazy/screenoff_maxfreq`
+STAT=`cat /sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq`
 case "$?" in
 	0)
 	echo "key_screenoff_maxfreq=$STAT" >> $OUT_FILE
