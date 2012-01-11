@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <!-- NSTweakActivity -->
     <string name="ns_tweak">Tweak</string>
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="bln_tweak">Backlight Notification</string>
     <string name="label_bln_blink">Clignotement</string>
-    <string name="blx_tweak">Battery Life Extender</string>
+    <string name="label_bln_blink_interval">Intervalle clignotement</string>
+    <string name="label_bln_blink_count">Nombre max clignotement</string>
+	<string name="blx_tweak">Battery Life Extender</string>
     <string name="label_charging_limit">Charge limitée</string>
     <string name="cmled_tweak">CMLed</string>
     <string name="label_cmled_bltimeout">Temps led</string>
@@ -15,8 +15,6 @@
     <string name="touchwake_tweak">Touchwake</string>
     <string name="iosched_tweak">IO Planificateur</string>
     <string name="label_iosched">Activer Planificateur</string>
-    
-    <!-- VoltageControlActivity -->
     <string name="voltage_control">Volt</string>
     <string name="label_default_voltage">Voltage par défaut</string>
     <string name="summaryOn_default_voltage">Utiliser un voltage standard</string>
@@ -27,8 +25,6 @@
     <string name="label_max_int_volt">Tension puce graphique max</string>
     <string name="warning_message">Ces paramètres sont dangereux. A utiliser à vos risques et périls.</string>
     <string name="dontshow_message">Ne plus afficher ce message</string>
-
-	<!-- common -->
     <string name="app_name">NSTools</string>
     <string name="label_status">Statut</string>
     <string name="label_delay">Délai</string>
@@ -36,21 +32,27 @@
     <string name="label_cancel">Annuler</string>
     <string name="label_yes">Oui</string>
     <string name="label_no">Non</string>
-    <string name="label_warning">Attention</string>
+    <string name="label_save">Enregistrer</string>
+	<string name="label_load">Restaurer</string>
+	<string name="label_warning">Attention</string>
     <string name="status_on"><b>Activé</b></string>
     <string name="status_off"><b>Désactivé</b></string>
     <string name="status_not_available"><i>Etat indisponible</i></string>
-
-	<!-- Setting Activity -->
     <string name="label_setting">Autres</string>
     <string name="label_restore_on_boot">Valeurs par défaut</string>
-    <string name="summaryOn_restore_on_boot">Un redémarrage sera nécessaire avant l\'application des paramètres</string>
+    <string name="summaryOn_restore_on_boot">"Un redémarrage sera nécessaire avant l\'application des paramètres"</string>
     <string name="summaryOff_restore_on_boot">Ces paramètres ne peuvent pas être utilisés après un redémarrage</string>
-    <string name="label_about">À propos</string>
+    <string name="label_load_settings">Restaurer</string>
+    <string name="summary_load_settings">Restaurer les paramètres depuis un fichier sauvegardé</string>
+    <string name="label_save_settings">Enregistrer</string>
+    <string name="summary_save_settings">Enregistrer les paramètres actuels</string>
+    <string name="save_success_message">Paramètres enregistrés</string>
+    <string name="save_failed_message">Impossible d\'enregistrer les paramètres</string>
+    <string name="label_delete_settings">Supprimer</string>
+    <string name="summary_delete_settings">Supprimer le fichier sauvegardé</string>
+	<string name="label_about">À propos</string>
     <string name="about_text">NSTools sur XDA</string>
     <string name="about_desc">Visitez le forum NSTools sur XDA</string>
-
-	<!-- CPU Activity -->
     <string name="label_cpu_tweak">CPU</string>
     <string name="label_governor">Gouverneur</string>
     <string name="label_min_cpufreq">Fréquence min processeur</string>
@@ -69,6 +71,5 @@
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">Valeur Overclocking</string>
-
     <string name="msg_kernel_changed">Les réglages sont rejetés parce que la version du noyau a changé</string>
 </resources>
