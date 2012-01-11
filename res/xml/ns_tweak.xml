@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" >
 
-    <PreferenceCategory android:title="@string/bld_tweak" >
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/bld_tweak" >
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/backlightdimmer/enabled"
             android:key="@string/key_bld_status"
@@ -19,8 +19,8 @@
             custom:step="500"
             android:summary="0"
             android:title="@string/label_delay" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/bln_tweak" >
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/bln_tweak" >
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/backlightnotification/enabled"
             android:key="@string/key_bln_status"
@@ -31,6 +31,7 @@
             android:key="@string/key_bln_blink"
             android:summary="@string/status_not_available"
             android:title="@string/label_bln_blink" />
+
         <mobi.cyann.nstools.preference.IntegerPreference
             android:dependency="@string/key_bln_blink"
             custom:interfacePath="/sys/class/misc/backlightnotification/blink_interval"
@@ -51,8 +52,8 @@
             custom:step="10"
             android:summary="0"
             android:title="@string/label_bln_blink_count" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/blx_tweak" >
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/blx_tweak" >
         <mobi.cyann.nstools.preference.IntegerPreference
             custom:interfacePath="/sys/class/misc/batterylifeextender/charging_limit"
             android:key="@string/key_blx_charging_limit"
@@ -62,8 +63,8 @@
             custom:step="1"
             android:summary="0"
             android:title="@string/label_charging_limit" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/touchwake_tweak" >
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/touchwake_tweak" >
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/touchwake/enabled"
             android:key="@string/key_touchwake_status"
@@ -80,8 +81,8 @@
             custom:step="1000"
             android:summary="0"
             android:title="@string/label_delay" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/cmled_tweak" >
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/cmled_tweak" >
         <mobi.cyann.nstools.preference.IntegerPreference
             custom:interfacePath="/sys/class/misc/notification/bl_timeout"
             android:key="@string/key_cmled_bltimeout"
@@ -108,14 +109,14 @@
             custom:step="1"
             android:summary="0"
             android:title="@string/label_cmled_blinktimeout" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/iosched_tweak" >
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/iosched_tweak" >
         <mobi.cyann.nstools.preference.IoSchedPreference
             custom:interfacePath="/sys/block/mmcblk0/queue/scheduler"
             android:key="@string/key_iosched"
             android:summary="@string/status_not_available"
             android:title="@string/label_iosched"
             custom:writeToInterface="@array/iosched_interfaces" />
-    </PreferenceCategory>
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
 
 </PreferenceScreen>

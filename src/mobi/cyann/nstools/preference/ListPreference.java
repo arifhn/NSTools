@@ -111,6 +111,11 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 		return (value != null) && listValues != null && super.isEnabled();
 	}
 
+	@Override
+	public boolean isAvailable() {
+		return value != null;
+	}
+
 	private int selectedIndex() {
 		for(int i = 0; i < listValues.length; ++i) {
 			if(listValues[i].equals(value)) {

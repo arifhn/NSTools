@@ -11,6 +11,9 @@ import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 /**
  * @author arif
@@ -85,10 +88,19 @@ public abstract class BasePreference extends Preference {
 	}
 	
 	public abstract void reload();
-	
+	public abstract boolean isAvailable();
 
 	public void setChangedListener(OnPreferenceChangedListener changedListener) {
 		this.changedListener = changedListener;
+	}
+
+	@Override
+	public View getView(View convertView, ViewGroup parent) {
+		if(isAvailable()) {
+			return super.getView(convertView, parent);
+		}else {
+			return new FrameLayout(getContext());
+		}
 	}
 
 	@Override

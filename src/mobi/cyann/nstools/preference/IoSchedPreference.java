@@ -122,6 +122,11 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 	}
 
 	@Override
+	public boolean isAvailable() {
+		return value != null;
+	}
+
+	@Override
 	protected void onClick() {
 		// show dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

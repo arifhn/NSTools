@@ -23,7 +23,7 @@
         android:title="@string/label_max_cpufreq"
         custom:valueType="integer" />
 
-    <PreferenceCategory android:title="@string/liveoc_tweak" >
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/liveoc_tweak" >
 
         <mobi.cyann.nstools.preference.IntegerPreference
             custom:interfacePath="/sys/class/misc/liveoc/oc_value"
@@ -34,9 +34,9 @@
             custom:step="1"
             android:summary="0"
             android:title="@string/label_liveoc_ocvalue" />
-    </PreferenceCategory>
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
 
-    <PreferenceCategory android:title="@string/deepidle_tweak" >
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/deepidle_tweak" >
 
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/deepidle/enabled"
@@ -47,9 +47,10 @@
         <PreferenceScreen
             android:key="@string/key_deepidle_stats"
             android:title="@string/label_deepidle_stats" />
-    </PreferenceCategory>
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
 
-    <PreferenceCategory android:title="@string/label_lazy" >
+    <mobi.cyann.nstools.preference.CustomPreferenceCategory android:title="@string/label_lazy" 
+        android:dependency="@string/key_screenoff_maxfreq">
 
         <mobi.cyann.nstools.preference.StatusPreference
             android:dependency="@string/key_governor"
@@ -58,6 +59,6 @@
             android:key="@string/key_screenoff_maxfreq"
             android:summary="@string/status_not_available"
             android:title="@string/label_screenoff_maxfreq" />
-    </PreferenceCategory>
+    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
 
 </PreferenceScreen>

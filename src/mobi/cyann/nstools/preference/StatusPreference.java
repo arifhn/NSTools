@@ -87,6 +87,11 @@ public class StatusPreference extends BasePreference {
 	}
 
 	@Override
+	public boolean isAvailable() {
+		return value > -1;
+	}
+	
+	@Override
 	protected void onClick() {
 		int newValue = -1;
 		if(value == 0) {
