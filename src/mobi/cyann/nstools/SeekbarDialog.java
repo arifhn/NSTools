@@ -8,7 +8,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListener {
 	private SeekBar seekbar;
 	private TextView textValue;
+	private EditText editValue;
 	
 	private String key;
 	private int min;
@@ -31,6 +35,8 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 	private DialogInterface.OnClickListener okButtonListener;
 	private DialogInterface.OnClickListener cancelButtonListener;
 	
+	private InputMethodManager inputMethodManager;
+	
 	public SeekbarDialog(Context context, OnClickListener ok, OnClickListener cancel) {
 		super(context);
 		
@@ -40,11 +46,13 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 		max = 100;
 		step = 1;
 		value = 0;
+		
+		inputMethodManager = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		View customView = getLayoutInflater().inflate(R.layout.seekbar_dialog, null);
+		final View customView = getLayoutInflater().inflate(R.layout.seekbar_dialog, null);
 		
 		setIcon(0);
 		setView(customView);
@@ -56,9 +64,46 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 		seekbar = (SeekBar)customView.findViewById(R.id.seekbar);
 		seekbar.setOnSeekBarChangeListener(this);
 
-		textValue = (TextView)customView.findViewById(R.id.textValue);
+		editValue = (EditText)customView.findViewById(R.id.editValue);
+		editValue.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				String val = editValue.getText().toString();
+				if(val.length() > 0) {
+					value = Integer.parseInt(val);
+					if(value < min) {
+						value = min;
+					}else if(value > max) {
+						value = max;
+					}
+					resetValues();
+				}
+				if(keyCode == KeyEvent.KEYCODE_ENTER) {
+					resetUI();
+				}
+				return false;
+			}
+		});
 		
+		textValue = (TextView)customView.findViewById(R.id.textValue);
+		textValue.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				editValue.setText(String.valueOf(value));
+				editValue.setVisibility(View.VISIBLE);
+				textValue.setVisibility(View.GONE);
+				editValue.requestFocus();
+				
+				inputMethodManager.showSoftInput(editValue, InputMethodManager.SHOW_FORCED);
+			}
+		});
 		resetValues();
+	}
+	
+	private void resetUI() {
+		inputMethodManager.hideSoftInputFromWindow(editValue.getWindowToken(), 0);
+		editValue.setVisibility(View.GONE);
+		textValue.setVisibility(View.VISIBLE);
 	}
 	
 	private void resetValues() {
@@ -147,6 +192,12 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		
+	}
+
+	@Override
+	public void dismiss() {
+		resetUI();
+		super.dismiss();
 	}
 	
 	
