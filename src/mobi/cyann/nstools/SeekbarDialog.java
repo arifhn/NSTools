@@ -180,7 +180,10 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 		if(metrics != null) {
 			textValue.setText(value + " " + metrics);
 		}else {
-			textValue.setText(String.valueOf(value));	
+			textValue.setText(String.valueOf(value));
+		}
+		if(fromUser) {
+			editValue.setText(String.valueOf(value));
 		}
 	}
 

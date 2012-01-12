@@ -4,6 +4,9 @@
  */
 package mobi.cyann.nstools.preference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mobi.cyann.nstools.R;
 import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
@@ -26,7 +29,7 @@ public abstract class BasePreference extends Preference {
 	private boolean reloadOnResume;
 	private int dependencyType;
 	
-	private OnPreferenceChangedListener changedListener;
+	private List<OnPreferenceChangedListener> changedListeners;
 	
 	public interface OnPreferenceChangedListener {
         /**
@@ -47,6 +50,8 @@ public abstract class BasePreference extends Preference {
 		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);
 		dependencyType = a.getInt(R.styleable.mobi_cyann_nstools_preference_BasePreference_dependencyType, 0);
 		a.recycle();
+		
+		changedListeners = new ArrayList<OnPreferenceChangedListener>();
 	}
 
 	public BasePreference(Context context, AttributeSet attrs) {
@@ -90,8 +95,8 @@ public abstract class BasePreference extends Preference {
 	public abstract void reload();
 	public abstract boolean isAvailable();
 
-	public void setChangedListener(OnPreferenceChangedListener changedListener) {
-		this.changedListener = changedListener;
+	public void addChangedListener(OnPreferenceChangedListener changedListener) {
+		changedListeners.add(changedListener);
 	}
 
 	@Override
@@ -106,8 +111,8 @@ public abstract class BasePreference extends Preference {
 	@Override
 	protected void notifyChanged() {
 		super.notifyChanged();
-		if(changedListener != null) {
-			changedListener.onPreferenceChanged(this);
+		for(OnPreferenceChangedListener listener: changedListeners) {
+			listener.onPreferenceChanged(this);
 		}
 	}
 
