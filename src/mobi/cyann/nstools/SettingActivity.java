@@ -26,11 +26,14 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 		
 		addPreferencesFromResource(R.xml.setting);
 		
-		findPreference(getString(R.string.key_about)).setOnPreferenceClickListener(this);
 		findPreference(getString(R.string.key_load_settings)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceClickListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_delete_settings)).setOnPreferenceChangeListener(this);
+		
+		Preference about = findPreference(getString(R.string.key_about));
+		about.setOnPreferenceClickListener(this);
+		about.setTitle(getString(R.string.app_name)+ " " + getString(R.string.app_version));
 	}
 
 	@Override
