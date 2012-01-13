@@ -55,4 +55,7 @@
 	    <item>/sys/block/mtdblock4/queue/scheduler</item>
 	    <item>/sys/block/mmcblk0/queue/scheduler</item>
 	</string-array>
+	
+	<string name="button_plus">+</string>
+	<string name="button_minus">-</string>
 </resources>

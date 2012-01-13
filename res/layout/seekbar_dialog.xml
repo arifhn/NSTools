@@ -3,12 +3,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <TextView
+        android:id="@+id/valueMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/valueWrap"
+        android:minWidth="20dip"
+        android:text="@string/button_minus"
+        android:gravity="center"
+        android:textSize="25dip" />
+
     <FrameLayout
         android:id="@+id/valueWrap"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip" >
 
         <TextView
             android:id="@+id/textValue"
@@ -16,21 +28,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@+id/textValue"
-            android:textSize="25dip" 
-            />
+            android:textSize="25dip" />
 
         <EditText
             android:id="@+id/editValue"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
-            android:layout_marginRight="15dip"
             android:gravity="center"
             android:inputType="number"
+            android:minWidth="100dip"
             android:text="@+id/editValue"
             android:textSize="25dip"
             android:visibility="gone" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/valuePlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/valueWrap"
+        android:minWidth="20dip"
+        android:text="@string/button_plus"
+        android:gravity="center"
+        android:textSize="25dip" />
 
     <SeekBar
         android:id="@+id/seekbar"

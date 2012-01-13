@@ -20,7 +20,7 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListener {
+public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListener, View.OnClickListener {
 	private SeekBar seekbar;
 	private TextView textValue;
 	private EditText editValue;
@@ -79,16 +79,17 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 					resetValues();
 				}
 				if(keyCode == KeyEvent.KEYCODE_ENTER) {
-					resetUI();
+					closeEditText();
 				}
 				return false;
 			}
 		});
 		
+		// set onclick to text (show soft keyboard)
 		textValue = (TextView)customView.findViewById(R.id.textValue);
 		textValue.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) { // open EditText
 				editValue.setText(String.valueOf(value));
 				editValue.setVisibility(View.VISIBLE);
 				textValue.setVisibility(View.GONE);
@@ -97,10 +98,28 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 				inputMethodManager.showSoftInput(editValue, InputMethodManager.SHOW_FORCED);
 			}
 		});
+
+		// set on click to '-' button
+		customView.findViewById(R.id.valueMin).setOnClickListener(this);
+		
+		// set on click to '+' button
+		customView.findViewById(R.id.valuePlus).setOnClickListener(this);
+
 		resetValues();
 	}
 	
-	private void resetUI() {
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.valueMin) {
+			value -= step;
+		}else {
+			value += step;
+		}
+		editValue.setText(String.valueOf(value));
+		resetValues();
+	}
+	
+	private void closeEditText() {
 		inputMethodManager.hideSoftInputFromWindow(editValue.getWindowToken(), 0);
 		editValue.setVisibility(View.GONE);
 		textValue.setVisibility(View.VISIBLE);
@@ -199,7 +218,7 @@ public class SeekbarDialog extends AlertDialog implements OnSeekBarChangeListene
 
 	@Override
 	public void dismiss() {
-		resetUI();
+		closeEditText();
 		super.dismiss();
 	}
 	
