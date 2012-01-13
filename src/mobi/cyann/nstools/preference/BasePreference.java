@@ -4,9 +4,6 @@
  */
 package mobi.cyann.nstools.preference;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mobi.cyann.nstools.R;
 import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
@@ -14,9 +11,6 @@ import android.content.res.TypedArray;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 /**
  * @author arif
@@ -29,7 +23,7 @@ public abstract class BasePreference extends Preference {
 	private boolean reloadOnResume;
 	private int dependencyType;
 	
-	private List<OnPreferenceChangedListener> changedListeners;
+	private OnPreferenceChangedListener changedListener;
 	
 	public interface OnPreferenceChangedListener {
         /**
@@ -50,8 +44,6 @@ public abstract class BasePreference extends Preference {
 		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);
 		dependencyType = a.getInt(R.styleable.mobi_cyann_nstools_preference_BasePreference_dependencyType, 0);
 		a.recycle();
-		
-		changedListeners = new ArrayList<OnPreferenceChangedListener>();
 	}
 
 	public BasePreference(Context context, AttributeSet attrs) {
@@ -93,26 +85,17 @@ public abstract class BasePreference extends Preference {
 	}
 	
 	public abstract void reload();
-	public abstract boolean isAvailable();
+	
 
-	public void addChangedListener(OnPreferenceChangedListener changedListener) {
-		changedListeners.add(changedListener);
-	}
-
-	@Override
-	public View getView(View convertView, ViewGroup parent) {
-		if(isAvailable()) {
-			return super.getView(convertView, parent);
-		}else {
-			return new FrameLayout(getContext());
-		}
+	public void setChangedListener(OnPreferenceChangedListener changedListener) {
+		this.changedListener = changedListener;
 	}
 
 	@Override
 	protected void notifyChanged() {
 		super.notifyChanged();
-		for(OnPreferenceChangedListener listener: changedListeners) {
-			listener.onPreferenceChanged(this);
+		if(changedListener != null) {
+			changedListener.onPreferenceChanged(this);
 		}
 	}
 

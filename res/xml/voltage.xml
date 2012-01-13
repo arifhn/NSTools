@@ -9,7 +9,7 @@
         android:title="@string/label_default_voltage" android:defaultValue="true"
         android:disableDependentsState="true"/>
 
-    <mobi.cyann.nstools.preference.CustomPreferenceCategory
+    <PreferenceCategory
         android:key="@string/key_arm_volt_pref"
         android:title="@string/arm_voltage" >
 
@@ -23,9 +23,9 @@
             custom:step="25"
             android:summary="0"
             android:title="@string/label_max_arm_volt" />
-    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    </PreferenceCategory>
 
-    <mobi.cyann.nstools.preference.CustomPreferenceCategory
+    <PreferenceCategory
         android:key="@string/key_int_volt_pref"
         android:title="@string/int_voltage" >
 
@@ -39,6 +39,6 @@
             custom:step="25"
             android:summary="0"
             android:title="@string/label_max_int_volt" />
-    </mobi.cyann.nstools.preference.CustomPreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -42,7 +42,7 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		// deepidle stats
 		findPreference(getString(R.string.key_deepidle_stats)).setOnPreferenceClickListener(this);
 		
-		((BasePreference)findPreference(getString(R.string.key_liveoc))).addChangedListener(this);
+		((BasePreference)findPreference(getString(R.string.key_liveoc))).setChangedListener(this);
 		
 		governor = (ListPreference)findPreference(getString(R.string.key_governor));
 		minFreq = (ListPreference)findPreference(getString(R.string.key_min_cpufreq));
