@@ -125,4 +125,9 @@ public class StatusPreference extends BasePreference {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	@Override
+	public boolean isAvailable() {
+		return value > -1;
+	}
 }

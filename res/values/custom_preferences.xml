@@ -26,4 +26,7 @@
 	<declare-styleable name="mobi.cyann.nstools.preference.FileSelectPreference">
 		<attr name="path" format="string"/>    
 	</declare-styleable>
+	<declare-styleable name="mobi.cyann.nstools.preference.GovernorPreferenceGroup">
+		<attr name="governor" format="string"/>    
+	</declare-styleable>
 </resources>

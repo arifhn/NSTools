@@ -16,7 +16,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class CPUActivity extends PreferenceActivity implements OnPreferenceChangedListener, OnPreferenceClickListener {
+public class CPUActivity extends BasePreferenceActivity implements OnPreferenceChangedListener, OnPreferenceClickListener {
 	private final static String LOG_TAG = "NSTools.CPUActivity";
 	
 	private ListPreference governor;
@@ -40,9 +39,15 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 		addPreferencesFromResource(R.xml.cpu);
 		
 		// deepidle stats
-		findPreference(getString(R.string.key_deepidle_stats)).setOnPreferenceClickListener(this);
+		Preference p = findPreference(getString(R.string.key_deepidle_stats));
+		if(p != null) {
+			p.setOnPreferenceClickListener(this);
+		}
 		
-		((BasePreference)findPreference(getString(R.string.key_liveoc))).setChangedListener(this);
+		p = findPreference(getString(R.string.key_liveoc));
+		if(p != null) {
+			((BasePreference)p).setChangedListener(this);
+		}
 		
 		governor = (ListPreference)findPreference(getString(R.string.key_governor));
 		minFreq = (ListPreference)findPreference(getString(R.string.key_min_cpufreq));
@@ -53,11 +58,9 @@ public class CPUActivity extends PreferenceActivity implements OnPreferenceChang
 	}
 	
 	private void reloadGovernors() {
-		SysCommand sc = SysCommand.getInstance();
 		String availableGovernors[] = null;
-		int n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors");
-		if(n > 0) {
-			String temp = sc.getLastResult(0);
+		String temp = PreloadValues.getInstance().getString("key_available_governor");
+		if(temp != null) {
 			availableGovernors = temp.split(" ");
 		}
 		governor.setListLabels(availableGovernors);

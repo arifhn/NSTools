@@ -160,4 +160,9 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		}
 		d.dismiss();
 	}
+	
+	@Override
+	public boolean isAvailable() {
+		return value != null;
+	}
 }

@@ -85,7 +85,7 @@ public abstract class BasePreference extends Preference {
 	}
 	
 	public abstract void reload();
-	
+	public abstract boolean isAvailable();
 
 	public void setChangedListener(OnPreferenceChangedListener changedListener) {
 		this.changedListener = changedListener;

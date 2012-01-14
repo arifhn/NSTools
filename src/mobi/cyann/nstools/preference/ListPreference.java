@@ -186,4 +186,8 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 		this.listLabels = labels;
 	}
 
+	@Override
+	public boolean isAvailable() {
+		return value != null;
+	}
 }

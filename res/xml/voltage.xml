@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" >
+    xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" android:key="root" >
 
     <CheckBoxPreference
         android:key="@string/key_default_voltage"
@@ -25,7 +25,7 @@
             android:title="@string/label_max_arm_volt" />
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <mobi.cyann.nstools.preference.RemovablePreferenceCategory
         android:key="@string/key_int_volt_pref"
         android:title="@string/int_voltage" >
 
@@ -39,6 +39,6 @@
             custom:step="25"
             android:summary="0"
             android:title="@string/label_max_int_volt" />
-    </PreferenceCategory>
+    </mobi.cyann.nstools.preference.RemovablePreferenceCategory>
 
 </PreferenceScreen>

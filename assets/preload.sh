@@ -152,6 +152,17 @@ case "$?" in
 	;;
 esac
 
+# available governors
+STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors`
+case "$?" in
+	0)
+	echo "key_available_governor=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_available_governor=-1" >> $OUT_FILE
+	;;
+esac
+
 # cpu min freq
 STAT=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq`
 case "$?" in

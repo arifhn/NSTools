@@ -17,7 +17,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,7 +27,7 @@ import android.widget.CheckBox;
  * @author arif
  *
  */
-public class VoltageControlActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class VoltageControlActivity extends BasePreferenceActivity implements OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.VoltageControlActivity";
 	
 	private IntegerPreference maxArmVolt;
