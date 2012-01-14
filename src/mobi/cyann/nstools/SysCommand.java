@@ -1,6 +1,9 @@
 package mobi.cyann.nstools;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +19,8 @@ public class SysCommand {
 
 	private StreamGobbler out;
 	private StreamGobbler err;
+	
+	private List<String> lastResult;
 
 	private final static SysCommand singleton;
 
@@ -27,6 +32,65 @@ public class SysCommand {
 		return singleton;
 	}
 
+	private SysCommand() {
+		lastResult = new ArrayList<String>();
+	}
+	
+	public int readSysfs(String sysfsPath) {
+		lastResult.clear();
+		File readThis = new File(sysfsPath);
+		if(readThis.canRead()) {
+			// read the file directly if we have read permission
+			BufferedReader br = null;
+	        String line = null;
+	        try {
+	            br = new BufferedReader(new FileReader(readThis), 512);
+	            do {
+	                line = br.readLine();
+	                if(line != null)
+	                	lastResult.add(line);
+	            }while(line != null);
+	        }catch (Exception e) {
+	            Log.e(LOG_TAG, "Exception when reading " + sysfsPath, e);
+	        }finally {
+	        	try {
+	        		br.close();
+	        	}catch(Exception e) {}
+	        }
+		}
+		if(lastResult.size() == 0 && readThis.isFile()) { // the file is exists but we don't have permission
+			// so.. we need SU here
+			return suRun("cat", sysfsPath);
+		}else {
+			return lastResult.size();
+		}
+	}
+	
+	public int writeSysfs(String sysfsPath, String value) {
+		int ret = -1;
+		File writeThis = new File(sysfsPath);
+		if(writeThis.canWrite()) {
+			// write the file directly if we have read permission
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(writeThis);
+				fw.write(value);
+				ret = 0;
+			}catch(Exception e) {
+				Log.e(LOG_TAG, "Exception when writing " + sysfsPath, e);
+			}finally {
+				try {
+					fw.close();
+				}catch(Exception e) {}
+			}
+		}
+		if(ret < 0) {
+			// so.. we need SU here
+			ret = suRun("echo", "\""+ value + "\"", ">", sysfsPath);
+		}
+		return ret;
+	}
+	
 	/**
 	 * run shell command with super user permission
 	 * 
@@ -70,6 +134,7 @@ public class SysCommand {
 				result = -err.getLineCount();
 			} else {
 				result = out.getLineCount();
+				out.copyLines(lastResult);
 			}
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "", e);
@@ -78,11 +143,6 @@ public class SysCommand {
 			result = -1;
 		}
 		return result;
-		
-		/*
-		return run("su", "-c", cmds.toString());
-		*/
-		
 	}
 	
 	/**
@@ -113,6 +173,7 @@ public class SysCommand {
 				result = -err.getLineCount();
 			} else {
 				result = out.getLineCount();
+				out.copyLines(lastResult);
 			}
 		} catch (Exception e) {
 			Log.e(LOG_TAG, "", e);
@@ -130,19 +191,9 @@ public class SysCommand {
 			return null;
 	}
 	
-	public void logLastError(String tag) {
-		if(err != null)
-			err.logLastLines(tag);
-	}
-	
-	public void logLastOutput(String tag) {
-		if(out != null)
-			out.logLastLines(tag);
-	}
-
 	public String getLastResult(int line) {
-		if(out != null)
-			return out.getLine(line);
+		if(lastResult.size() > line)
+			return lastResult.get(line);
 		else
 			return null;
 	}
@@ -193,20 +244,17 @@ public class SysCommand {
 			}
 		}
 
-		public void logLastLines(String tag) {
-			if(result != null) {
-				for(int i = 0; i < result.size(); ++i) {
-					Log.d(tag, result.get(i));
-				}
-			}
-		}
-		
 		public int getLineCount() {
 			return result.size();
 		}
 
 		public String getLine(int idx) {
 			return result.get(idx);
+		}
+		
+		public void copyLines(List<String> copyTo) {
+			copyTo.clear();
+			copyTo.addAll(result);
 		}
 	}
 }

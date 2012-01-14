@@ -282,7 +282,7 @@ public class SettingsManager {
 		// now check current kernel version with saved value
 		restore = false;
 		SysCommand sysCommand = SysCommand.getInstance();
-		if(sysCommand.suRun("cat", "/proc/version") > 0) {
+		if(sysCommand.readSysfs("/proc/version") > 0) {
 			String kernel = sysCommand.getLastResult(0);
 			String savedKernelVersion = preferences.getString(c.getString(R.string.key_kernel_version), null);
 			if(kernel.equals(savedKernelVersion)) {

@@ -64,7 +64,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		if(writeToInterfaces != null) {
 			SysCommand sc = SysCommand.getInstance();
 			for(CharSequence i: writeToInterfaces) {
-				if(sc.suRun("echo", value, ">", i.toString()) >= 0) {
+				if(sc.writeSysfs(i.toString(), value) >= 0) {
 					Log.d(LOG_TAG, "WOK");
 				}else {
 					Log.e(LOG_TAG, "WER:" + sc.getLastError(0));

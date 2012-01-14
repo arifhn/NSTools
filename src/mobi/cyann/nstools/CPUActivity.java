@@ -73,7 +73,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		SysCommand sc = SysCommand.getInstance();
 		Integer availableFreqs[] = null;
 		String availableFreqsStr[] = null;
-		int n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
+		int n = sc.readSysfs("/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
 		if(n > 0) {
 			String temp = sc.getLastResult(0);
 			String f[] = temp.split(" ");
@@ -85,7 +85,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 			}
 		}else {
 			// try read available frequencies from time_in_state
-			n = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state");
+			n = sc.readSysfs("/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state");
 			if(n >= 0) {
 				availableFreqs = new Integer[n];
 				availableFreqsStr = new String[n];
@@ -128,7 +128,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		Pattern time = Pattern.compile("([0-9]+)ms");
 		Pattern average = Pattern.compile("\\(([0-9]+)ms\\)");
 		
-		SysCommand.getInstance().suRun("cat", "/sys/class/misc/deepidle/idle_stats");
+		SysCommand.getInstance().readSysfs("/sys/class/misc/deepidle/idle_stats");
 		for(int i = 0; i < 3; ++i) {
 			String line = SysCommand.getInstance().getLastResult(i + 2);
 			Log.d(LOG_TAG, line);
@@ -145,7 +145,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		builder.setPositiveButton(getString(R.string.label_reset), new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
+				if(SysCommand.getInstance().writeSysfs("/sys/class/misc/deepidle/reset_stats", "1") < 0) {
 					Log.d(LOG_TAG, "failed to reset deepidle stats");
 				}
 				dialog.dismiss();

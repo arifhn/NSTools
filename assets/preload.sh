@@ -185,17 +185,6 @@ case "$?" in
 	;;
 esac
 
-# lazy screenoff
-STAT=`cat /sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq`
-case "$?" in
-	0)
-	echo "key_screenoff_maxfreq=$STAT" >> $OUT_FILE
-	;;
-	*)
-	echo "key_screenoff_maxfreq=-1" >> $OUT_FILE
-	;;
-esac
-
 # iosched
 STAT=`cat /sys/block/mmcblk0/queue/scheduler`
 case "$?" in

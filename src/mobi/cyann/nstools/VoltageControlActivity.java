@@ -109,7 +109,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 	private void readUvmvTable() {
 		PreferenceCategory c = (PreferenceCategory)findPreference(getString(R.string.key_arm_volt_pref));
 		SysCommand sc = SysCommand.getInstance();
-		int count = sc.suRun("cat", "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
+		int count = sc.readSysfs("/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table");
 		for(int i = 0; i < count; ++i) {
 			String line = sc.getLastResult(i);
 			String parts[] = line.split(":");
@@ -132,7 +132,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 		}
 		
 		SysCommand sc = SysCommand.getInstance();
-		int count = sc.suRun("cat", voltDevice);
+		int count = sc.readSysfs(voltDevice);
 		for(int i = 0; i < count; ++i) {
 			String line = sc.getLastResult(i);
 			String parts[] = line.split(":");
@@ -155,7 +155,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 		}
 		Log.d(LOG_TAG, "voltages:" + s.toString());
 		if(deviceString != null) {
-			SysCommand.getInstance().suRun("echo", "\""+s.toString()+"\"", ">", deviceString);
+			SysCommand.getInstance().writeSysfs(deviceString, "\""+s.toString()+"\"");
 		}
 		// save to xml pref
 		Editor ed = preferences.edit();

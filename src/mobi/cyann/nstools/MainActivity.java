@@ -89,7 +89,7 @@ public class MainActivity extends TabActivity {
 		PreloadValues.getInstance().reload();
 		
 		// save kernel version
-		if(sc.suRun("cat", "/proc/version") > 0) {
+		if(sc.readSysfs("/proc/version") > 0) {
 			String kernel = sc.getLastResult(0);
 			
 			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);

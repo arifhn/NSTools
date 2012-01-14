@@ -59,7 +59,7 @@ public abstract class BasePreference extends Preference {
 		if(interfacePath != null) {
 			Log.d(LOG_TAG, "read from " + interfacePath);
 			SysCommand sc = SysCommand.getInstance();
-			int n = sc.suRun("cat", interfacePath); 
+			int n = sc.readSysfs(interfacePath); 
 			if(n > 0) {
 				ret = sc.getLastResult(0); 
 				Log.d(LOG_TAG, "ROK:" + ret);
@@ -76,7 +76,7 @@ public abstract class BasePreference extends Preference {
 		// echo to interfacePath
 		if(interfacePath != null) {
 			SysCommand sc = SysCommand.getInstance();
-			if(sc.suRun("echo", value, ">", interfacePath) >= 0) {
+			if(sc.writeSysfs(interfacePath, value) >= 0) {
 				Log.d(LOG_TAG, "WOK");
 			}else {
 				Log.e(LOG_TAG, "WER:" + sc.getLastError(0));
