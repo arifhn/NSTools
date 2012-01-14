@@ -69,6 +69,13 @@
     <string name="label_max_cpufreq">Max CPU freq</string>
     <string name="label_lazy">Lazy</string>
     <string name="label_screenoff_maxfreq">Screen off max freq</string>
+    <string name="label_lulzactive">Lulzactive</string>
+    <string name="label_lulzactive_inc_cpu_load">Inc CPU load</string>
+    <string name="label_lulzactive_pump_up_step">Pump up step</string>
+    <string name="label_lulzactive_pump_down_step">Pump down step</string>
+    <string name="label_lulzactive_screen_off_min_step">Screen off min step</string>
+    <string name="label_lulzactive_down_sample_time">Down sample time</string>
+    <string name="label_lulzactive_up_sample_time">Up sample time</string>
     <string name="deepidle_tweak">Deep Idle</string>
     <string name="label_deepidle_stats">Idle Stats</string>
     <string name="label_state">State</string>

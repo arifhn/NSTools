@@ -60,4 +60,79 @@
             android:title="@string/label_screenoff_maxfreq" />
     </mobi.cyann.nstools.preference.GovernorPreferenceGroup>
 
+    <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_lulzactive" custom:governor="lulzactive">
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/inc_cpu_load"
+            android:key="@string/key_lulzactive_inc_cpu_load"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="10"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_lulzactive_inc_cpu_load" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/pump_up_step"
+            android:key="@string/key_lulzactive_pump_up_step"
+            custom:maxValue="7"
+            custom:metrics="step"
+            custom:minValue="0"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_lulzactive_pump_up_step" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/pump_down_step"
+            android:key="@string/key_lulzactive_pump_down_step"
+            custom:maxValue="7"
+            custom:metrics="step"
+            custom:minValue="0"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_lulzactive_pump_down_step" />
+
+		<mobi.cyann.nstools.preference.LulzactiveScreenOffPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/screen_off_min_step"
+            android:key="@string/key_lulzactive_screen_off_min_step"
+            custom:maxValue="7"
+            custom:metrics="step"
+            custom:minValue="0"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_lulzactive_screen_off_min_step" />
+
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/up_sample_time"
+            android:key="@string/key_lulzactive_up_sample_time"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_lulzactive_up_sample_time" />
+		
+		<mobi.cyann.nstools.preference.IntegerPreference
+            android:dependency="@string/key_governor"
+            custom:dependencyType="reload_value"
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/lulzactive/down_sample_time"
+            android:key="@string/key_lulzactive_down_sample_time"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_lulzactive_down_sample_time" />
+    </mobi.cyann.nstools.preference.GovernorPreferenceGroup>    
 </PreferenceScreen>

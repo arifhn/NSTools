@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 
 import mobi.cyann.nstools.preference.BasePreference;
 import mobi.cyann.nstools.preference.BasePreference.OnPreferenceChangedListener;
+import mobi.cyann.nstools.preference.IntegerPreference;
 import mobi.cyann.nstools.preference.ListPreference;
+import mobi.cyann.nstools.preference.LulzactiveScreenOffPreference;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -101,6 +103,19 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		maxFreq.setListValues(availableFreqs);
 		maxFreq.setListLabels(availableFreqsStr);
 		maxFreq.reload();
+		
+		// setup lulzactive min/max step
+		if(findPreference(getString(R.string.key_lulzactive_pump_up_step)) != null) {
+			IntegerPreference p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_up_step));
+			p.setMaxValue(availableFreqs.length - 1);
+			
+			p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_down_step));
+			p.setMaxValue(availableFreqs.length - 1);
+			
+			p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_screen_off_min_step));
+			p.setMaxValue(availableFreqs.length - 1);
+			((LulzactiveScreenOffPreference)p).setAvailableFrequencies(availableFreqsStr);
+		}
 	}
 	
 	private void showIdleStatsDialog() {
@@ -132,7 +147,6 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 			public void onClick(DialogInterface dialog, int which) {
 				if(SysCommand.getInstance().suRun("echo", "1", ">", "/sys/class/misc/deepidle/reset_stats") < 0) {
 					Log.d(LOG_TAG, "failed to reset deepidle stats");
-					SysCommand.getInstance().logLastError(LOG_TAG);
 				}
 				dialog.dismiss();
 			}
