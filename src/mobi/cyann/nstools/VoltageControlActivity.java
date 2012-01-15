@@ -125,26 +125,27 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 	
 	private void readVoltages(IntegerPreference maxVolt, String catKey, String voltPrefix, String voltDevice, List<Integer>voltList) {
 		PreferenceCategory c = (PreferenceCategory)findPreference(catKey);
-		
-		while(c.getPreferenceCount() > 1) { // clear all preference except the first one
-			Preference tp = c.getPreference(1);
-			c.removePreference(tp);
-		}
-		
-		SysCommand sc = SysCommand.getInstance();
-		int count = sc.readSysfs(voltDevice);
-		for(int i = 0; i < count; ++i) {
-			String line = sc.getLastResult(i);
-			String parts[] = line.split(":");
-			int volt = Integer.parseInt(parts[1].substring(1, parts[1].length()-3));
-
-			Log.d(LOG_TAG, line);
+		if(c != null) {
+			while(c.getPreferenceCount() > 1) { // clear all preference except the first one
+				Preference tp = c.getPreference(1);
+				c.removePreference(tp);
+			}
 			
-			createDefaultVoltPreference(c, voltPrefix, i, parts[0], volt);
-			
-			voltList.add(volt);
+			SysCommand sc = SysCommand.getInstance();
+			int count = sc.readSysfs(voltDevice);
+			for(int i = 0; i < count; ++i) {
+				String line = sc.getLastResult(i);
+				String parts[] = line.split(":");
+				int volt = Integer.parseInt(parts[1].substring(1, parts[1].length()-3));
+	
+				Log.d(LOG_TAG, line);
+				
+				createDefaultVoltPreference(c, voltPrefix, i, parts[0], volt);
+				
+				voltList.add(volt);
+			}
+			saveVoltages(catKey, voltList, null);
 		}
-		saveVoltages(catKey, voltList, null);
 	}
 
 	private void saveVoltages(String key, List<Integer> voltageList, String deviceString) {
@@ -155,7 +156,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 		}
 		Log.d(LOG_TAG, "voltages:" + s.toString());
 		if(deviceString != null) {
-			SysCommand.getInstance().writeSysfs(deviceString, "\""+s.toString()+"\"");
+			SysCommand.getInstance().writeSysfs(deviceString, s.toString());
 		}
 		// save to xml pref
 		Editor ed = preferences.edit();
