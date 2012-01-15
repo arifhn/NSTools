@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NSTools</string>
-    <string name="app_version">1.11</string>
+    <string name="app_version">1.11b</string>
     
 	<string name="SETTINGS_DIR">/data/data/mobi.cyann.nstools/settings/</string>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
