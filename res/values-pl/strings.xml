@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- NSTweakActivity -->
+    <string name="ns_tweak">Tweaki</string>
+    <string name="bld_tweak">Wygaszanie podœwietlenia</string>
+    <string name="bln_tweak">Powiadamianie podœwietleniem</string>
+    <string name="label_bln_blink">Status migania</string>
+    <string name="label_bln_blink_interval">Czêst. migania</string>
+    <string name="label_bln_blink_count">Maks. liczba migniêæ</string>
+    <string name="blx_tweak">¯ywotnoœæ baterii</string>
+    <string name="label_charging_limit">Limit ³adowania</string>
+	<string name="cmled_tweak">CMLed</string>
+    <string name="label_cmled_bltimeout">Czas trwania LED</string>
+    <string name="label_cmled_blink">Miganie</string>
+    <string name="label_cmled_blinktimeout">Czas migania</string>
+    <string name="touchwake_tweak">Wybudzanie dotykiem</string>
+	<string name="iosched_tweak">Harmonogram IO</string>
+	<string name="label_iosched">Aktywny harmonogram</string>
+	
+    <!-- VoltageControlActivity -->
+    <string name="voltage_control">Volt</string>
+    <string name="label_default_voltage">Domyœlne napiêcia</string>
+    <string name="summaryOn_default_voltage">U¿yj ustawieñ napiêcia z kernela</string>
+    <string name="summaryOff_default_voltage">WprowadŸ poni¿sze ustawienia napiêcia</string>
+    <string name="arm_voltage">Napiêcie Arm</string>
+    <string name="label_max_arm_volt">Maks. napiêcie Arm</string>
+    <string name="int_voltage">Napiêcie Int</string>
+    <string name="label_max_int_volt">Maks. napiêcie Int</string>
+    <string name="warning_message">Te ustawienia s¹ niebezpieczne. U¿ywasz ich na w³asne ryzyko.</string>
+    <string name="dontshow_message">Nie pokazuj wiêcej tej wiadomoœci</string>
+
+    <!-- common -->
+    <string name="label_status">Status</string>
+    <string name="label_delay">OpóŸnienie</string>
+    <string name="label_ok">OK</string>
+    <string name="label_cancel">Anuluj</string>
+    <string name="label_yes">Tak</string>
+    <string name="label_no">Nie</string>
+    <string name="label_save">Zapisz</string>
+    <string name="label_load">Wczytaj</string>
+    <string name="label_warning">OSTRZE¯ENIE</string>
+    <string name="status_on"><b>W³.</b></string>
+    <string name="status_off"><b>Wy³.</b></string>
+    <string name="status_not_available"><i>niedostêpne</i></string>
+	
+
+    <!-- Setting Activity -->
+    <string name="label_setting">Ustaw.</string>
+    <string name="label_restore_on_boot">Ustaw przy starcie</string>
+    <string name="summaryOn_restore_on_boot">Ustawienia zostan¹ zachowane przy ponownym uruchomieniu systemu</string>
+    <string name="summaryOff_restore_on_boot">Zresetuj do ustawieñ domyœlnych przy starcie</string>
+    <string name="label_load_settings">Wczytaj</string>
+    <string name="summary_load_settings">Wczytaj ustawienia z pliku</string>
+    <string name="label_save_settings">Zapisz</string>
+    <string name="summary_save_settings">Zapisz bie¿¹ce ustawienia do pliku</string>
+    <string name="save_success_message">Ustawienia zapisane</string>
+    <string name="save_failed_message">Nie uda³o siê zapisaæ ustawieñ</string>
+    <string name="label_delete_settings">Usuñ</string>
+    <string name="summary_delete_settings">Usuñ zapisany plik</string>
+    <string name="label_about">O programie</string>
+    <string name="about_text">NSTools na XDA</string>
+    <string name="about_desc">OdwiedŸ w¹tek NSTools na XDA</string>
+
+    <!-- CPU Activity -->
+    <string name="label_cpu_tweak">CPU</string>
+    <string name="label_governor">Governor</string>
+    <string name="label_min_cpufreq">Min. czêst. CPU</string>
+    <string name="label_max_cpufreq">Maks. czêst. CPU</string>
+    <string name="label_lazy">Lazy</string>
+    <string name="label_screenoff_maxfreq">Maks. czêstotliwoœæ przy wy³. ekranie</string>
+    <string name="label_lulzactive">Lulzactive</string>
+    <string name="label_lulzactive_inc_cpu_load">Zwiêksz obci¹¿enie CPU</string>
+    <string name="label_lulzactive_pump_up_step">Krok w górê</string>
+    <string name="label_lulzactive_pump_down_step">Krok w dó³</string>
+    <string name="label_lulzactive_screen_off_min_step">Min. krok przy wy³. ekranie</string>
+    <string name="label_lulzactive_down_sample_time">Czas w dó³</string>
+    <string name="label_lulzactive_up_sample_time">Czas w górê</string>
+    <string name="deepidle_tweak">Deep Idle</string>
+    <string name="label_deepidle_stats">Statystyki trybu bezczynnoœci</string>
+    <string name="label_state">Stan</string>
+    <string name="label_time">Czas (ms)</string>
+    <string name="label_average">Œr. (ms)</string>
+    <string name="label_reset">Wyczyœæ</string>
+    <string name="label_close">Zamknij</string>
+    <string name="label_idle1">Idle</string>
+    <string name="label_idle2">Deep Idle (TOP=ON)</string>
+    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
+    <string name="liveoc_tweak">Live OC</string>
+    <string name="label_liveoc_ocvalue">Wartoœæ OC</string>
+
+	<string name="msg_kernel_changed">Ustawienia zosta³y wyczyszczone z powodu zmiany kernela</string>
+</resources>
