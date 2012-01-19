@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
+import mobi.cyann.nstools.services.ObserverService;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,9 @@ public class MainActivity extends TabActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// start our ObserverService
+		startService(new Intent(this, ObserverService.class));
 		
 		// extract our scripts 
 		extractScripts();

@@ -1,5 +1,6 @@
 package mobi.cyann.nstools;
 
+import mobi.cyann.nstools.services.ObserverService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +15,12 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.d(LOG_TAG, "starting service");
-		//Intent mServiceIntent = new Intent();
-		//mServiceIntent.setAction("mobi.cyann.nstools.OnBootCompleteService");
+		
+		// start OnBootCompleteService (restore setting)
 		context.startService(new Intent(context, OnBootCompleteService.class));
+		
+		// start our ObserverService (monitor missed call)
+		context.startService(new Intent(context, ObserverService.class));
 	}
 	
 }
