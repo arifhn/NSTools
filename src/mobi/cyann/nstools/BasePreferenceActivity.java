@@ -49,7 +49,7 @@ public class BasePreferenceActivity extends PreferenceActivity {
 					list.add(((PreferenceGroup) p).getPreference(i));
 			}else if(p instanceof BasePreference) {
 				// call on resume
-				((BasePreference) p).onResume();
+				((BasePreference<?>) p).onResume();
 			}
 		}
 	}
@@ -88,8 +88,8 @@ public class BasePreferenceActivity extends PreferenceActivity {
     				for(int i = 0; i < n; ++i)
     					list.add(((PreferenceGroup) p).getPreference(i));
     			}else if(p instanceof BasePreference) {
-    				// reload
-    				((BasePreference) p).reload();
+    				// reload from PreloadValues
+    				((BasePreference<?>) p).reload(true);
     			}
     		}
         }

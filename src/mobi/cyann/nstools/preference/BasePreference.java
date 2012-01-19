@@ -16,7 +16,7 @@ import android.util.Log;
  * @author arif
  *
  */
-public abstract class BasePreference extends Preference {
+public abstract class BasePreference<T> extends Preference {
 	private final static String LOG_TAG = "NSTools.BasePreference";
 	
 	private final String interfacePath;
@@ -33,6 +33,11 @@ public abstract class BasePreference extends Preference {
          */
         void onPreferenceChanged(Preference preference);
     }
+	
+	protected abstract T readPreloadValue();
+	protected abstract T readValue();
+	protected abstract void writeValue(T newValue, boolean writeInterface);
+	public abstract boolean isAvailable();
 	
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -84,9 +89,14 @@ public abstract class BasePreference extends Preference {
 		}
 	}
 	
-	public abstract void reload();
-	public abstract boolean isAvailable();
-
+	public void reload(boolean readFromPreload) {
+		if(readFromPreload) {
+			writeValue(readPreloadValue(), false);
+		}else {
+			writeValue(readValue(), false);
+		}
+	}
+	
 	public void setChangedListener(OnPreferenceChangedListener changedListener) {
 		this.changedListener = changedListener;
 	}
@@ -101,7 +111,7 @@ public abstract class BasePreference extends Preference {
 
 	public void onResume() {
 		if(reloadOnResume) {
-			reload();
+			reload(false);
 		}
 	}
 
@@ -120,7 +130,7 @@ public abstract class BasePreference extends Preference {
 		if(dependencyType == 0) { // android_default
 			super.onDependencyChanged(dependency, disableDependent);
 		}else if(dependencyType == 1) { // reload_value
-			reload();
+			reload(false);
 		}
 	}
 }

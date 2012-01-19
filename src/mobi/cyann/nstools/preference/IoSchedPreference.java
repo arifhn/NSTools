@@ -22,7 +22,7 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class IoSchedPreference extends BasePreference implements DialogInterface.OnClickListener {
+public class IoSchedPreference extends BasePreference<String> implements DialogInterface.OnClickListener {
 	private final static String LOG_TAG = "NSTools.IOSchedPreference";
 	private String value;
 	private String schedValues[];
@@ -73,11 +73,12 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		}
 	}
 
-	private void writeValue(String newValue) {
+	@Override
+	protected void writeValue(String newValue, boolean writeInterface) {
 		if(newValue == null) {
 			return;
 		}
-		if(value != null && !newValue.equals(value)) {
+		if(writeInterface && value != null && !newValue.equals(value)) {
 			writeToInterface(newValue);
 			newValue = readValue();
 		}
@@ -90,8 +91,14 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 		}
 	}
 
-	private String readValue() {
+	@Override
+	protected String readValue() {
 		return parseValue(readFromInterface());
+	}
+	
+	@Override
+	protected String readPreloadValue() {
+		return parseValue(PreloadValues.getInstance().getString(getKey()));
 	}
 	
 	private String parseValue(String tmp) {
@@ -110,10 +117,6 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 			Arrays.sort(schedValues);
 		}
 		return ret;
-	}
-	
-	public void reload() {
-		writeValue(readValue());
 	}
 	
 	@Override
@@ -141,7 +144,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
     	if(restoreValue) {
     		value = getPersistedString(null);
     	}
-		writeValue(parseValue(PreloadValues.getInstance().getString(getKey())));
+		writeValue(readPreloadValue(), false);
     }
     
 	@Override
@@ -156,7 +159,7 @@ public class IoSchedPreference extends BasePreference implements DialogInterface
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
-	        writeValue(newValue);
+	        writeValue(newValue, true);
 		}
 		d.dismiss();
 	}

@@ -33,7 +33,7 @@ public class RemovablePreferenceCategory extends PreferenceCategory {
     	for(int i = 0; i < count; ++i) {
     		Preference p = getPreference(i);
     		if(p instanceof BasePreference) {
-    			if(!((BasePreference) p).isAvailable()) {
+    			if(!((BasePreference<?>) p).isAvailable()) {
     				++notAvailable;
     			}
     		}else {

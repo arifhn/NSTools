@@ -17,7 +17,7 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class StatusPreference extends BasePreference {
+public class StatusPreference extends BasePreference<Integer> {
 	private final static String LOG_TAG = "NSTools.StatusPreference";
 	protected int value = -1;
 	
@@ -49,7 +49,8 @@ public class StatusPreference extends BasePreference {
         }
 	}
 
-	protected void writeValue(int newValue, boolean writeInterface) {
+	@Override
+	protected void writeValue(Integer newValue, boolean writeInterface) {
 		if(writeInterface && value > -1 && newValue != value) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
@@ -64,7 +65,8 @@ public class StatusPreference extends BasePreference {
 		}
 	}
 
-	protected int readValue() {
+	@Override
+	protected Integer readValue() {
 		int ret = -1;
 		String str = readFromInterface();
 		try {
@@ -77,8 +79,9 @@ public class StatusPreference extends BasePreference {
 		return ret;
 	}
 	
-	public void reload() {
-		writeValue(readValue(), false);
+	@Override
+	protected Integer readPreloadValue() {
+		return PreloadValues.getInstance().getInt(getKey());
 	}
 	
 	@Override
@@ -110,7 +113,7 @@ public class StatusPreference extends BasePreference {
     	if(restoreValue) {
     		value = getPersistedInt(-1);
     	}
-		writeValue(PreloadValues.getInstance().getInt(getKey()), false);
+		writeValue(readPreloadValue(), false);
     }
     
 	@Override

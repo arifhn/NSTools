@@ -7,7 +7,6 @@ package mobi.cyann.nstools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mobi.cyann.nstools.preference.BasePreference;
 import mobi.cyann.nstools.preference.BasePreference.OnPreferenceChangedListener;
 import mobi.cyann.nstools.preference.IntegerPreference;
 import mobi.cyann.nstools.preference.ListPreference;
@@ -48,7 +47,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		
 		p = findPreference(getString(R.string.key_liveoc));
 		if(p != null) {
-			((BasePreference)p).setChangedListener(this);
+			((IntegerPreference)p).setChangedListener(this);
 		}
 		
 		governor = (ListPreference)findPreference(getString(R.string.key_governor));
@@ -99,10 +98,10 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		}
 		minFreq.setListValues(availableFreqs);
 		minFreq.setListLabels(availableFreqsStr);
-		minFreq.reload();
+		minFreq.reload(false);
 		maxFreq.setListValues(availableFreqs);
 		maxFreq.setListLabels(availableFreqsStr);
-		maxFreq.reload();
+		maxFreq.reload(false);
 		
 		// setup lulzactive min/max step
 		if(findPreference(getString(R.string.key_lulzactive_pump_up_step)) != null) {

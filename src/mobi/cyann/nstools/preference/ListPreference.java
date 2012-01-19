@@ -19,7 +19,7 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class ListPreference extends BasePreference implements DialogInterface.OnClickListener {
+public class ListPreference extends BasePreference<Object> implements DialogInterface.OnClickListener {
 	private final static String LOG_TAG = "NSTools.ListPreference";
 	private Object value = null;
 	private Object listValues[];
@@ -62,11 +62,11 @@ public class ListPreference extends BasePreference implements DialogInterface.On
         }
 	}
 
-	private void writeValue(Object newValue, boolean writeInterface) {
+	@Override
+	protected void writeValue(Object newValue, boolean writeInterface) {
 		if(newValue == null) {
 			return;
 		}
-		Log.d(LOG_TAG, "setValue=" + newValue);
 		if(writeInterface && value != null && !newValue.equals(value)) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
@@ -85,7 +85,8 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 		}
 	}
 
-	private Object readValue() {
+	@Override
+	protected Object readValue() {
 		Object ret = null;
 		String str = readFromInterface();
 		try {
@@ -102,8 +103,15 @@ public class ListPreference extends BasePreference implements DialogInterface.On
 		return ret;
 	}
 	
-	public void reload() {
-		writeValue(readValue(), false);
+	@Override
+	protected Object readPreloadValue() {
+		Object preloadVal = null;
+		if(valueType == 0) { // int
+			preloadVal = PreloadValues.getInstance().getInt(getKey());
+    	}else { // string
+    		preloadVal = PreloadValues.getInstance().getString(getKey());
+    	}
+		return preloadVal;
 	}
 	
 	@Override
@@ -144,13 +152,7 @@ public class ListPreference extends BasePreference implements DialogInterface.On
     			value = getPersistedString(null);
     		}
     	}
-    	Object preloadVal = null;
-		if(valueType == 0) { // int
-			preloadVal = PreloadValues.getInstance().getInt(getKey());
-    	}else { // string
-    		preloadVal = PreloadValues.getInstance().getString(getKey());
-    	}
-		writeValue(preloadVal, false);
+		writeValue(readPreloadValue(), false);
     }
     
 	@Override

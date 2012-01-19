@@ -32,11 +32,8 @@ public class VoltagePreference extends IntegerPreference {
 	}
 	
 	@Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-    	if(restoreValue) {
-    		value = getPersistedInt(-1);
-    	}
-    	int preloadVal = -1;
+	protected Integer readPreloadValue() {
+		int preloadVal = -1;
     	if(!ignoreInterface) {
 	    	String str =  PreloadValues.getInstance().getString(getKey());
 	    	if(str == null) {
@@ -49,11 +46,19 @@ public class VoltagePreference extends IntegerPreference {
     	}else {
     		preloadVal = value;
     	}
-		writeValue(preloadVal, false);
+    	return preloadVal;
+	}
+	
+	@Override
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+    	if(restoreValue) {
+    		value = getPersistedInt(-1);
+    	}
+		writeValue(readPreloadValue(), false);
     }
 
 	@Override
-	protected void writeValue(int newValue, boolean writeInterface) {
+	protected void writeValue(Integer newValue, boolean writeInterface) {
 		if(!ignoreInterface && writeInterface && value > -1 && newValue != value) {
 			writeToInterface(String.valueOf(newValue));
 			// re-read from interface (to detect error)
@@ -69,7 +74,7 @@ public class VoltagePreference extends IntegerPreference {
 	}
 	
 	@Override
-	protected int readValue() {
+	protected Integer readValue() {
 		int ret = -1;
 		String str = readFromInterface();
 		if(str != null) {
@@ -81,4 +86,5 @@ public class VoltagePreference extends IntegerPreference {
 		}
 		return ret;
 	}
+	
 }
