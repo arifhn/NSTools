@@ -72,10 +72,12 @@ public class VoltagePreference extends IntegerPreference {
 	protected int readValue() {
 		int ret = -1;
 		String str = readFromInterface();
-		if(str.endsWith(" mV")) {
-			ret = Integer.parseInt(str.substring(0, str.length() - 3));
-		}else {
-			ret = Integer.parseInt(str);
+		if(str != null) {
+			if(str.endsWith(" mV")) {
+				ret = Integer.parseInt(str.substring(0, str.length() - 3));
+			}else {
+				ret = Integer.parseInt(str);
+			}
 		}
 		return ret;
 	}

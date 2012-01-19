@@ -73,12 +73,6 @@ public class MainActivity extends TabActivity {
 		}
 		onCreate = false;
 	}
-    
-    @Override
-    protected void onStop() {
-    	super.onStop();
-    	finish();
-    }
 
     private void reloadTweak() {
 		SysCommand sc = SysCommand.getInstance();
@@ -97,6 +91,10 @@ public class MainActivity extends TabActivity {
 			ed.putString(getString(R.string.key_kernel_version), kernel);
 			ed.commit();
 		}
+		
+		Intent i = new Intent();
+		i.setAction("mobi.cyann.nstools.RELOAD");
+		sendBroadcast(i);
     }
     
 	private void copyAsset(String srcPath, String dstPath) throws IOException {
