@@ -23,21 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="mobi.cyann.nstools.NSTweakActivity" >
-            <intent-filter>
-                <action android:name="mobi.cyann.nstools.RELOAD" />
-            </intent-filter>
-        </activity>
-        <activity android:name="mobi.cyann.nstools.CPUActivity">
-            <intent-filter>
-                <action android:name="mobi.cyann.nstools.RELOAD" />
-            </intent-filter>
-		</activity>
-        <activity android:name="mobi.cyann.nstools.VoltageControlActivity">
-            <intent-filter>
-                <action android:name="mobi.cyann.nstools.RELOAD" />
-            </intent-filter>
-		</activity>
+        <activity android:name="mobi.cyann.nstools.NSTweakActivity" />
+        <activity android:name="mobi.cyann.nstools.CPUActivity" />
+        <activity android:name="mobi.cyann.nstools.VoltageControlActivity" />
         <activity android:name="mobi.cyann.nstools.SettingActivity" />
 
         <service android:name="mobi.cyann.nstools.OnBootCompleteService" >
