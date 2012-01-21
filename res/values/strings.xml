@@ -8,6 +8,7 @@
     <string name="label_bln_blink">Blink Status</string>
     <string name="label_bln_blink_interval">Blink Interval</string>
     <string name="label_bln_blink_count">Max Blink Count</string>
+    <string name="label_bln_timeout">Led Timeout</string>
     <string name="blx_tweak">Battery Life Extender</string>
     <string name="label_charging_limit">Charging Limit</string>
 	<string name="cmled_tweak">CMLed</string>

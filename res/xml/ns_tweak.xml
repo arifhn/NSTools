@@ -26,6 +26,15 @@
             android:key="@string/key_bln_status"
             android:summary="@string/status_not_available"
             android:title="@string/label_status" />
+        <mobi.cyann.nstools.preference.normal.IntegerPreference
+            android:dependency="@string/key_bln_status"
+            android:key="@string/key_bln_timeout"
+            custom:maxValue="1800"
+            custom:metrics="sec"
+            custom:minValue="0"
+            custom:step="30"
+            android:summary="0"
+            android:title="@string/label_bln_timeout" />
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/backlightnotification/in_kernel_blink"
             android:key="@string/key_bln_blink"

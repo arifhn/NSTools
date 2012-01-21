@@ -15,6 +15,7 @@ import android.provider.CallLog.Calls;
  */
 public class ObserverService extends Service {
 	private MissedCallObserver missedCallObserver;
+	private BlnObserver blnObserver;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -29,9 +30,14 @@ public class ObserverService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		// register missed call observer
 		missedCallObserver = new MissedCallObserver(this);
 		getContentResolver().registerContentObserver(Calls.CONTENT_URI, true, missedCallObserver);
+
+		// register bln observer (for bln timeout)
+		blnObserver = new BlnObserver(this);
+		blnObserver.startWatching();
 	}
 
 }
