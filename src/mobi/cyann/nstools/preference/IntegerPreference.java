@@ -20,25 +20,21 @@ import android.widget.TextView;
 public class IntegerPreference extends StatusPreference implements DialogInterface.OnClickListener {
 	//private final static String LOG_TAG = "NSTools.IntegerPreference";
 	
-	private final SeekbarDialog dialog;
+	private Context context;
+	private int minValue, maxValue, step;
 	private String metrics;
 	
 	public IntegerPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
 		TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.mobi_cyann_nstools_preference_IntegerPreference, defStyle, 0);
-		int minValue = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_minValue, 0);
-		int maxValue = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_maxValue, 100);
-		int step = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_step, 1);
+		minValue = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_minValue, 0);
+		maxValue = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_maxValue, 100);
+		step = a.getInt(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_step, 1);
 		metrics = a.getString(R.styleable.mobi_cyann_nstools_preference_IntegerPreference_metrics);
 		a.recycle();
 		
-		dialog = new SeekbarDialog(context, this, this);
-		dialog.setMin(minValue);
-		dialog.setMax(maxValue);
-		dialog.setStep(step);
-		dialog.setTitle(getTitle());
-		dialog.setMetrics(metrics);
+		this.context = context;
 	}
 
 	public IntegerPreference(Context context, AttributeSet attrs) {
@@ -67,15 +63,22 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 	
 	@Override
 	protected void onClick() {
+		SeekbarDialog dialog = new SeekbarDialog(context, this, this);
+		
+		dialog.setMin(minValue);
+		dialog.setMax(maxValue);
+		dialog.setStep(step);
+		dialog.setTitle(getTitle());
+		dialog.setMetrics(metrics);
+		
 		dialog.setValue(value);
 		dialog.show();
 	}
 	
 	@Override
 	public void onClick(DialogInterface d, int which) {
-		//SeekbarDialog d = (SeekbarDialog)dialog;
 		if(which == DialogInterface.BUTTON_POSITIVE) {
-			int newValue = dialog.getValue();
+			int newValue = ((SeekbarDialog)d).getValue();
 			if (!callChangeListener(newValue)) {
 	            return;
 	        }
@@ -85,24 +88,22 @@ public class IntegerPreference extends StatusPreference implements DialogInterfa
 	
 	public void setMetrics(String metrics) {
 		this.metrics = metrics;
-		dialog.setMetrics(metrics);
 	}
 	
 	public void setMinValue(int minValue) {
-		dialog.setMin(minValue);
+		this.minValue = minValue;
 	}
 	
 	public void setMaxValue(int maxValue) {
-		dialog.setMax(maxValue);
+		this.maxValue = maxValue;
 	}
 	
 	public void setStep(int step) {
-		dialog.setStep(step);
+		this.step = step;
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
 		super.setTitle(title);
-		dialog.setTitle(title);
 	}
 }
