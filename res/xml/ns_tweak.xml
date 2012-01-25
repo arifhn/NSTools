@@ -94,10 +94,10 @@
         <mobi.cyann.nstools.preference.IntegerPreference
             custom:interfacePath="/sys/class/misc/notification/bl_timeout"
             android:key="@string/key_cmled_bltimeout"
-            custom:maxValue="300"
+            custom:maxValue="1800"
             custom:metrics="sec"
-            custom:minValue="1"
-            custom:step="1"
+            custom:minValue="0"
+            custom:step="30"
             android:summary="0"
             android:title="@string/label_cmled_bltimeout" />
 
