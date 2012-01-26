@@ -50,6 +50,9 @@
     <string name="label_restore_on_boot">Ustaw przy starcie</string>
     <string name="summaryOn_restore_on_boot">Ustawienia zostaną zachowane przy ponownym uruchomieniu systemu</string>
     <string name="summaryOff_restore_on_boot">Zresetuj do ustawień domyślnych przy starcie</string>
+    <string name="label_nstools_service">Usługi NSTools</string>	
+    <string name="summaryOn_nstools_service">Włącz usługę BLN dla nieodebranych połączeń</string>	
+    <string name="summaryOff_nstools_service">Wyłącz usługę BLN dla nieodebranych połączeń</string>
     <string name="label_load_settings">Wczytaj</string>
     <string name="summary_load_settings">Wczytaj ustawienia z pliku</string>
     <string name="label_save_settings">Zapisz</string>
