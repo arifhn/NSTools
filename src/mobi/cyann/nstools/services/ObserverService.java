@@ -4,16 +4,22 @@
  */
 package mobi.cyann.nstools.services;
 
+import mobi.cyann.nstools.R;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
+import android.util.Log;
 
 /**
  * @author arif
  *
  */
 public class ObserverService extends Service {
+	private final static String LOG_TAG = "NSTools.ObserverService";
 	private MissedCallObserver missedCallObserver;
 	private BlnObserver blnObserver;
 	
@@ -24,20 +30,48 @@ public class ObserverService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		return Service.START_STICKY;
+		String action = intent.getAction();
+		if(action != null && action.equals("STOP")) {
+			Log.d(LOG_TAG, "stoping service");
+			if(blnObserver != null) {
+				blnObserver.stopWatching();
+			}
+			blnObserver = null;
+			if(missedCallObserver != null) {
+				missedCallObserver.stopWatching();
+			}
+			missedCallObserver = null;
+			
+			stopSelf();
+			Log.d(LOG_TAG, "service stoped");
+			return Service.START_NOT_STICKY;
+		}else {
+			Log.d(LOG_TAG, "starting service");
+			if(blnObserver == null) {
+				// register bln observer (for bln timeout)
+				blnObserver = new BlnObserver(this);
+				blnObserver.startWatching();
+			}
+			if(missedCallObserver == null) {
+				// register missed call observer
+				missedCallObserver = new MissedCallObserver(this);
+			}
+			Log.d(LOG_TAG, "service started");
+			return Service.START_STICKY;
+		}
 	}
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-
-		// register missed call observer
-		missedCallObserver = new MissedCallObserver(this);
-		getContentResolver().registerContentObserver(Calls.CONTENT_URI, true, missedCallObserver);
-
-		// register bln observer (for bln timeout)
-		blnObserver = new BlnObserver(this);
-		blnObserver.startWatching();
+	public static void startService(Context context, boolean forced) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean startService = preferences.getBoolean(context.getString(R.string.key_nstools_service), false);
+		if(startService || forced) {
+			context.startService(new Intent(context, ObserverService.class));
+		}
 	}
-
+	
+	public static void stopService(Context context) {
+		Intent stopIntent = new Intent(context, ObserverService.class);
+		stopIntent.setAction("STOP");
+		context.startService(stopIntent);
+	}
 }

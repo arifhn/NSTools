@@ -24,14 +24,16 @@ import android.util.Log;
 public class BlnObserver extends FileObserver {
 	private final static String LOG_TAG = "NSTools.BlnObserver";
 	
+	private AlarmReceiver alarmReceiver;
 	private Context context;
 	
 	public BlnObserver(Context context) {
 		super("/sys/class/misc/backlightnotification/notification_led");
 		this.context = context;
 		
+		alarmReceiver = new AlarmReceiver();
 		// register alarm receiver
-		context.registerReceiver(new AlarmReceiver(), new IntentFilter("mobi.cyann.nstools.SHUTDOWN_BLN"));
+		context.registerReceiver(alarmReceiver, new IntentFilter("mobi.cyann.nstools.SHUTDOWN_BLN"));
 	}
 	
 	private int getBlnTimeout() {
@@ -71,5 +73,11 @@ public class BlnObserver extends FileObserver {
 			SysCommand.getInstance().writeSysfs("/sys/class/misc/backlightnotification/notification_led", "0");
 			WakeLock.release();
 		}
+	}
+
+	@Override
+	public void stopWatching() {
+		context.unregisterReceiver(alarmReceiver);
+		super.stopWatching();
 	}
 }

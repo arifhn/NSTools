@@ -4,6 +4,7 @@
  */
 package mobi.cyann.nstools;
 
+import mobi.cyann.nstools.services.ObserverService;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 		
 		addPreferencesFromResource(R.xml.setting);
 		
+		findPreference(getString(R.string.key_nstools_service)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_load_settings)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceClickListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceChangeListener(this);
@@ -69,6 +71,15 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 		}else if(preference.getKey().equals(getString(R.string.key_delete_settings))) {
 			if(newValue != null && newValue.toString().length() > 0) {
 				SettingsManager.deleteSettings(this, newValue.toString());
+			}
+			return true;
+		}else if(preference.getKey().equals(getString(R.string.key_nstools_service))) {
+			if(newValue != null) {
+				if((Boolean)newValue) {
+					ObserverService.startService(this, true);
+				}else {
+					ObserverService.stopService(this);
+				}
 			}
 			return true;
 		}

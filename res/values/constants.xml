@@ -38,6 +38,7 @@
     <string name="key_max_int_volt">key_max_int_volt</string>
     <string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
     <string name="key_restore_on_boot">key_restore_on_boot</string>
+    <string name="key_nstools_service">key_nstools_service</string>
     <string name="key_load_settings">key_load_settings</string>
     <string name="key_save_settings">key_save_settings</string>
     <string name="key_delete_settings">key_delete_settings</string>

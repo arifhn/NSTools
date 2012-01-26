@@ -51,6 +51,9 @@
     <string name="label_restore_on_boot">Set on boot</string>
     <string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
     <string name="summaryOff_restore_on_boot">Reset to default settings on boot</string>
+    <string name="label_nstools_service">NSTools service</string>
+    <string name="summaryOn_nstools_service">Enable service for BLN missed call and timeout</string>
+    <string name="summaryOff_nstools_service">Disable service for BLN missed call and timeout</string>
     <string name="label_load_settings">Load</string>
     <string name="summary_load_settings">Load settings from saved file</string>
     <string name="label_save_settings">Save</string>

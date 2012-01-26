@@ -20,7 +20,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 		context.startService(new Intent(context, OnBootCompleteService.class));
 		
 		// start our ObserverService (monitor missed call)
-		context.startService(new Intent(context, ObserverService.class));
+		ObserverService.startService(context, false);
 	}
 	
 }

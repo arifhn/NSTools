@@ -31,7 +31,7 @@ public class MainActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		
 		// start our ObserverService
-		startService(new Intent(this, ObserverService.class));
+		ObserverService.startService(this, false);
 		
 		// extract our scripts 
 		extractScripts();

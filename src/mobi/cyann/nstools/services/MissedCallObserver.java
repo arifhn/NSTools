@@ -27,6 +27,12 @@ public class MissedCallObserver extends ContentObserver {
 	public MissedCallObserver(Context context) {
 		super(new Handler());
 		this.context = context;
+		
+		context.getContentResolver().registerContentObserver(Calls.CONTENT_URI, true, this);
+	}
+
+	public void stopWatching() {
+		context.getContentResolver().unregisterContentObserver(this);
 	}
 	
     @Override
@@ -49,6 +55,10 @@ public class MissedCallObserver extends ContentObserver {
             	screenReceiver = new ScreenReceiver();
             }
             context.registerReceiver(screenReceiver, filter);
+        }else {
+        	Log.d(LOG_TAG, "deactivate bln");
+        	//set BLN off
+			SysCommand.getInstance().writeSysfs("/sys/class/misc/backlightnotification/notification_led", "0");
         }
     }
     

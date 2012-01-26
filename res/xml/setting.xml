@@ -9,6 +9,13 @@
         android:summaryOn="@string/summaryOn_restore_on_boot"
         android:title="@string/label_restore_on_boot" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="@string/key_nstools_service"
+        android:summaryOff="@string/summaryOff_nstools_service"
+        android:summaryOn="@string/summaryOn_nstools_service"
+        android:title="@string/label_nstools_service" />
+    
     <mobi.cyann.nstools.preference.FileSelectPreference
         android:key="@string/key_load_settings"
         android:summary="@string/summary_load_settings"
