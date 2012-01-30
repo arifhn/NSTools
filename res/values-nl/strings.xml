@@ -2,21 +2,21 @@
 <resources>
 
     <!-- NSTweakActivity -->
-    <string name="ns_tweak">Tweak</string>
+    <string name="ns_tweak">Tweaks</string>
     <string name="bld_tweak">Backlight Dimmer</string>
-    <string name="bln_tweak">Backlight Notification</string>
+    <string name="bln_tweak">Backlight Notificatie</string>
     <string name="label_bln_blink">Knipper Status</string>
-	<string name="label_bln_blink_interval">Knippersnelheid</string>
-    <string name="label_bln_blink_count">Max aantal knipperen</string>
+    <string name="label_bln_blink_interval">Knippersnelheid</string>
+    <string name="label_bln_blink_count">Aantal keer knipperen</string>
     <string name="blx_tweak">Battery Life Extender</string>
     <string name="label_charging_limit">Oplaad Limiet</string>
-	<string name="cmled_tweak">CMLed</string>
+    <string name="cmled_tweak">CMLed</string>
     <string name="label_cmled_bltimeout">Led Timeout</string>
     <string name="label_cmled_blink">Knipper</string>
     <string name="label_cmled_blinktimeout">Knipper Timeout</string>
     <string name="touchwake_tweak">Touchwake</string>
-	<string name="iosched_tweak">IO Scheduler</string>
-	<string name="label_iosched">Active scheduler</string>
+    <string name="iosched_tweak">IO Scheduler</string>
+    <string name="label_iosched">Actieve Scheduler</string>
 	
     <!-- VoltageControlActivity -->
     <string name="voltage_control">Spanningen</string>
@@ -34,9 +34,9 @@
     <string name="label_status">Status</string>
     <string name="label_delay">Vertraging</string>
     <string name="label_ok">Ok</string>
-    <string name="label_cancel">Annuleer</string>
+    <string name="label_cancel">Annuleren</string>
     <string name="label_yes">Ja</string>
-    <string name="label_no">Neen</string>
+    <string name="label_no">Nee</string>
     <string name="label_save">Opslaan</string>
     <string name="label_load">Openen</string>
     <string name="label_warning">WAARSCHUWING</string>
@@ -47,17 +47,17 @@
 
     <!-- Setting Activity -->
     <string name="label_setting">Instellingen</string>
-    <string name="label_restore_on_boot">Stel in on opstart</string>
-    <string name="summaryOn_restore_on_boot">Instellingen zullen bewaard blijven na een reboot</string>
-    <string name="summaryOff_restore_on_boot">Instellingen zullen verworpen worden na een reboot</string>
+    <string name="label_restore_on_boot">Stel in bij opstarten</string>
+    <string name="summaryOn_restore_on_boot">Instellingen zullen bewaard blijven na opnieuw opstarten</string>
+    <string name="summaryOff_restore_on_boot">Instellingen zullen verworpen worden na opnieuw opstarten</string>
     <string name="label_load_settings">Openen</string>
-    <string name="summary_load_settings">Open opgeslagen bestand met instellingen</string>
+    <string name="summary_load_settings">Open opgeslagen instellingen</string>
     <string name="label_save_settings">Opslaan</string>
-    <string name="summary_save_settings">Sla huidige instellingen op in een bestand</string>
+    <string name="summary_save_settings">Sla huidige instellingen op</string>
     <string name="save_success_message">Instellingen opgeslagen</string>
     <string name="save_failed_message">Het is niet gelukt om de instellingen op te slaan</string>
     <string name="label_delete_settings">Verwijder</string>
-    <string name="summary_delete_settings">Verwijder opgeslagen bestand met instellingen</string>
+    <string name="summary_delete_settings">Verwijder opgeslagen instellingen</string>
     <string name="label_about">Over</string>
     <string name="about_text">NSTools on XDA</string>
     <string name="about_desc">Visit NSTools thread on XDA</string>
@@ -65,11 +65,11 @@
     <!-- CPU Activity -->
     <string name="label_cpu_tweak">CPU</string>
     <string name="label_governor">Governor</string>
-    <string name="label_min_cpufreq">Min CPU freq</string>
-    <string name="label_max_cpufreq">Max CPU freq</string>
+    <string name="label_min_cpufreq">Min CPU frequentie</string>
+    <string name="label_max_cpufreq">Max CPU frequentie</string>
     <string name="label_lazy">Lazy</string>
     <string name="label_screenoff_maxfreq">Screen off max freq</string>
-	<string name="label_lulzactive">Lulzactive</string>
+    <string name="label_lulzactive">Lulzactive</string>
     <string name="label_lulzactive_inc_cpu_load">Inc CPU load</string>
     <string name="label_lulzactive_pump_up_step">Pump up step</string>
     <string name="label_lulzactive_pump_down_step">Pump down step</string>
@@ -87,7 +87,6 @@
     <string name="label_idle2">Deep Idle (TOP=ON)</string>
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
-    <string name="label_liveoc_ocvalue">OC Value</string>
-
-	<string name="msg_kernel_changed">De instellingen zijn verworpen wegens kernel-verandering</string>
+    <string name="label_liveoc_ocvalue">OC Waarde</string>
+    <string name="msg_kernel_changed">De instellingen zijn verworpen wegens kernel-verandering</string>
 </resources>
