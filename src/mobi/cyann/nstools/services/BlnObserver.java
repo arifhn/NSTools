@@ -77,7 +77,11 @@ public class BlnObserver extends FileObserver {
 
 	@Override
 	public void stopWatching() {
-		context.unregisterReceiver(alarmReceiver);
+		try {
+			context.unregisterReceiver(alarmReceiver);
+		}catch(Exception ex) {
+			Log.d(LOG_TAG, "exception when unregister receiver", ex);
+		}
 		super.stopWatching();
 	}
 }

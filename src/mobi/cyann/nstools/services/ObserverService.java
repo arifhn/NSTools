@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.provider.CallLog.Calls;
 import android.util.Log;
 
 /**
@@ -30,7 +29,10 @@ public class ObserverService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		String action = intent.getAction();
+		String action = null;
+		if(intent != null) {
+			action = intent.getAction();
+		}
 		if(action != null && action.equals("STOP")) {
 			Log.d(LOG_TAG, "stoping service");
 			if(blnObserver != null) {
