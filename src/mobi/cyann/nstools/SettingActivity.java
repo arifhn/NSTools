@@ -4,29 +4,30 @@
  */
 package mobi.cyann.nstools;
 
+import mobi.cyann.nstools.PreferenceListFragment.OnPreferenceAttachedListener;
 import mobi.cyann.nstools.services.ObserverService;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
 /**
  * @author arif
  *
  */
-public class SettingActivity extends PreferenceActivity implements OnPreferenceClickListener, OnPreferenceChangeListener {
-
+public class SettingActivity extends PreferenceListFragment implements OnPreferenceAttachedListener, OnPreferenceClickListener, OnPreferenceChangeListener {
+	public SettingActivity() {
+		super(R.xml.setting);
+		setOnPreferenceAttachedListener(this);
+	}
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		addPreferencesFromResource(R.xml.setting);
-		
+	public void onPreferenceAttached(PreferenceScreen rootPreference, int xmlId) {
 		findPreference(getString(R.string.key_nstools_service)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_load_settings)).setOnPreferenceChangeListener(this);
 		findPreference(getString(R.string.key_save_settings)).setOnPreferenceClickListener(this);
@@ -55,30 +56,30 @@ public class SettingActivity extends PreferenceActivity implements OnPreferenceC
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if(preference.getKey().equals(getString(R.string.key_load_settings))) {
 			if(newValue != null && newValue.toString().length() > 0) {
-				SettingsManager.loadSettings(this, newValue.toString());
-				MainActivity.restart(this);
+				SettingsManager.loadSettings(getActivity(), newValue.toString());
+				MainActivity.restart(getActivity());
 			}
 			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_save_settings))) {
 			if(newValue != null && newValue.toString().length() > 0) {
-				if(SettingsManager.saveSettings(this, newValue.toString())) {
-					Toast.makeText(this, getString(R.string.save_success_message), Toast.LENGTH_LONG).show();
+				if(SettingsManager.saveSettings(getActivity(), newValue.toString())) {
+					Toast.makeText(getActivity(), getString(R.string.save_success_message), Toast.LENGTH_LONG).show();
 				}else {
-					Toast.makeText(this, getString(R.string.save_failed_message), Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), getString(R.string.save_failed_message), Toast.LENGTH_LONG).show();
 				}
 			}
 			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_delete_settings))) {
 			if(newValue != null && newValue.toString().length() > 0) {
-				SettingsManager.deleteSettings(this, newValue.toString());
+				SettingsManager.deleteSettings(getActivity(), newValue.toString());
 			}
 			return true;
 		}else if(preference.getKey().equals(getString(R.string.key_nstools_service))) {
 			if(newValue != null) {
 				if((Boolean)newValue) {
-					ObserverService.startService(this, true);
+					ObserverService.startService(getActivity(), true);
 				}else {
-					ObserverService.stopService(this);
+					ObserverService.stopService(getActivity());
 				}
 			}
 			return true;

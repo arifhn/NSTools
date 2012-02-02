@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mobi.cyann.nstools.services.ObserverService;
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,15 +15,19 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-public class MainActivity extends TabActivity {
+public class MainActivity extends FragmentActivity {
 	private final static String LOG_TAG = "NSTools.MainActivity";
 	
 	private boolean onCreate = false;
+	private TabHost tabHost;
+	private TabsAdapter tabsAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +48,46 @@ public class MainActivity extends TabActivity {
 		
 		setContentView(R.layout.main);
 		
-		TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
+		tabHost = (TabHost)findViewById(android.R.id.tabhost);
+		tabHost.setup();
+		
+		ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
+		
+		tabsAdapter = new TabsAdapter(this, tabHost, viewPager);
+		
 		Resources res = getResources();
-
-		TabSpec tab1 = tabHost.newTabSpec("tid1");
+		
+		TabSpec tab1 = tabHost.newTabSpec("nstweak");
 		tab1.setIndicator(getString(R.string.ns_tweak), res.getDrawable(R.drawable.ic_tab_tweaks));
-		tab1.setContent(new Intent(this, NSTweakActivity.class));
-		tabHost.addTab(tab1);
+		//tab1.setContent(new Intent(this, NSTweakActivity.class));
+		tabsAdapter.addTab(tab1, NSTweakActivity.class, null);
 		
-		TabSpec tab2 = tabHost.newTabSpec("tid2");
+		TabSpec tab2 = tabHost.newTabSpec("cpu");
 		tab2.setIndicator(getString(R.string.label_cpu_tweak), res.getDrawable(R.drawable.ic_tab_cpu));
-		tab2.setContent(new Intent(this, CPUActivity.class));
-		tabHost.addTab(tab2);
+		//tab2.setContent(new Intent(this, CPUActivity.class));
+		tabsAdapter.addTab(tab2, CPUActivity.class, null);
 		
-		TabSpec tab3 = tabHost.newTabSpec("tid3");
+		TabSpec tab3 = tabHost.newTabSpec("volt");
 		tab3.setIndicator(getString(R.string.voltage_control), res.getDrawable(R.drawable.ic_tab_voltages));
-		tab3.setContent(new Intent(this, VoltageControlActivity.class));
-		tabHost.addTab(tab3);
+		//tab3.setContent(new Intent(this, VoltageControlActivity.class));
+		tabsAdapter.addTab(tab3, VoltageControlActivity.class, null);
 		
-		TabSpec tab4 = tabHost.newTabSpec("tid4");
+		TabSpec tab4 = tabHost.newTabSpec("setting");
 		tab4.setIndicator(getString(R.string.label_setting), res.getDrawable(R.drawable.ic_tab_settings));
-		tab4.setContent(new Intent(this, SettingActivity.class));
-		tabHost.addTab(tab4);
+		//tab4.setContent(new Intent(this, SettingActivity.class));
+		tabsAdapter.addTab(tab4, SettingActivity.class, null);
+		
+		if (savedInstanceState != null) {
+            tabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+        }
 	}
 
+	@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("tab", tabHost.getCurrentTabTag());
+    }
+	
     @Override
 	protected void onResume() {
 		super.onResume();

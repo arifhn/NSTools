@@ -14,11 +14,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -38,17 +38,16 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 	
 	private SharedPreferences preferences;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+	public VoltageControlActivity() {
+		super(R.xml.voltage);
+		
 		armVoltages = new ArrayList<Integer>();
 		intVoltages = new ArrayList<Integer>();
+	}
 
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		addPreferencesFromResource(R.xml.voltage);
-
+	@Override
+	public void onPreferenceAttached(PreferenceScreen rootPreference, int xmlId) {
+		preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		
 		maxArmVolt = (IntegerPreference)findPreference(getString(R.string.key_max_arm_volt));
 		maxIntVolt = (IntegerPreference)findPreference(getString(R.string.key_max_int_volt));
@@ -64,13 +63,14 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 			Log.d(LOG_TAG, "read from customvoltage");
 			readVoltages(maxArmVolt, getString(R.string.key_arm_volt_pref), "armvolt_", "/sys/class/misc/customvoltage/arm_volt", armVoltages);
 		}
-
+		
+		super.onPreferenceAttached(rootPreference, xmlId);
 	}
-
+	
 	private void showWarningDialog() {
 		if(!preferences.getBoolean(getString(R.string.key_dont_show_volt_warning), false)) {
-			final View content = getLayoutInflater().inflate(R.layout.warning_dialog, null);
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final View content = getActivity().getLayoutInflater().inflate(R.layout.warning_dialog, null);
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(content);
 			builder.setTitle(getString(R.string.label_warning));
 			builder.setPositiveButton(getString(R.string.label_ok), new OnClickListener() {
@@ -88,7 +88,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 	}
 
 	private void createDefaultVoltPreference(PreferenceCategory parent, String voltPrefix, int i, String title, int value) {
-		VoltagePreference vp = new VoltagePreference(this);
+		VoltagePreference vp = new VoltagePreference(getActivity());
 		vp.setKey(voltPrefix + i);
 		vp.setTitle(title);
 		vp.setValue(value);

@@ -7,6 +7,7 @@ package mobi.cyann.nstools;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobi.cyann.nstools.PreferenceListFragment.OnPreferenceAttachedListener;
 import mobi.cyann.nstools.preference.BasePreference;
 import mobi.cyann.nstools.preference.RemovablePreferenceCategory;
 import android.content.BroadcastReceiver;
@@ -15,7 +16,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 
@@ -23,20 +23,25 @@ import android.preference.PreferenceScreen;
  * @author arif
  *
  */
-public class BasePreferenceActivity extends PreferenceActivity {
+public class BasePreferenceActivity extends PreferenceListFragment implements OnPreferenceAttachedListener {
 	private final static String ROOT = "root";
 	
 	private ReloadListener reloadListener;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		reloadListener = new ReloadListener();
-		registerReceiver(reloadListener, new IntentFilter("mobi.cyann.nstools.RELOAD"));
+	public BasePreferenceActivity(int id) {
+		super(id);
+		setOnPreferenceAttachedListener(this);
 	}
 	
 	@Override
-	protected void onResume() {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		reloadListener = new ReloadListener();
+		getActivity().registerReceiver(reloadListener, new IntentFilter("mobi.cyann.nstools.RELOAD"));
+	}
+	
+	@Override
+	public void onResume() {
 		super.onResume();
 		
 		List<Preference> list = new ArrayList<Preference>();
@@ -53,16 +58,9 @@ public class BasePreferenceActivity extends PreferenceActivity {
 			}
 		}
 	}
-	
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
     
 	@Override
-	public void addPreferencesFromResource(int preferencesResId) {
-		super.addPreferencesFromResource(preferencesResId);
-		
+	public void onPreferenceAttached(PreferenceScreen rootPreference, int xmlId) {
 		List<Preference> removeThem = new ArrayList<Preference>();
 		PreferenceScreen root = (PreferenceScreen)findPreference(ROOT);
 		for(int i = 0; i < root.getPreferenceCount(); ++i) {
@@ -96,9 +94,8 @@ public class BasePreferenceActivity extends PreferenceActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
+	public void onDestroy() {
 		super.onDestroy();
-		unregisterReceiver(reloadListener);
+		getActivity().unregisterReceiver(reloadListener);
 	}
 }

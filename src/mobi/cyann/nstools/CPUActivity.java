@@ -14,9 +14,9 @@ import mobi.cyann.nstools.preference.LulzactiveScreenOffPreference;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,12 +32,13 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 	private ListPreference minFreq;
 	private ListPreference maxFreq;
 	
+	public CPUActivity() {
+		super(R.xml.cpu);
+	}
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		// set preference layout
-		addPreferencesFromResource(R.xml.cpu);
+	public void onPreferenceAttached(PreferenceScreen rootPreference, int xmlId) {
+		super.onPreferenceAttached(rootPreference, xmlId);
 		
 		// deepidle stats
 		Preference p = findPreference(getString(R.string.key_deepidle_stats));
@@ -122,7 +123,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 		final int timeText[] = {R.id.time1, R.id.time2, R.id.time3};
 		final int avgText[] = {R.id.avg1, R.id.avg2, R.id.avg3};
 		
-		final View content = getLayoutInflater().inflate(R.layout.idle_stats_dialog, null);
+		final View content = getActivity().getLayoutInflater().inflate(R.layout.idle_stats_dialog, null);
 		
 		Pattern time = Pattern.compile("([0-9]+)ms");
 		Pattern average = Pattern.compile("\\(([0-9]+)ms\\)");
@@ -138,7 +139,7 @@ public class CPUActivity extends BasePreferenceActivity implements OnPreferenceC
 			if(m.find())
 				((TextView)content.findViewById(avgText[i])).setText(m.group(1));
 		}
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(getString(R.string.label_deepidle_stats));
 		builder.setView(content);
 		builder.setPositiveButton(getString(R.string.label_reset), new OnClickListener() {
