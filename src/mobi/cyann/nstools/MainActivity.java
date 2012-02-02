@@ -59,23 +59,23 @@ public class MainActivity extends FragmentActivity {
 		
 		TabSpec tab1 = tabHost.newTabSpec("nstweak");
 		tab1.setIndicator(getString(R.string.ns_tweak), res.getDrawable(R.drawable.ic_tab_tweaks));
-		//tab1.setContent(new Intent(this, NSTweakActivity.class));
-		tabsAdapter.addTab(tab1, NSTweakActivity.class, null);
+		//tab1.setContent(new Intent(this, NSTweakFragment.class));
+		tabsAdapter.addTab(tab1, NSTweakFragment.class, null);
 		
 		TabSpec tab2 = tabHost.newTabSpec("cpu");
 		tab2.setIndicator(getString(R.string.label_cpu_tweak), res.getDrawable(R.drawable.ic_tab_cpu));
-		//tab2.setContent(new Intent(this, CPUActivity.class));
-		tabsAdapter.addTab(tab2, CPUActivity.class, null);
+		//tab2.setContent(new Intent(this, CPUFragment.class));
+		tabsAdapter.addTab(tab2, CPUFragment.class, null);
 		
 		TabSpec tab3 = tabHost.newTabSpec("volt");
 		tab3.setIndicator(getString(R.string.voltage_control), res.getDrawable(R.drawable.ic_tab_voltages));
-		//tab3.setContent(new Intent(this, VoltageControlActivity.class));
-		tabsAdapter.addTab(tab3, VoltageControlActivity.class, null);
+		//tab3.setContent(new Intent(this, VoltageControlFragment.class));
+		tabsAdapter.addTab(tab3, VoltageControlFragment.class, null);
 		
 		TabSpec tab4 = tabHost.newTabSpec("setting");
 		tab4.setIndicator(getString(R.string.label_setting), res.getDrawable(R.drawable.ic_tab_settings));
-		//tab4.setContent(new Intent(this, SettingActivity.class));
-		tabsAdapter.addTab(tab4, SettingActivity.class, null);
+		//tab4.setContent(new Intent(this, SettingFragment.class));
+		tabsAdapter.addTab(tab4, SettingFragment.class, null);
 		
 		if (savedInstanceState != null) {
             tabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));

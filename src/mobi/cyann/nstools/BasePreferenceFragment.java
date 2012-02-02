@@ -1,5 +1,5 @@
 /**
- * BasePreferenceActivity.java
+ * BasePreferenceFragment.java
  * Nov 25, 2011 10:05:19 PM
  */
 package mobi.cyann.nstools;
@@ -23,12 +23,12 @@ import android.preference.PreferenceScreen;
  * @author arif
  *
  */
-public class BasePreferenceActivity extends PreferenceListFragment implements OnPreferenceAttachedListener {
+public class BasePreferenceFragment extends PreferenceListFragment implements OnPreferenceAttachedListener {
 	private final static String ROOT = "root";
 	
 	private ReloadListener reloadListener;
 	
-	public BasePreferenceActivity(int id) {
+	public BasePreferenceFragment(int id) {
 		super(id);
 		setOnPreferenceAttachedListener(this);
 	}

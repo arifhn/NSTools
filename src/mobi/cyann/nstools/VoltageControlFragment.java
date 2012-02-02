@@ -1,5 +1,5 @@
 /**
- * VoltageControlActivity.java
+ * VoltageControlFragment.java
  * Nov 6, 2011 7:27:58 PM
  */
 package mobi.cyann.nstools;
@@ -27,7 +27,7 @@ import android.widget.CheckBox;
  * @author arif
  *
  */
-public class VoltageControlActivity extends BasePreferenceActivity implements OnPreferenceChangeListener {
+public class VoltageControlFragment extends BasePreferenceFragment implements OnPreferenceChangeListener {
 	private final static String LOG_TAG = "NSTools.VoltageControlActivity";
 	
 	private IntegerPreference maxArmVolt;
@@ -38,7 +38,7 @@ public class VoltageControlActivity extends BasePreferenceActivity implements On
 	
 	private SharedPreferences preferences;
 	
-	public VoltageControlActivity() {
+	public VoltageControlFragment() {
 		super(R.xml.voltage);
 		
 		armVoltages = new ArrayList<Integer>();

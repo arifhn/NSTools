@@ -1,5 +1,5 @@
 /**
- * CPUActivity.java
+ * CPUFragment.java
  * Nov 12, 2011 10:49:10 AM
  */
 package mobi.cyann.nstools;
@@ -25,14 +25,14 @@ import android.widget.TextView;
  * @author arif
  *
  */
-public class CPUActivity extends BasePreferenceActivity implements OnPreferenceChangedListener, OnPreferenceClickListener {
+public class CPUFragment extends BasePreferenceFragment implements OnPreferenceChangedListener, OnPreferenceClickListener {
 	private final static String LOG_TAG = "NSTools.CPUActivity";
 	
 	private ListPreference governor;
 	private ListPreference minFreq;
 	private ListPreference maxFreq;
 	
-	public CPUActivity() {
+	public CPUFragment() {
 		super(R.xml.cpu);
 	}
 	

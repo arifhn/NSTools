@@ -1,5 +1,5 @@
 /**
- * SettingActivity.java
+ * SettingFragment.java
  * Nov 5, 2011 3:12:07 PM
  */
 package mobi.cyann.nstools;
@@ -8,20 +8,19 @@ import mobi.cyann.nstools.PreferenceListFragment.OnPreferenceAttachedListener;
 import mobi.cyann.nstools.services.ObserverService;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
 /**
  * @author arif
  *
  */
-public class SettingActivity extends PreferenceListFragment implements OnPreferenceAttachedListener, OnPreferenceClickListener, OnPreferenceChangeListener {
-	public SettingActivity() {
+public class SettingFragment extends PreferenceListFragment implements OnPreferenceAttachedListener, OnPreferenceClickListener, OnPreferenceChangeListener {
+	public SettingFragment() {
 		super(R.xml.setting);
 		setOnPreferenceAttachedListener(this);
 	}

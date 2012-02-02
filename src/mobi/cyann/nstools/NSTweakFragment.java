@@ -1,10 +1,10 @@
 package mobi.cyann.nstools;
 
 
-public class NSTweakActivity extends BasePreferenceActivity {
+public class NSTweakFragment extends BasePreferenceFragment {
 	//private final static String LOG_TAG = "NSTools.NSTweakActivity";
 	
-	public NSTweakActivity() {
+	public NSTweakFragment() {
 		super(R.xml.ns_tweak);
 	}
 }
