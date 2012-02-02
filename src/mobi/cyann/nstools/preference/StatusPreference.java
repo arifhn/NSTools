@@ -81,7 +81,12 @@ public class StatusPreference extends BasePreference<Integer> {
 	
 	@Override
 	protected Integer readPreloadValue() {
-		return PreloadValues.getInstance().getInt(getKey());
+		int ret = PreloadValues.getInstance().getInt(getKey());
+		if(ret == -2) { // if the value was not found in preload, we try to read it from interface
+			return readValue();
+		}else {
+			return ret;
+		}
 	}
 	
 	@Override

@@ -98,7 +98,12 @@ public class IoSchedPreference extends BasePreference<String> implements DialogI
 	
 	@Override
 	protected String readPreloadValue() {
-		return parseValue(PreloadValues.getInstance().getString(getKey()));
+		String read = PreloadValues.getInstance().getString(getKey());
+		if(read == null) { // if the value was not found in preload, we try to read it from interface
+			return readValue();
+		}else {
+			return parseValue(read);
+		}
 	}
 	
 	private String parseValue(String tmp) {

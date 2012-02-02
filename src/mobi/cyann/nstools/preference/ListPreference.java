@@ -111,7 +111,11 @@ public class ListPreference extends BasePreference<Object> implements DialogInte
     	}else { // string
     		preloadVal = PreloadValues.getInstance().getString(getKey());
     	}
-		return preloadVal;
+		if(preloadVal == null || (valueType == 0 && (Integer)preloadVal == -2)) { // if the value was not found in preload, we try to read it from interface
+			return readValue();
+		}else {
+			return preloadVal;
+		}
 	}
 	
 	@Override

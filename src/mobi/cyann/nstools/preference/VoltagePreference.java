@@ -37,7 +37,7 @@ public class VoltagePreference extends IntegerPreference {
     	if(!ignoreInterface) {
 	    	String str =  PreloadValues.getInstance().getString(getKey());
 	    	if(str == null) {
-	    		preloadVal = -1;
+	    		preloadVal = readValue(); // if the value was not found in preload, we try to read it from interface
 	    	}else if(str.endsWith(" mV")) {
 				preloadVal = Integer.parseInt(str.substring(0, str.length() - 3));
 			}else {

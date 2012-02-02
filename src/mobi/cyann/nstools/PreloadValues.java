@@ -44,7 +44,7 @@ public class PreloadValues {
 	}
 	
 	public int getInt(String key) {
-		int ret = -1;
+		int ret = -2;
 		try {
 			ret = Integer.parseInt(prop.getProperty(key));
 		}catch(Exception e) {
