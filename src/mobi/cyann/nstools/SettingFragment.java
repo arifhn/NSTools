@@ -21,7 +21,7 @@ import android.widget.Toast;
  */
 public class SettingFragment extends PreferenceListFragment implements OnPreferenceAttachedListener, OnPreferenceClickListener, OnPreferenceChangeListener {
 	public SettingFragment() {
-		super(R.xml.setting);
+		super(R.layout.setting);
 		setOnPreferenceAttachedListener(this);
 	}
 	

@@ -33,7 +33,7 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 	private ListPreference maxFreq;
 	
 	public CPUFragment() {
-		super(R.xml.cpu);
+		super(R.layout.cpu);
 	}
 	
 	@Override

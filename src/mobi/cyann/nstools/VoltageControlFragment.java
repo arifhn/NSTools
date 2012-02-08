@@ -39,7 +39,7 @@ public class VoltageControlFragment extends BasePreferenceFragment implements On
 	private SharedPreferences preferences;
 	
 	public VoltageControlFragment() {
-		super(R.xml.voltage);
+		super(R.layout.voltage);
 		
 		armVoltages = new ArrayList<Integer>();
 		intVoltages = new ArrayList<Integer>();
