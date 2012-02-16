@@ -7,10 +7,15 @@ package mobi.cyann.nstools.preference;
 import mobi.cyann.nstools.R;
 import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 /**
  * @author arif
@@ -39,6 +44,8 @@ public abstract class BasePreference<T> extends Preference {
 	protected abstract void writeValue(T newValue, boolean writeInterface);
 	public abstract boolean isAvailable();
 	
+	private static View blankView;
+	
 	public BasePreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		
@@ -49,6 +56,11 @@ public abstract class BasePreference<T> extends Preference {
 		interfacePath = a.getString(R.styleable.mobi_cyann_nstools_preference_BasePreference_interfacePath);
 		dependencyType = a.getInt(R.styleable.mobi_cyann_nstools_preference_BasePreference_dependencyType, 0);
 		a.recycle();
+		
+		// init blankView for hiding this preference if not available
+		if(blankView == null) {
+			blankView = new FrameLayout(context);
+		}
 	}
 
 	public BasePreference(Context context, AttributeSet attrs) {
@@ -59,6 +71,15 @@ public abstract class BasePreference<T> extends Preference {
 		this(context, null);
 	}
 
+	@Override
+	protected View onCreateView(ViewGroup parent) {
+		if(isAvailable()) {
+			return super.onCreateView(parent);
+		}else {
+			return blankView;
+		}
+	}
+	
 	protected String readFromInterface() {
 		String ret = null;
 		if(interfacePath != null) {

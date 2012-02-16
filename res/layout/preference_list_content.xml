@@ -4,4 +4,6 @@
     android:drawSelectorOnTop="false"
     android:paddingRight="10dp"
     android:paddingLeft="10dp"
-    android:scrollbarStyle="outsideOverlay"/>
+    android:scrollbarStyle="outsideOverlay"
+    android:divider="#000000"
+	android:dividerHeight="0px"/>
