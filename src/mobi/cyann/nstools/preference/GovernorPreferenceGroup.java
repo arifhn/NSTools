@@ -7,7 +7,10 @@ package mobi.cyann.nstools.preference;
 import mobi.cyann.nstools.PreloadValues;
 import mobi.cyann.nstools.R;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +53,42 @@ public class GovernorPreferenceGroup extends RemovablePreferenceCategory {
     	return availableGovernor == null || !availableGovernor.contains(governor);
     }
 
+	private boolean isVisible() {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+		String currentGovernor = pref.getString(getContext().getString(R.string.key_governor), "");
+		return governor.equals(currentGovernor);
+	}
+	
 	@Override
 	protected View onCreateView(ViewGroup parent) {
-		if(super.canBeRemoved()) { // check is child available?
-			return blankView;
-		}else {
+		if(isVisible()) {
 			return super.onCreateView(parent);
+		}else {
+			return blankView;
 		}
+	}
+
+	@Override
+	public void onDependencyChanged(Preference dependency,
+			boolean disableDependent) {
+		
+		boolean visible = isVisible();
+		int count = getPreferenceCount();
+    	for(int i = 0; i < count; ++i) {
+    		Preference p = getPreference(i);
+    		if(p instanceof BasePreference) {
+    			BasePreference<?> bp = ((BasePreference<?>) p);
+    			if(visible) {
+    				// show child
+    				bp.setVisible(true);
+    				// reload values from interface
+    				bp.reload(false);
+    			}else {
+    				// hide child
+    				bp.setVisible(false);	
+    			}
+    		}
+    	}
+		super.onDependencyChanged(dependency, disableDependent);
 	}
 }

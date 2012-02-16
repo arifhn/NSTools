@@ -7,10 +7,8 @@ package mobi.cyann.nstools.preference;
 import mobi.cyann.nstools.R;
 import mobi.cyann.nstools.SysCommand;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +25,7 @@ public abstract class BasePreference<T> extends Preference {
 	private final String interfacePath;
 	private boolean reloadOnResume;
 	private int dependencyType;
-	
+	private boolean visible;
 	private OnPreferenceChangedListener changedListener;
 	
 	public interface OnPreferenceChangedListener {
@@ -61,6 +59,7 @@ public abstract class BasePreference<T> extends Preference {
 		if(blankView == null) {
 			blankView = new FrameLayout(context);
 		}
+		visible = true;
 	}
 
 	public BasePreference(Context context, AttributeSet attrs) {
@@ -73,11 +72,19 @@ public abstract class BasePreference<T> extends Preference {
 
 	@Override
 	protected View onCreateView(ViewGroup parent) {
-		if(isAvailable()) {
+		if(isAvailable() && isVisible()) {
 			return super.onCreateView(parent);
 		}else {
 			return blankView;
 		}
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
+	public boolean isVisible() {
+		return visible;
 	}
 	
 	protected String readFromInterface() {
