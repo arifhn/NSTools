@@ -119,6 +119,12 @@
 	<string name="label_smartass_ramp_up_step">Ramp up step</string>
 	<string name="label_smartass_down_rate_us">Down rate</string>
 	<string name="label_smartass_up_rate_us">Up rate</string>
-	
+	<!-- interactive governor -->
+	<string name="label_interactive">Interactive</string>
+	<string name="label_interactive_go_hispeed_load">Go hispeed load</string>
+	<string name="label_interactive_hispeed_freq">Hispeed freq</string>
+	<string name="label_interactive_min_sample_time">Min sample time</string>
+	<string name="label_interactive_timer_rate">Timer rate</string>
+
 	<string name="msg_kernel_changed">Settings discarded because the kernel version has changed</string>
 </resources>

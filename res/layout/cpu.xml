@@ -240,7 +240,49 @@
             android:summary="0"
             android:title="@string/label_smartass_up_rate_us" />
 	</mobi.cyann.nstools.preference.GovernorPreferenceGroup>
-        
+
+    <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_interactive" custom:governor="interactive" android:dependency="@string/key_governor">
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load"
+            android:key="@string/key_interactive_go_hispeed_load"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="1"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_interactive_go_hispeed_load" />
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/interactive/hispeed_freq"
+            android:key="@string/key_interactive_hispeed_freq"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_interactive_hispeed_freq" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/interactive/min_sample_time"
+            android:key="@string/key_interactive_min_sample_time"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_interactive_min_sample_time" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/interactive/timer_rate"
+            android:key="@string/key_interactive_timer_rate"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_interactive_timer_rate" />
+    </mobi.cyann.nstools.preference.GovernorPreferenceGroup>
+    
     <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_lazy" custom:governor="lazy" android:dependency="@string/key_governor">
 
         <mobi.cyann.nstools.preference.StatusPreference

@@ -77,7 +77,11 @@
 	<string name="key_smartass_ramp_up_step">key_smartass_ramp_up_step</string>
 	<string name="key_smartass_down_rate_us">key_smartass_down_rate_us</string>
 	<string name="key_smartass_up_rate_us">key_smartass_up_rate_us</string>
-		
+	<string name="key_interactive_go_hispeed_load">key_interactive_go_hispeed_load</string>
+	<string name="key_interactive_hispeed_freq">key_interactive_hispeed_freq</string>
+	<string name="key_interactive_min_sample_time">key_interactive_min_sample_time</string>
+	<string name="key_interactive_timer_rate">key_interactive_timer_rate</string>
+            
 	<string-array name="iosched_interfaces">
 	    <item>/sys/block/mtdblock4/queue/scheduler</item>
 	    <item>/sys/block/mmcblk0/queue/scheduler</item>

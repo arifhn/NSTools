@@ -192,6 +192,23 @@ public class SettingsManager {
 			if(value > -1) {
 				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/up_rate_us\n");
 			}
+		}else if(status.equals("interactive")) { // set this parameter only if active governor = interactive
+			value = preferences.getInt(c.getString(R.string.key_interactive_go_hispeed_load), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_interactive_hispeed_freq), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/interactive/hispeed_freq\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_interactive_min_sample_time), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/interactive/min_sample_time\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_interactive_timer_rate), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/interactive/timer_rate\n");
+			}
 		}else if(status.equals("lulzactive")) { // set this parameter only if active governor = lulzactive
 			// lulzactive inc_cpu_load
 			value = preferences.getInt(c.getString(R.string.key_lulzactive_inc_cpu_load), -1);
