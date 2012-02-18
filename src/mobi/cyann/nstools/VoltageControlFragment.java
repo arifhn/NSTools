@@ -52,9 +52,11 @@ public class VoltageControlFragment extends BasePreferenceFragment implements On
 		maxArmVolt = (IntegerPreference)findPreference(getString(R.string.key_max_arm_volt));
 		maxIntVolt = (IntegerPreference)findPreference(getString(R.string.key_max_int_volt));
 		findPreference(getString(R.string.key_default_voltage)).setOnPreferenceChangeListener(this);
+
+		armVoltages.clear();
+		intVoltages.clear();
 		
 		readVoltages(maxIntVolt, getString(R.string.key_int_volt_pref), "intvolt_", "/sys/class/misc/customvoltage/int_volt", intVoltages);
-		
 		if(maxArmVolt.getValue() == -1) {
 			Log.d(LOG_TAG, "read from uv_mv_table");
 			// if we can't get customvoltage mod, then try to read UV_mV_table
@@ -113,14 +115,18 @@ public class VoltageControlFragment extends BasePreferenceFragment implements On
 		for(int i = 0; i < count; ++i) {
 			String line = sc.getLastResult(i);
 			String parts[] = line.split(":");
-			int volt = Integer.parseInt(parts[1].substring(1, parts[1].length()-3));
-
-			Log.d(LOG_TAG, line);
-			createDefaultVoltPreference(c, "uvmvtable_", i, parts[0], volt);
-			
-			armVoltages.add(volt);
+			if(parts.length >= 2) {
+				int volt = Integer.parseInt(parts[1].substring(1, parts[1].length()-3));
+	
+				Log.d(LOG_TAG, line);
+				createDefaultVoltPreference(c, "uvmvtable_", i, parts[0], volt);
+				
+				armVoltages.add(volt);
+			}
 		}
-		saveVoltages(getString(R.string.key_uvmvtable_pref), armVoltages, null);
+		if(armVoltages.size() > 0) {
+			saveVoltages(getString(R.string.key_uvmvtable_pref), armVoltages, null);
+		}
 	}
 	
 	private void readVoltages(IntegerPreference maxVolt, String catKey, String voltPrefix, String voltDevice, List<Integer>voltList) {
