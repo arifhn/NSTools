@@ -49,6 +49,49 @@
             android:title="@string/label_deepidle_stats" />
     </mobi.cyann.nstools.preference.RemovablePreferenceCategory>
     
+    <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_ondemand" custom:governor="ondemand" android:dependency="@string/key_governor">
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate"
+            android:key="@string/key_ondemand_sampling_rate"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_ondemand_sampling_rate" />
+        
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/ondemand/up_threshold"
+            android:key="@string/key_ondemand_up_threshold"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="10"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_ondemand_up_threshold" />
+        
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor"
+            android:key="@string/key_ondemand_sampling_down_factor"
+            custom:maxValue="100"
+            custom:metrics="step"
+            custom:minValue="1"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_ondemand_sampling_down_factor" />
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/ondemand/powersave_bias"
+            android:key="@string/key_ondemand_powersave_bias"
+            custom:maxValue="1000"
+            
+            custom:minValue="0"
+            custom:step="10"
+            android:summary="0"
+            android:title="@string/label_ondemand_powersave_bias" />
+    </mobi.cyann.nstools.preference.GovernorPreferenceGroup>
+    
     <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_lazy" custom:governor="lazy" android:dependency="@string/key_governor">
 
         <mobi.cyann.nstools.preference.StatusPreference

@@ -58,6 +58,10 @@
     <string name="key_lulzactive_screen_off_min_step">key_lulzactive_screen_off_min_step</string>
     <string name="key_lulzactive_up_sample_time">key_lulzactive_up_sample_time</string>
     <string name="key_lulzactive_down_sample_time">key_lulzactive_down_sample_time</string>
+    <string name="key_ondemand_sampling_rate">key_ondemand_sampling_rate</string>
+    <string name="key_ondemand_up_threshold">key_ondemand_up_threshold</string>
+    <string name="key_ondemand_sampling_down_factor">key_ondemand_sampling_down_factor</string>
+    <string name="key_ondemand_powersave_bias">key_ondemand_powersave_bias</string>
     
 	<string-array name="iosched_interfaces">
 	    <item>/sys/block/mtdblock4/queue/scheduler</item>

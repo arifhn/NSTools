@@ -106,49 +106,67 @@ public class SettingsManager {
 		if(!status.equals("-1")) {
 			command.append("echo " + status + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor\n");
 		}
-		
-		// lazy screenoff max freq
-		value = preferences.getInt(c.getString(R.string.key_screenoff_maxfreq), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq\n");
+		// governor's parameters
+		if(status.equals("lazy")) { // set this parameter only if active governor = lazy
+			// lazy screenoff max freq
+			value = preferences.getInt(c.getString(R.string.key_screenoff_maxfreq), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lazy/screenoff_maxfreq\n");
+			}
+		}else if(status.equals("ondemand")) { // set this parameter only if active governor = ondemand
+			value = preferences.getInt(c.getString(R.string.key_ondemand_sampling_rate), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_ondemand_up_threshold), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/ondemand/up_threshold\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_ondemand_sampling_down_factor), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_ondemand_powersave_bias), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/ondemand/powersave_bias\n");
+			}
+		}else if(status.equals("lulzactive")) { // set this parameter only if active governor = lulzactive
+			// lulzactive inc_cpu_load
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_inc_cpu_load), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/inc_cpu_load\n");
+			}
+	
+			// lulzactive pump_up_step
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_pump_up_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/pump_up_step\n");
+			}
+	
+			// lulzactive pump_down_step
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_pump_down_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/pump_down_step\n");
+			}
+			
+			// lulzactive screen_off_min_step
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_screen_off_min_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/screen_off_min_step\n");
+			}
+			
+			// lulzactive up_sample_time
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_up_sample_time), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/up_sample_time\n");
+			}
+			
+			// lulzactive down_sample_time
+			value = preferences.getInt(c.getString(R.string.key_lulzactive_down_sample_time), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/down_sample_time\n");
+			}
 		}
-		
-		// lulzactive inc_cpu_load
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_inc_cpu_load), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/inc_cpu_load\n");
-		}
-
-		// lulzactive pump_up_step
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_pump_up_step), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/pump_up_step\n");
-		}
-
-		// lulzactive pump_down_step
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_pump_down_step), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/pump_down_step\n");
-		}
-		
-		// lulzactive screen_off_min_step
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_screen_off_min_step), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/screen_off_min_step\n");
-		}
-		
-		// lulzactive up_sample_time
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_up_sample_time), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/up_sample_time\n");
-		}
-		
-		// lulzactive down_sample_time
-		value = preferences.getInt(c.getString(R.string.key_lulzactive_down_sample_time), -1);
-		if(value > -1) {
-			command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/lulzactive/down_sample_time\n");
-		}
-		
 		// cmled
 		value = preferences.getInt(c.getString(R.string.key_cmled_bltimeout), -1);
 		if(value > -1) {
