@@ -100,6 +100,14 @@
     <string name="label_ondemand_up_threshold">Up threshold</string>
     <string name="label_ondemand_sampling_down_factor">Sampling down factor</string>
     <string name="label_ondemand_powersave_bias">Powersave bias</string>
+    <!-- conservative governor -->
+    <string name="label_conservative">Conservative</string>
+    <string name="label_conservative_sampling_rate">Sampling rate</string>
+    <string name="label_conservative_down_threshold">Down threshold</string>
+    <string name="label_conservative_up_threshold">Up threshold</string>
+    <string name="label_conservative_sampling_down_factor">Sampling down factor</string>
+    <string name="label_conservative_freq_step">Freq step</string>
+    <string name="label_conservative_ignore_nice_load">Ignore nice load</string>
 
 	<string name="msg_kernel_changed">Settings discarded because the kernel version has changed</string>
 </resources>

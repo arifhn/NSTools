@@ -130,6 +130,31 @@ public class SettingsManager {
 			if(value > -1) {
 				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/ondemand/powersave_bias\n");
 			}
+		}else if(status.equals("conservative")) { // set this parameter only if active governor = conservative
+		    value = preferences.getInt(c.getString(R.string.key_conservative_sampling_rate), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/sampling_rate\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_conservative_down_threshold), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/down_threshold\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_conservative_up_threshold), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/up_threshold\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_conservative_sampling_down_factor), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/sampling_down_factor\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_conservative_freq_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/freq_step\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_conservative_ignore_nice_load), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/ignore_nice_load\n");
+			}
 		}else if(status.equals("lulzactive")) { // set this parameter only if active governor = lulzactive
 			// lulzactive inc_cpu_load
 			value = preferences.getInt(c.getString(R.string.key_lulzactive_inc_cpu_load), -1);
