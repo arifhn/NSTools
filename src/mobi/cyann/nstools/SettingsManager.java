@@ -155,6 +155,43 @@ public class SettingsManager {
 			if(value > -1) {
 				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/conservative/ignore_nice_load\n");
 			}
+		}else if(status.equals("smartassV2")) { // set this parameter only if active governor = smartass2
+			value = preferences.getInt(c.getString(R.string.key_smartass_awake_ideal_freq), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/awake_ideal_freq\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_sleep_ideal_freq), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/sleep_ideal_freq\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_sleep_wakeup_freq), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/sleep_wakeup_freq\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_min_cpu_load), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/min_cpu_load\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_max_cpu_load), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/max_cpu_load\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_ramp_down_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/ramp_down_step\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_ramp_up_step), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/ramp_up_step\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_down_rate_us), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/down_rate_us\n");
+			}
+			value = preferences.getInt(c.getString(R.string.key_smartass_up_rate_us), -1);
+			if(value > -1) {
+				command.append("echo " + value + " > " + "/sys/devices/system/cpu/cpufreq/smartass/up_rate_us\n");
+			}
 		}else if(status.equals("lulzactive")) { // set this parameter only if active governor = lulzactive
 			// lulzactive inc_cpu_load
 			value = preferences.getInt(c.getString(R.string.key_lulzactive_inc_cpu_load), -1);

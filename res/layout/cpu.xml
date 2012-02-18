@@ -66,7 +66,7 @@
             android:key="@string/key_ondemand_up_threshold"
             custom:maxValue="100"
             custom:metrics="%"
-            custom:minValue="10"
+            custom:minValue="1"
             custom:step="1"
             android:summary="0"
             android:title="@string/label_ondemand_up_threshold" />
@@ -108,7 +108,7 @@
             android:key="@string/key_conservative_down_threshold"
             custom:maxValue="100"
             custom:metrics="%"
-            custom:minValue="10"
+            custom:minValue="1"
             custom:step="1"
             android:summary="0"
             android:title="@string/label_conservative_down_threshold" />
@@ -118,7 +118,7 @@
             android:key="@string/key_conservative_up_threshold"
             custom:maxValue="100"
             custom:metrics="%"
-            custom:minValue="10"
+            custom:minValue="1"
             custom:step="1"
             android:summary="0"
             android:title="@string/label_conservative_up_threshold" />
@@ -149,6 +149,98 @@
             android:title="@string/label_conservative_ignore_nice_load" />
     </mobi.cyann.nstools.preference.GovernorPreferenceGroup>
     
+    <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_smartass" custom:governor="smartassV2" android:dependency="@string/key_governor">
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/awake_ideal_freq"
+            android:key="@string/key_smartass_awake_ideal_freq"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_smartass_awake_ideal_freq" />
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/sleep_ideal_freq"
+            android:key="@string/key_smartass_sleep_ideal_freq"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_smartass_sleep_ideal_freq" />
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/sleep_wakeup_freq"
+            android:key="@string/key_smartass_sleep_wakeup_freq"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_smartass_sleep_wakeup_freq" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/min_cpu_load"
+            android:key="@string/key_smartass_min_cpu_load"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="1"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_smartass_min_cpu_load" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/max_cpu_load"
+            android:key="@string/key_smartass_max_cpu_load"
+            custom:maxValue="100"
+            custom:metrics="%"
+            custom:minValue="1"
+            custom:step="1"
+            android:summary="0"
+            android:title="@string/label_smartass_max_cpu_load" />
+		
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/ramp_down_step"
+            android:key="@string/key_smartass_ramp_down_step"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_smartass_ramp_down_step" />
+
+        <mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/ramp_up_step"
+            android:key="@string/key_smartass_ramp_up_step"
+            custom:maxValue="2000000"
+            custom:metrics="Hz"
+            custom:minValue="100000"
+            custom:step="100000"
+            android:summary="0"
+            android:title="@string/label_smartass_ramp_up_step" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/down_rate_us"
+            android:key="@string/key_smartass_down_rate_us"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_smartass_down_rate_us" />
+
+		<mobi.cyann.nstools.preference.IntegerPreference
+            custom:interfacePath="/sys/devices/system/cpu/cpufreq/smartass/up_rate_us"
+            android:key="@string/key_smartass_up_rate_us"
+            custom:maxValue="500000"
+            custom:metrics="µs"
+            custom:minValue="10000"
+            custom:step="1000"
+            android:summary="0"
+            android:title="@string/label_smartass_up_rate_us" />
+	</mobi.cyann.nstools.preference.GovernorPreferenceGroup>
+        
     <mobi.cyann.nstools.preference.GovernorPreferenceGroup android:title="@string/label_lazy" custom:governor="lazy" android:dependency="@string/key_governor">
 
         <mobi.cyann.nstools.preference.StatusPreference
@@ -165,7 +257,7 @@
             android:key="@string/key_lulzactive_inc_cpu_load"
             custom:maxValue="100"
             custom:metrics="%"
-            custom:minValue="10"
+            custom:minValue="1"
             custom:step="1"
             android:summary="0"
             android:title="@string/label_lulzactive_inc_cpu_load" />

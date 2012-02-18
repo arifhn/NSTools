@@ -68,7 +68,16 @@
     <string name="key_conservative_sampling_down_factor">key_conservative_sampling_down_factor</string>
     <string name="key_conservative_freq_step">key_conservative_freq_step</string>
     <string name="key_conservative_ignore_nice_load">key_conservative_ignore_nice_load</string>
-    
+	<string name="key_smartass_awake_ideal_freq">key_smartass_awake_ideal_freq</string>
+	<string name="key_smartass_sleep_ideal_freq">key_smartass_sleep_ideal_freq</string>
+	<string name="key_smartass_sleep_wakeup_freq">key_smartass_sleep_wakeup_freq</string>
+	<string name="key_smartass_min_cpu_load">key_smartass_min_cpu_load</string>
+	<string name="key_smartass_max_cpu_load">key_smartass_max_cpu_load</string>
+	<string name="key_smartass_ramp_down_step">key_smartass_ramp_down_step</string>
+	<string name="key_smartass_ramp_up_step">key_smartass_ramp_up_step</string>
+	<string name="key_smartass_down_rate_us">key_smartass_down_rate_us</string>
+	<string name="key_smartass_up_rate_us">key_smartass_up_rate_us</string>
+		
 	<string-array name="iosched_interfaces">
 	    <item>/sys/block/mtdblock4/queue/scheduler</item>
 	    <item>/sys/block/mmcblk0/queue/scheduler</item>
