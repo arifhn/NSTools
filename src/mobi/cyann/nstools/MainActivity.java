@@ -180,4 +180,11 @@ public class MainActivity extends FragmentActivity {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         c.startActivity(i);
 	}
+
+	@Override
+	protected void onDestroy() {
+		Log.d(LOG_TAG, "onDestroy");
+		SettingsManager.saveToInitd(this);
+		super.onDestroy();
+	}
 }

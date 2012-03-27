@@ -51,6 +51,9 @@
     <string name="label_restore_on_boot">Set on boot</string>
     <string name="summaryOn_restore_on_boot">Settings will persist across reboots</string>
     <string name="summaryOff_restore_on_boot">Reset to default settings on boot</string>
+    <string name="label_restore_on_initd">Use init.d script</string>
+    <string name="summaryOn_restore_on_initd">Set through init.d script</string>
+    <string name="summaryOff_restore_on_initd">Set through android boot complete event</string>
     <string name="label_nstools_service">NSTools service</string>
     <string name="summaryOn_nstools_service">Enable service for BLN missed call and timeout</string>
     <string name="summaryOff_nstools_service">Disable service for BLN missed call and timeout</string>

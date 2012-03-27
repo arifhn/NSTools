@@ -12,6 +12,7 @@
     </string-array>
 
     <string name="PRELOAD_SCRIPT">/data/data/mobi.cyann.nstools/scripts/preload.sh</string>
+    <string name="INITD_SCRIPT">/etc/init.d/99nstools</string>
     
 	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
         
@@ -38,6 +39,7 @@
     <string name="key_max_int_volt">key_max_int_volt</string>
     <string name="key_dont_show_volt_warning">key_dont_show_volt_warning</string>
     <string name="key_restore_on_boot">key_restore_on_boot</string>
+    <string name="key_restore_on_initd">key_restore_on_initd</string>
     <string name="key_nstools_service">key_nstools_service</string>
     <string name="key_load_settings">key_load_settings</string>
     <string name="key_save_settings">key_save_settings</string>

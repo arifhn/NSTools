@@ -8,7 +8,15 @@
         android:summaryOff="@string/summaryOff_restore_on_boot"
         android:summaryOn="@string/summaryOn_restore_on_boot"
         android:title="@string/label_restore_on_boot" />
-
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="@string/key_restore_on_initd"
+        android:summaryOff="@string/summaryOff_restore_on_initd"
+        android:summaryOn="@string/summaryOn_restore_on_initd"
+        android:title="@string/label_restore_on_initd"
+        android:dependency="@string/key_restore_on_boot" />
+    
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="@string/key_nstools_service"
