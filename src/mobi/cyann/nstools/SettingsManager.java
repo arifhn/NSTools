@@ -272,6 +272,16 @@ public class SettingsManager {
 			}
 		}
 		
+		// Liveoc target low
+		int ocTargetLow = preferences.getInt(c.getString(R.string.key_liveoc_target_low), -1);
+		if(ocTargetLow > -1) {
+			command.append("echo " + ocTargetLow + " > " + "/sys/class/misc/liveoc/oc_target_low\n");
+		}
+		// Liveoc target high
+		int ocTargetHigh = preferences.getInt(c.getString(R.string.key_liveoc_target_high), -1);
+		if(ocTargetHigh > -1) {
+			command.append("echo " + ocTargetHigh + " > " + "/sys/class/misc/liveoc/oc_target_high\n");
+		}
 		// Liveoc
 		value = preferences.getInt(c.getString(R.string.key_liveoc), -1);
 		if(value > -1 && value != 100) {
@@ -280,13 +290,17 @@ public class SettingsManager {
 			// cpu minfreq
 			int minFreq = preferences.getInt(c.getString(R.string.key_min_cpufreq), -1);
 			if(minFreq > -1) {
-				minFreq = minFreq * 100 / value;
+				if(minFreq >= ocTargetLow) {
+					minFreq = minFreq * 100 / value;
+				}
 				command.append("echo " + minFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq\n");
 			}
 			// cpu maxfreq
 			int maxFreq = preferences.getInt(c.getString(R.string.key_max_cpufreq), -1);
 			if(maxFreq > -1) {
-				maxFreq = maxFreq * 100 / value;
+				if(minFreq <= ocTargetHigh) {
+					maxFreq = maxFreq * 100 / value;
+				}
 				command.append("echo " + maxFreq + " > " + "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq\n");
 			}
 			// now set liveoc value

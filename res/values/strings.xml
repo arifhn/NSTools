@@ -86,6 +86,8 @@
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">OC Value</string>
+    <string name="label_liveoc_target_low">OC Target Low</string>
+    <string name="label_liveoc_target_high">OC Target High</string>
 	<!-- lazy governor -->
     <string name="label_lazy">Lazy</string>
     <string name="label_screenoff_maxfreq">Screen off max freq</string>

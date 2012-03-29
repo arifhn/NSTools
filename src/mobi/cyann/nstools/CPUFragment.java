@@ -14,8 +14,10 @@ import mobi.cyann.nstools.preference.LulzactiveScreenOffPreference;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +33,8 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 	private ListPreference governor;
 	private ListPreference minFreq;
 	private ListPreference maxFreq;
+	private ListPreference liveocTargetLow;
+	private ListPreference liveocTargetHigh;
 	
 	public CPUFragment() {
 		super(R.layout.cpu);
@@ -54,7 +58,12 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 		governor = (ListPreference)findPreference(getString(R.string.key_governor));
 		minFreq = (ListPreference)findPreference(getString(R.string.key_min_cpufreq));
 		maxFreq = (ListPreference)findPreference(getString(R.string.key_max_cpufreq));
+		liveocTargetLow = (ListPreference)findPreference(getString(R.string.key_liveoc_target_low));
+		liveocTargetLow.setChangedListener(this);
+		liveocTargetHigh = (ListPreference)findPreference(getString(R.string.key_liveoc_target_high));
+		liveocTargetHigh.setChangedListener(this);
 		
+		reloadLiveocTarget();
 		reloadGovernors();
 		reloadFrequencies();
 	}
@@ -69,34 +78,59 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 		governor.setListValues(availableGovernors);
 	}
 
-	private void reloadFrequencies() {
+	private Integer[] readAvailableFrequencies() {
 		SysCommand sc = SysCommand.getInstance();
 		Integer availableFreqs[] = null;
-		String availableFreqsStr[] = null;
 		int n = sc.readSysfs("/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies");
 		if(n > 0) {
 			String temp = sc.getLastResult(0);
 			String f[] = temp.split(" ");
 			availableFreqs = new Integer[f.length];
-			availableFreqsStr = new String[f.length];
 			for(int i = 0; i < f.length; ++i) {
 				availableFreqs[i] = Integer.parseInt(f[i]);
-				availableFreqsStr[i] = (availableFreqs[i] / 1000) + " MHz";
 			}
 		}else {
 			// try read available frequencies from time_in_state
 			n = sc.readSysfs("/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state");
 			if(n >= 0) {
 				availableFreqs = new Integer[n];
-				availableFreqsStr = new String[n];
 				for(int i = 0; i < n; ++i) {
 					String line = sc.getLastResult(i);
 					String parts[] = line.split(" ");
 					availableFreqs[i] = Integer.parseInt(parts[0]);
-					availableFreqsStr[i] = (availableFreqs[i] / 1000) + " MHz";
 				}
 			}
 		}
+		return availableFreqs;
+	}
+	
+	private void reloadLiveocTarget() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		int liveoc = preferences.getInt(getActivity().getString(R.string.key_liveoc), -1);
+		SysCommand sc = SysCommand.getInstance();
+		// we need to set liveoc to 100 before read the frequencies
+		sc.writeSysfs("/sys/class/misc/liveoc/oc_value", "100");
+		Integer targetFreqs[] = readAvailableFrequencies();
+		String targetFreqsStr[] = new String[targetFreqs.length];
+		for(int i = 0; i < targetFreqs.length; ++i) {
+			targetFreqsStr[i] = (targetFreqs[i] / 1000) + " MHz";
+		}
+		liveocTargetLow.setListValues(targetFreqs);
+		liveocTargetLow.setListLabels(targetFreqsStr);
+		liveocTargetLow.reload(false);
+		liveocTargetHigh.setListValues(targetFreqs);
+		liveocTargetHigh.setListLabels(targetFreqsStr);
+		liveocTargetHigh.reload(false);
+		sc.writeSysfs("/sys/class/misc/liveoc/oc_value", "" + liveoc);
+	}
+	
+	private void reloadFrequencies() {
+		Integer availableFreqs[] = readAvailableFrequencies();
+		String availableFreqsStr[] = new String[availableFreqs.length];
+		for(int i = 0; i < availableFreqs.length; ++i) {
+			availableFreqsStr[i] = (availableFreqs[i] / 1000) + " MHz";
+		}
+			
 		minFreq.setListValues(availableFreqs);
 		minFreq.setListLabels(availableFreqsStr);
 		minFreq.reload(false);
@@ -172,7 +206,10 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 
 	@Override
 	public void onPreferenceChanged(Preference preference) {
-		if(preference.getKey().equals(getString(R.string.key_liveoc))) {
+		if(preference.getKey().equals(getString(R.string.key_liveoc)) ||
+			preference.getKey().equals(getString(R.string.key_liveoc_target_high)) ||
+			preference.getKey().equals(getString(R.string.key_liveoc_target_low))) {
+			
 			reloadFrequencies();
 		}
 	}
