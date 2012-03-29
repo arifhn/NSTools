@@ -42,6 +42,9 @@
     <string name="label_restore_on_boot">부팅 설정</string>
     <string name="summaryOn_restore_on_boot">재부팅시에도 유지</string>
     <string name="summaryOff_restore_on_boot">재부팅시 기본설정으로 초기화</string>
+    <string name="label_restore_on_initd">init.d 스크립트 사용 여부</string>
+    <string name="summaryOn_restore_on_initd">사용 - 부팅 중 적용</string>
+    <string name="summaryOff_restore_on_initd">사용 안 함 - 부팅 후 적용</string>	
     <string name="label_nstools_service">NSTools 제공 서비스</string>
     <string name="summaryOn_nstools_service">부재중통화 알림과 알림시간 제한 사용</string>
     <string name="summaryOff_nstools_service">부재중통화 알림과 알림시간 제한 사용 안 함</string>
@@ -54,6 +57,7 @@
     <string name="label_delete_settings">삭제</string>
     <string name="summary_delete_settings">저장된 설정 파일 삭제</string>
     <string name="label_about">앱 정보</string>
+    <string name="about_text">XDA의 NSTools</string>	
     <string name="about_desc">XDA의 NSTools 스레드를 방문하세요 (arifhn)</string>
     <string name="label_cpu_tweak">CPU</string>
     <string name="label_governor">정책(調速機)</string>
@@ -71,6 +75,8 @@
     <string name="label_idle3">Deep Idle (TOP=OFF)</string>
     <string name="liveoc_tweak">Live OC</string>
     <string name="label_liveoc_ocvalue">오버클럭 값</string>
+    <string name="label_liveoc_target_low">적용 하한(下限)</string>
+    <string name="label_liveoc_target_high">적용 상한(上限)</string>	
     <string name="label_lazy">lazy 관련설정</string>
     <string name="label_screenoff_maxfreq">화면 끌 때 최대클럭으로</string>
     <string name="label_lulzactive">lulzactive 세부설정</string>
@@ -106,6 +112,6 @@
     <string name="label_interactive_go_hispeed_load">최고클럭상승 CPU부하</string>
     <string name="label_interactive_hispeed_freq">상승할 최고클럭</string>
     <string name="label_interactive_min_sample_time">클럭하강 시간간격</string>
-    <string name="label_interactive_timer_rate">CPU부하 측정주기</string>	
+    <string name="label_interactive_timer_rate">CPU부하 측정주기</string>
     <string name="msg_kernel_changed">커널 변경으로 인해 기존설정은 폐기되었습니다.</string>
 </resources>
