@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- NSTweakActivity -->
     <string name="ns_tweak">Твики</string>
     <string name="bld_tweak">Регулировка подсветки</string>
     <string name="bln_tweak">Уведомление подсветкой</string>
@@ -11,15 +9,12 @@
     <string name="label_bln_timeout">Таймаут подсветки</string>
     <string name="blx_tweak">Увеличение срока жизни батареи</string>
     <string name="label_charging_limit">Ограничение заряда</string>
-	<string name="cmled_tweak">CMLed</string>
     <string name="label_cmled_bltimeout">Таймаут подсветки</string>
     <string name="label_cmled_blink">Мерцание</string>
     <string name="label_cmled_blinktimeout">Таймаут мерцания</string>
     <string name="touchwake_tweak">Пробуждение при касании</string>
-	<string name="iosched_tweak">IO Планировщик</string>
-	<string name="label_iosched">Текущий планировщик</string>
-	
-    <!-- VoltageControlActivity -->
+    <string name="iosched_tweak">IO Планировщик</string>
+    <string name="label_iosched">Текущий планировщик</string>
     <string name="voltage_control">Напряжение</string>
     <string name="label_default_voltage">Напряжение по умолчанию</string>
     <string name="summaryOn_default_voltage">Использовать установки ядра</string>
@@ -30,8 +25,6 @@
     <string name="label_max_int_volt">Макс. напряжение INT</string>
     <string name="warning_message">Эти установки могут быть опасны. Используйте их на свой страх и риск.</string>
     <string name="dontshow_message">Не показывать это сообщение</string>
-
-    <!-- common -->
     <string name="label_status">Статус</string>
     <string name="label_delay">Задержка</string>
     <string name="label_ok">Ок</string>
@@ -44,13 +37,13 @@
     <string name="status_on"><b>ВКЛ.</b></string>
     <string name="status_off"><b>ОТКЛ.</b></string>
     <string name="status_not_available"><i>не доступно</i></string>
-	
-
-    <!-- Setting Activity -->
     <string name="label_setting">Настройки</string>
     <string name="label_restore_on_boot">Применять при загрузке</string>
     <string name="summaryOn_restore_on_boot">Настройки будут применены при перезагрузке</string>
     <string name="summaryOff_restore_on_boot">Настройки будут сброшены при перезагрузке</string>
+	<string name="label_restore_on_initd">Использ. скрипт init.d</string>
+    <string name="summaryOn_restore_on_initd">Применять настройки через скрипт init.d</string>
+    <string name="summaryOff_restore_on_initd">Применять настройки через событие загрузки Android</string>
     <string name="label_nstools_service">Служба NSTools</string>
     <string name="summaryOn_nstools_service">Включить службу для уведомления о пропущенных звонках и настройки таймаута</string>
     <string name="summaryOff_nstools_service">Отключить службу для уведомления о пропущенных звонках и настройки таймаута</string>
@@ -65,33 +58,18 @@
     <string name="label_about">О программе</string>
     <string name="about_text">NSTools на форуме XDA</string>
     <string name="about_desc">Посетите тему NSTools на форуме XDA</string>
-
-    <!-- CPU Activity -->
     <string name="label_cpu_tweak">Процессор</string>
     <string name="label_governor">Управление частотой</string>
     <string name="label_min_cpufreq">Мин. частота</string>
     <string name="label_max_cpufreq">Макс. частота</string>
-    <string name="label_lazy">Lazy</string>
-    <string name="label_screenoff_maxfreq">Макс. частота при откл. экране</string>
-    <string name="label_lulzactive">Lulzactive</string>
-    <string name="label_lulzactive_inc_cpu_load">Inc CPU load</string>
-    <string name="label_lulzactive_pump_up_step">Pump up step</string>
-    <string name="label_lulzactive_pump_down_step">Pump down step</string>
-    <string name="label_lulzactive_screen_off_min_step">Screen off min step</string>
-    <string name="label_lulzactive_down_sample_time">Down sample time</string>
-    <string name="label_lulzactive_up_sample_time">Up sample time</string>
-    <string name="deepidle_tweak">Deep Idle</string>
     <string name="label_deepidle_stats">Статистика простоя</string>
     <string name="label_state">Режим</string>
     <string name="label_time">Время (мс)</string>
     <string name="label_average">Сред. (мс)</string>
     <string name="label_reset">Сброс</string>
     <string name="label_close">Закрыть</string>
-    <string name="label_idle1">Idle</string>
-    <string name="label_idle2">Deep Idle (TOP=ON)</string>
-    <string name="label_idle3">Deep Idle (TOP=OFF)</string>
-    <string name="liveoc_tweak">Live OC</string>
-    <string name="label_liveoc_ocvalue">Значения OC</string>
-
-	<string name="msg_kernel_changed">Настройки не применены из-за смены ядра</string>
+    <string name="label_liveoc_ocvalue">Значение OC</string>
+    <string name="label_liveoc_target_low">Нижнее значение OC</string>
+    <string name="label_liveoc_target_high">Верхнее значение OC</string>
+    <string name="msg_kernel_changed">Настройки не применены из-за смены ядра</string>
 </resources>
