@@ -5,7 +5,7 @@
     
 	<string name="SETTINGS_DIR">/data/data/mobi.cyann.nstools/settings/</string>
     <string name="SCRIPT_DIR">/data/data/mobi.cyann.nstools/scripts/</string>
-    <string name="SCRIPT_VERSION">9</string>
+    <string name="SCRIPT_VERSION">10</string>
 
     <string-array name="scripts">
         <item>preload.sh</item>

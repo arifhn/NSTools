@@ -124,6 +124,26 @@ case "$?" in
 	;;
 esac
 
+STAT=`cat /sys/class/misc/liveoc/oc_target_high`
+case "$?" in
+	0)
+	echo "key_liveoc_target_high=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_liveoc_target_high=-1" >> $OUT_FILE
+	;;
+esac
+
+STAT=`cat /sys/class/misc/liveoc/oc_target_low`
+case "$?" in
+	0)
+	echo "key_liveoc_target_low=$STAT" >> $OUT_FILE
+	;;
+	*)
+	echo "key_liveoc_target_low=-1" >> $OUT_FILE
+	;;
+esac
+
 # touchwake
 STAT=`cat /sys/class/misc/touchwake/enabled`
 case "$STAT" in
