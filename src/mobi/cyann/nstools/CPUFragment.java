@@ -53,18 +53,20 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 		p = findPreference(getString(R.string.key_liveoc));
 		if(p != null) {
 			((IntegerPreference)p).setChangedListener(this);
+			liveocTargetLow = (ListPreference)findPreference(getString(R.string.key_liveoc_target_low));
+			liveocTargetHigh = (ListPreference)findPreference(getString(R.string.key_liveoc_target_high));
+			if(liveocTargetLow != null && liveocTargetHigh != null) {
+				liveocTargetLow.setChangedListener(this);
+				liveocTargetHigh.setChangedListener(this);
+				reloadLiveocTarget();
+			}
 		}
-		
 		governor = (ListPreference)findPreference(getString(R.string.key_governor));
+		if(governor != null) {
+			reloadGovernors();
+		}
 		minFreq = (ListPreference)findPreference(getString(R.string.key_min_cpufreq));
 		maxFreq = (ListPreference)findPreference(getString(R.string.key_max_cpufreq));
-		liveocTargetLow = (ListPreference)findPreference(getString(R.string.key_liveoc_target_low));
-		liveocTargetLow.setChangedListener(this);
-		liveocTargetHigh = (ListPreference)findPreference(getString(R.string.key_liveoc_target_high));
-		liveocTargetHigh.setChangedListener(this);
-		
-		reloadLiveocTarget();
-		reloadGovernors();
 		reloadFrequencies();
 	}
 	
@@ -125,30 +127,32 @@ public class CPUFragment extends BasePreferenceFragment implements OnPreferenceC
 	}
 	
 	private void reloadFrequencies() {
-		Integer availableFreqs[] = readAvailableFrequencies();
-		String availableFreqsStr[] = new String[availableFreqs.length];
-		for(int i = 0; i < availableFreqs.length; ++i) {
-			availableFreqsStr[i] = (availableFreqs[i] / 1000) + " MHz";
-		}
+		if(minFreq != null && maxFreq != null) {
+			Integer availableFreqs[] = readAvailableFrequencies();
+			String availableFreqsStr[] = new String[availableFreqs.length];
+			for(int i = 0; i < availableFreqs.length; ++i) {
+				availableFreqsStr[i] = (availableFreqs[i] / 1000) + " MHz";
+			}
+				
+			minFreq.setListValues(availableFreqs);
+			minFreq.setListLabels(availableFreqsStr);
+			minFreq.reload(false);
+			maxFreq.setListValues(availableFreqs);
+			maxFreq.setListLabels(availableFreqsStr);
+			maxFreq.reload(false);
 			
-		minFreq.setListValues(availableFreqs);
-		minFreq.setListLabels(availableFreqsStr);
-		minFreq.reload(false);
-		maxFreq.setListValues(availableFreqs);
-		maxFreq.setListLabels(availableFreqsStr);
-		maxFreq.reload(false);
-		
-		// setup lulzactive min/max step
-		if(findPreference(getString(R.string.key_lulzactive_pump_up_step)) != null) {
-			IntegerPreference p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_up_step));
-			p.setMaxValue(availableFreqs.length - 1);
-			
-			p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_down_step));
-			p.setMaxValue(availableFreqs.length - 1);
-			
-			p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_screen_off_min_step));
-			p.setMaxValue(availableFreqs.length - 1);
-			((LulzactiveScreenOffPreference)p).setAvailableFrequencies(availableFreqsStr);
+			// setup lulzactive min/max step
+			if(findPreference(getString(R.string.key_lulzactive_pump_up_step)) != null) {
+				IntegerPreference p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_up_step));
+				p.setMaxValue(availableFreqs.length - 1);
+				
+				p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_pump_down_step));
+				p.setMaxValue(availableFreqs.length - 1);
+				
+				p = (IntegerPreference)findPreference(getString(R.string.key_lulzactive_screen_off_min_step));
+				p.setMaxValue(availableFreqs.length - 1);
+				((LulzactiveScreenOffPreference)p).setAvailableFrequencies(availableFreqsStr);
+			}
 		}
 	}
 	

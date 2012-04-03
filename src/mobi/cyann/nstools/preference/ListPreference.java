@@ -194,6 +194,10 @@ public class ListPreference extends BasePreference<Object> implements DialogInte
 
 	@Override
 	public boolean isAvailable() {
-		return value != null;
+		if(valueType == 0 && value != null) {
+			return (Integer)value != -1;
+		}else {
+			return value != null;
+		}
 	}
 }
