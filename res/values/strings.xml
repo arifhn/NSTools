@@ -3,6 +3,7 @@
 
     <!-- NSTweakActivity -->
     <string name="ns_tweak">Tweak</string>
+    <string name="fast_charge_tweak">Fast Charge</string>
     <string name="bld_tweak">Backlight Dimmer</string>
     <string name="bln_tweak">Backlight Notification</string>
     <string name="label_bln_blink">Blink Status</string>

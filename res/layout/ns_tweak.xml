@@ -2,6 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/mobi.cyann.nstools" android:key="root" >
 
+    <mobi.cyann.nstools.preference.RemovablePreferenceCategory android:title="@string/fast_charge_tweak" >
+        <mobi.cyann.nstools.preference.StatusPreference
+            custom:interfacePath="/sys/kernel/fast_charge/force_fast_charge"
+            android:key="@string/key_fast_charge_forced"
+            android:summary="@string/status_not_available"
+            android:title="@string/label_status" />
+	</mobi.cyann.nstools.preference.RemovablePreferenceCategory>
+
     <mobi.cyann.nstools.preference.RemovablePreferenceCategory android:title="@string/bld_tweak" >
         <mobi.cyann.nstools.preference.StatusPreference
             custom:interfacePath="/sys/class/misc/backlightdimmer/enabled"

@@ -15,7 +15,8 @@
     <string name="INITD_SCRIPT">/etc/init.d/99nstools</string>
     
 	<string name="nstools_thread_url">http://forum.xda-developers.com/showthread.php?t=1333696</string>
-        
+	
+	<string name="key_fast_charge_forced">key_fast_charge_forced</string>
     <string name="key_bld_status">key_bld_status</string>
     <string name="key_bld_delay">key_bld_delay</string>
     <string name="key_bln_status">key_bln_status</string>
