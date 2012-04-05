@@ -4,6 +4,7 @@
  */
 package mobi.cyann.nstools;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -342,6 +343,7 @@ public class SettingsManager {
 			
 			try {
 				FileWriter fw = new FileWriter(destination);
+				fw.write("# v" + c.getString(R.string.app_version) + "\n");
 				fw.write(command);
 				fw.close();
 				ret = true;
@@ -352,6 +354,42 @@ public class SettingsManager {
 		return ret;
 	}
 	
+	private static void checkOldSavedFile(Context c, File source) {
+		try {
+			FileReader fr = new FileReader(source);
+			BufferedReader br = new BufferedReader(fr);
+			String line = br.readLine();
+			String lastLine = null;
+			String versionString = "# v" + c.getString(R.string.app_version);
+			StringBuilder command = new StringBuilder(versionString);
+			command.append("\n");
+			boolean rewrite = false;
+			if(line != null && !line.equals(versionString)) {
+				rewrite = true;
+				do {
+					if(line.contains("scaling_min_freq") && !lastLine.contains("oc_value")) {
+						command.append("echo 100 > " + "/sys/class/misc/liveoc/oc_value\n");
+					}
+					if(line != null) {
+						command.append(line);
+						command.append("\n");
+					}
+					lastLine = line;
+					line = br.readLine();
+				}while(line != null);
+			}
+			br.close();
+			fr.close();
+			if(rewrite) {
+				FileWriter fw = new FileWriter(source);
+				fw.write(command.toString());
+				fw.close();
+			}
+		}catch(Exception ex) {
+			Log.e(LOG_TAG, "", ex);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param c
@@ -360,16 +398,18 @@ public class SettingsManager {
 	 */
 	public static void loadSettings(Context c, String preferenceName) {
 		File source = new File(c.getString(R.string.SETTINGS_DIR), preferenceName);
+		checkOldSavedFile(c, source); // check old saved file
 		StringBuilder command = new StringBuilder();
 		try {
 			FileReader fr = new FileReader(source);
-			int count = 0;
-			char buff[] = new char[1024];
-			do {
-				count = fr.read(buff);
-				if(count > 0)
-					command.append(buff, 0, count);
-			}while(count > 0);
+			BufferedReader br = new BufferedReader(fr);
+			String line = br.readLine();
+			while(line != null) {
+				command.append(line);
+				command.append("\n");
+				line = br.readLine();
+			}
+			br.close();
 			fr.close();
 		}catch(IOException e) {
 			Log.e(LOG_TAG, "", e);
